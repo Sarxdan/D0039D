@@ -1,6 +1,12 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Ice Cart VR/Assets/Textures-Materials/New Material.mat.meta
 guid: 691b07db9c5d0754eba5f1e1a9df5b3e
 NativeFormatImporter:
+=======
+guid: d0e8aa3ba978b20448c64f7b3cbf08d9
+folderAsset: yes
+DefaultImporter:
+>>>>>>> Sanders:Ice Cart VR/Assets/Models.meta
   externalObjects: {}
   mainObjectFileID: 2100000
   userData: 
