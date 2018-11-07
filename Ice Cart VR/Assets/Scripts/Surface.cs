@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Surface : MonoBehaviour {
 
-	// Use this for initialization
+    // Use this for initialization
+    public float friction = 10.0f;
+    public float resistance = 0.1f;
 	void Start () {
 		
 	}
