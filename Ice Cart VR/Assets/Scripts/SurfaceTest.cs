@@ -19,7 +19,7 @@ public class SurfaceTest : MonoBehaviour {
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Ground");
+        if (collision.gameObject.tag == "Ground")
         {
             //resistance += 10;
            // rb.AddForce(new Vector3(-rb.velocity.x * resistance, -rb.velocity.y * resistance, -rb.velocity.z * resistance));
