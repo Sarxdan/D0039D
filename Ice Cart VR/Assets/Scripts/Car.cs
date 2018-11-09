@@ -9,21 +9,75 @@ public class Car : MonoBehaviour {
     public Wheel wheel;
     public float velocity;
 
-	// Use this for initialization
-	void Start () {
+    public float horizontalInput;
+    public float verticalInput;
+    public float gasInput;
+    public float brakeInput;
+    private float steeringAngle;
+
+    public WheelCollider frontLeftCol, frontRightCol, backLeftCol, backRightCol;
+    public Transform frontLeft, frontRight, backLeft, backRight;
+
+    public float maxSteeringAngle = 30;
+    public float enginePower = 500;
+
+
+    void GetInput()
+    {
+        horizontalInput = Input.GetAxis("Horizontal");
+        verticalInput = Input.GetAxis("Vertical");
+        gasInput = (Input.GetAxis("Gas") + 1) / 2;
+        brakeInput = (Input.GetAxis("Brake") + 1) / 2;
+    }
+
+    void Steer()
+    {
+        steeringAngle = horizontalInput * maxSteeringAngle;
+        frontLeftCol.steerAngle = steeringAngle;
+        frontRightCol.steerAngle = steeringAngle;
+    }
+
+    void Accelerate()
+    {
+        frontLeftCol.motorTorque = gasInput * enginePower;
+        frontRightCol.motorTorque = gasInput * enginePower;
+    }
+    
+    void UpdateWheelPoses()
+    {
+        UpdateWheelPose(frontLeftCol, frontLeft);
+        UpdateWheelPose(frontRightCol, frontRight);
+        UpdateWheelPose(backLeftCol, backLeft);
+        UpdateWheelPose(backRightCol, backRight);
+    }
+
+    void UpdateWheelPose(WheelCollider col, Transform trans)
+    {
+        Vector3 pos = trans.position;
+        Quaternion quat = trans.rotation;
+
+        col.GetWorldPose(out pos, out quat);
+
+        trans.position = pos;
+        trans.rotation = quat;
+    }
+
+    // Use this for initialization
+    void Start () {
         //Get wheel script from the first child
-        wheel = this.gameObject.transform.GetChild(0).GetComponent<Wheel>();
+        //wheel = this.gameObject.transform.GetChild(0).GetComponent<Wheel>();
 	}
 
     void FixedUpdate()
     {
-        
+        GetInput();
+        Steer();
+        Accelerate();
+        UpdateWheelPoses();
     }
-
 
     void Update()
     {
-        Debug.Log(Input.GetAxis("Horizontal"));
-        
+
     }
 }
