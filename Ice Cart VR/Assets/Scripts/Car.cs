@@ -11,8 +11,8 @@ public class Car : MonoBehaviour {
 
     public float horizontalInput;
     public float verticalInput;
-    public float gasInput = 0;
-    public float brakeInput = 0;
+    public float gasInput = 0.0F;
+    public float brakeInput = 0.0F;
     private float steeringAngle;
 
     public WheelCollider frontLeftCol, frontRightCol, backLeftCol, backRightCol;
@@ -70,6 +70,7 @@ public class Car : MonoBehaviour {
 
     void FixedUpdate()
     {
+        Debug.Log("Test");
         GetInput();
         Steer();
         Accelerate();
@@ -78,6 +79,6 @@ public class Car : MonoBehaviour {
 
     void Update()
     {
-
+        
     }
 }
