@@ -11,8 +11,8 @@ public class Car : MonoBehaviour {
 
     public float horizontalInput;
     public float verticalInput;
-    public float gasInput;
-    public float brakeInput;
+    public float gasInput = 0;
+    public float brakeInput = 0;
     private float steeringAngle;
 
     public WheelCollider frontLeftCol, frontRightCol, backLeftCol, backRightCol;
