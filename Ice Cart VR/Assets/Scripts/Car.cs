@@ -11,14 +11,14 @@ public class Car : MonoBehaviour {
 
     public float horizontalInput;
     public float verticalInput;
-    public float gasInput;
-    public float brakeInput;
+    public float gasInput = 0.0F;
+    public float brakeInput = 0.0F;
     private float steeringAngle;
 
     public WheelCollider frontLeftCol, frontRightCol, backLeftCol, backRightCol;
     public Transform frontLeft, frontRight, backLeft, backRight;
 
-    public float maxSteeringAngle = 30;
+    public float maxSteeringAngle = 60;
     public float enginePower = 500;
 
 
@@ -26,7 +26,7 @@ public class Car : MonoBehaviour {
     {
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
-        gasInput = (Input.GetAxis("Gas") + 1) / 2;
+        gasInput = (Input.GetAxis("Gas") +  1) / 2;
         brakeInput = (Input.GetAxis("Brake") + 1) / 2;
     }
 
@@ -66,7 +66,12 @@ public class Car : MonoBehaviour {
     void Start () {
         //Get wheel script from the first child
         //wheel = this.gameObject.transform.GetChild(0).GetComponent<Wheel>();
-	}
+        frontLeftCol.ConfigureVehicleSubsteps(5, 12, 15);
+        frontRightCol.ConfigureVehicleSubsteps(5, 12, 15);
+        backLeftCol.ConfigureVehicleSubsteps(5, 12, 15);
+        backRightCol.ConfigureVehicleSubsteps(5, 12, 15);
+
+    }
 
     void FixedUpdate()
     {
@@ -78,6 +83,6 @@ public class Car : MonoBehaviour {
 
     void Update()
     {
-
+        
     }
 }
