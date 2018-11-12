@@ -14,14 +14,32 @@ public class Car : MonoBehaviour {
     public float gasInput = 0.0F;
     public float brakeInput = 0.0F;
     private float steeringAngle;
-
-    public WheelCollider frontLeftCol, frontRightCol, backLeftCol, backRightCol;
-    public Transform frontLeft, frontRight, backLeft, backRight;
+    
+    public GameObject wheelShape;
+    public WheelCollider[] wheels;
 
     public float maxSteeringAngle = 60;
     public float enginePower = 500;
 
+    void Start()
+    {
+        //Get all the Wheel Colliders for the car
+        wheels = GetComponentsInChildren<WheelCollider>();
+        for(int i = 0; i<wheels.Length; i++)
+        {
+            WheelCollider thisWheel = wheels[i];
+            thisWheel.ConfigureVehicleSubsteps(500, 450, 500);
 
+            //Adds the wheel prefab to the car
+            if (wheelShape != null)
+            {
+                var ws = Instantiate(wheelShape);
+                ws.transform.parent = thisWheel.transform;
+            }
+        }
+    }
+
+    //Get input from controller
     void GetInput()
     {
         horizontalInput = Input.GetAxis("Horizontal");
@@ -30,59 +48,58 @@ public class Car : MonoBehaviour {
         brakeInput = (Input.GetAxis("Brake") + 1) / 2;
     }
 
-    void Steer()
+    //Rotate the wheels when steering
+    void Steer(WheelCollider wheel)
     {
         steeringAngle = horizontalInput * maxSteeringAngle;
-        frontLeftCol.steerAngle = steeringAngle;
-        frontRightCol.steerAngle = steeringAngle;
+        wheel.steerAngle = steeringAngle;
     }
 
-    void Accelerate()
+    //Make the car move according to the input
+    void Accelerate(WheelCollider wheel)
     {
-        frontLeftCol.motorTorque = gasInput * enginePower;
-        frontRightCol.motorTorque = gasInput * enginePower;
+        wheel.motorTorque = gasInput * enginePower;
     }
-    
-    void UpdateWheelPoses()
+    void Brake(WheelCollider wheel)
     {
-        UpdateWheelPose(frontLeftCol, frontLeft);
-        UpdateWheelPose(frontRightCol, frontRight);
-        UpdateWheelPose(backLeftCol, backLeft);
-        UpdateWheelPose(backRightCol, backRight);
+        wheel.brakeTorque = brakeInput * enginePower;
     }
 
-    void UpdateWheelPose(WheelCollider col, Transform trans)
+    //Updates the position of the wheel prefabs according to the wheel colliders
+    void UpdateWheelPoses(WheelCollider wheel)
     {
-        Vector3 pos = trans.position;
-        Quaternion quat = trans.rotation;
+        //Assume that the wheelcolliders first child is the wheel prefab
+        Transform shapeTransform = wheel.transform.GetChild(0);
 
-        col.GetWorldPose(out pos, out quat);
+        Vector3 pos = shapeTransform.position;
+        Quaternion quat = shapeTransform.rotation;
 
-        trans.position = pos;
-        trans.rotation = quat;
-    }
+        wheel.GetWorldPose(out pos, out quat);
 
-    // Use this for initialization
-    void Start () {
-        //Get wheel script from the first child
-        //wheel = this.gameObject.transform.GetChild(0).GetComponent<Wheel>();
-        frontLeftCol.ConfigureVehicleSubsteps(5, 12, 15);
-        frontRightCol.ConfigureVehicleSubsteps(5, 12, 15);
-        backLeftCol.ConfigureVehicleSubsteps(5, 12, 15);
-        backRightCol.ConfigureVehicleSubsteps(5, 12, 15);
-
-    }
+        shapeTransform.position = pos;
+        shapeTransform.rotation = quat;
+    }   
 
     void FixedUpdate()
     {
         GetInput();
-        Steer();
-        Accelerate();
-        UpdateWheelPoses();
-    }
+        //Does something for every wheel collider in the car
+        foreach (WheelCollider wheel in wheels)
+        {
+            UpdateWheelPoses(wheel);
+            
+            //If the wheel is a rear wheel
+            if (wheel.transform.localPosition.z < 0)
+            {
+                Brake(wheel);
+            }
 
-    void Update()
-    {
-        
+            //If the wheel is a front wheel
+            if (wheel.transform.localPosition.z > 0)
+            {
+                Steer(wheel);
+                Accelerate(wheel);
+            }
+        }
     }
 }
