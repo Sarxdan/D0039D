@@ -9,6 +9,8 @@ public class Car : MonoBehaviour {
     public Wheel wheel;
     public float velocity;
 
+    public WheelFrictionCurve ff;
+    public WheelFrictionCurve sf;
     public float horizontalInput;
     public float verticalInput;
     public float gasInput = 0.0F;
@@ -78,20 +80,59 @@ public class Car : MonoBehaviour {
 
         shapeTransform.position = pos;
         shapeTransform.rotation = quat;
-    }   
-
+    }
+    
     void FixedUpdate()
     {
         GetInput();
         //Does something for every wheel collider in the car
         foreach (WheelCollider wheel in wheels)
         {
+            
             UpdateWheelPoses(wheel);
+            WheelHit hit;
+            if (wheel.GetGroundHit(out hit))
+            {
+
+                if (hit.collider.tag == "ice")
+                {
+                    ff.asymptoteSlip = 0.4f;
+                    ff.asymptoteValue = 0.25f;
+                    ff.extremumSlip = 0.2f;
+                    ff.extremumValue = 0.5f;
+                    ff.stiffness = 1;
+                    sf.asymptoteSlip = 0.1f;
+                    sf.asymptoteValue = 0.375f;
+                    sf.extremumSlip = 0.1f;
+                    sf.extremumValue = 0.5f;
+                    sf.stiffness = 1;
+                    wheel.forwardFriction = ff;
+                    wheel.sidewaysFriction = sf;
+                }
+                if (hit.collider.tag == "tarmac")
+                {
+                    ff.asymptoteSlip = 2.0f;
+                    ff.asymptoteValue = 10.0f;
+                    ff.extremumSlip = 1.0f;
+                    ff.extremumValue = 10;
+                    ff.stiffness = 1;
+                    sf.asymptoteSlip = 2.0f;
+                    sf.asymptoteValue = 10.0f;
+                    sf.extremumSlip = 1.0f;
+                    sf.extremumValue = 20.0f;
+                    sf.stiffness = 1;
+                    wheel.forwardFriction = ff;
+                    wheel.sidewaysFriction = sf;
+                }
+
+
+            }
             
             //If the wheel is a rear wheel
             if (wheel.transform.localPosition.z < 0)
             {
                 Brake(wheel);
+                Accelerate(wheel);
             }
 
             //If the wheel is a front wheel
