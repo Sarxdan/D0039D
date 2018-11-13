@@ -88,13 +88,13 @@ public class Car : MonoBehaviour {
         //Does something for every wheel collider in the car
         foreach (WheelCollider wheel in wheels)
         {
-            
             UpdateWheelPoses(wheel);
-<<<<<<< HEAD
+
+            // checks if the wheel is on a new surface.
             WheelHit hit;
             if (wheel.GetGroundHit(out hit))
             {
-
+                // changes the effectivness of the wheel while on ice!
                 if (hit.collider.tag == "ice")
                 {
                     ff.asymptoteSlip = 0.4f;
@@ -110,6 +110,7 @@ public class Car : MonoBehaviour {
                     wheel.forwardFriction = ff;
                     wheel.sidewaysFriction = sf;
                 }
+                // changes the effectivness of the wheel while on tarmac!
                 if (hit.collider.tag == "tarmac")
                 {
                     ff.asymptoteSlip = 2.0f;
@@ -125,13 +126,8 @@ public class Car : MonoBehaviour {
                     wheel.forwardFriction = ff;
                     wheel.sidewaysFriction = sf;
                 }
-
-
             }
-            
-=======
 
->>>>>>> 463580905694baaa7e5cfce95471b5f393b1fbd7
             //If the wheel is a rear wheel
             if (wheel.transform.localPosition.z < 0)
             {
