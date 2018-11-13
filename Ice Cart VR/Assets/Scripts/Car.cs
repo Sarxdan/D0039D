@@ -5,7 +5,7 @@ using UnityEngine;
 public class Car : MonoBehaviour {
 
     enum wheelDrive { four, front, back };
-    public float weight;
+    public float  ght;
     public Wheel wheel;
     public float velocity;
 
@@ -90,6 +90,7 @@ public class Car : MonoBehaviour {
         {
             
             UpdateWheelPoses(wheel);
+<<<<<<< HEAD
             WheelHit hit;
             if (wheel.GetGroundHit(out hit))
             {
@@ -128,6 +129,9 @@ public class Car : MonoBehaviour {
 
             }
             
+=======
+
+>>>>>>> 463580905694baaa7e5cfce95471b5f393b1fbd7
             //If the wheel is a rear wheel
             if (wheel.transform.localPosition.z < 0)
             {
