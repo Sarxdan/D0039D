@@ -5,7 +5,7 @@ using UnityEngine;
 public class Car : MonoBehaviour {
 
     enum wheelDrive { four, front, back };
-    public float weight;
+    public float  ght;
     public Wheel wheel;
     public float velocity;
 
@@ -87,7 +87,7 @@ public class Car : MonoBehaviour {
         foreach (WheelCollider wheel in wheels)
         {
             UpdateWheelPoses(wheel);
-            
+
             //If the wheel is a rear wheel
             if (wheel.transform.localPosition.z < 0)
             {
