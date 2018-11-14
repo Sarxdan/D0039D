@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Car : MonoBehaviour {
 
-    enum wheelDrive { four, front, back };
+    enum wheelDrive { four, front, rear };
     public float  ght;
     public Wheel wheel;
     public float velocity;
@@ -19,12 +19,17 @@ public class Car : MonoBehaviour {
     
     public GameObject wheelShape;
     public WheelCollider[] wheels;
+    public WheelCollider[] frontWheels;
+    public WheelCollider[] rearWheels;
 
     public float maxSteeringAngle = 60;
     public float enginePower = 500;
 
+    public float antiRollSpring = 50000;
+
     void Start()
     {
+        GetComponent<Rigidbody>().centerOfMass = new Vector3(0, 0.15f, 0);
         //Get all the Wheel Colliders for the car
         wheels = GetComponentsInChildren<WheelCollider>();
         for(int i = 0; i<wheels.Length; i++)
@@ -39,6 +44,64 @@ public class Car : MonoBehaviour {
                 ws.transform.parent = thisWheel.transform;
             }
         }
+
+        // Divide wheels into front and rear wheels
+
+        // Number of front wheels. Used to decide sizes of arrays
+        int numOfFrontWheels = 0;
+        // Loop to determine number of front wheels
+        foreach (WheelCollider wheel in wheels)
+        {
+            if (wheel.transform.localPosition.z > 0)
+            {
+                numOfFrontWheels++;
+            }
+        }
+
+        frontWheels = new WheelCollider[numOfFrontWheels];
+        rearWheels = new WheelCollider[wheels.Length - numOfFrontWheels];
+
+        // Indexes used to allow multiple tires at each axis (for example two rear right tires and two rear left tires)
+        int currentRearLeftIndex = 0;
+        int currentRearRightIndex = 1;
+        int currentFrontLeftIndex = 0;
+        int currentFrontRightIndex = 1;
+
+        // Insert front and rear wheels into their respective arrays where left wheels are even numbers and right wheels are odd numbers.
+        foreach (WheelCollider wheel in wheels)
+        {
+            if (wheel.transform.localPosition.z < 0)
+            {
+                if (wheel.transform.localPosition.x < 0)
+                {
+                    // Rear left tire
+                    rearWheels[currentRearLeftIndex] = wheel;
+                    currentRearLeftIndex += 2;
+                }
+                else
+                {
+                    // Rear right tire
+                    rearWheels[currentRearRightIndex] = wheel;
+                    currentRearRightIndex += 2;
+                }
+            }
+            else
+            {
+                if (wheel.transform.localPosition.x < 0)
+                {
+                    // Front left tire
+                    frontWheels[currentFrontLeftIndex] = wheel;
+                    currentFrontLeftIndex += 2;
+                }
+                else
+                {
+                    // Front right tire
+                    frontWheels[currentFrontRightIndex] = wheel;
+                    currentFrontRightIndex += 2;
+                }
+            }
+        }
+        Debug.Log("hey");
     }
 
     //Get input from controller
@@ -88,8 +151,6 @@ public class Car : MonoBehaviour {
         //Does something for every wheel collider in the car
         foreach (WheelCollider wheel in wheels)
         {
-            UpdateWheelPoses(wheel);
-
             // checks if the wheel is on a new surface.
             WheelHit hit;
             if (wheel.GetGroundHit(out hit))
@@ -114,7 +175,7 @@ public class Car : MonoBehaviour {
                 if (hit.collider.tag == "tarmac")
                 {
                     ff.asymptoteSlip = 2.0f;
-                    ff.asymptoteValue = 10.0f;
+                    ff.asymptoteValue = 0.8f;
                     ff.extremumSlip = 1.0f;
                     ff.extremumValue = 10;
                     ff.stiffness = 1;
@@ -127,20 +188,82 @@ public class Car : MonoBehaviour {
                     wheel.sidewaysFriction = sf;
                 }
             }
+        }
 
-            //If the wheel is a rear wheel
-            if (wheel.transform.localPosition.z < 0)
-            {
-                Brake(wheel);
-                Accelerate(wheel);
-            }
+        // Rear wheels
+        
 
-            //If the wheel is a front wheel
-            if (wheel.transform.localPosition.z > 0)
-            {
-                Steer(wheel);
-                Accelerate(wheel);
-            }
+        // Call axis stabilizer function using only the first two wheels in each axis
+        
+        // Front axis
+        StabilizeAxis(frontWheels[0], frontWheels[1]);
+        // Rear axis
+        StabilizeAxis(rearWheels[0], rearWheels[1]);
+
+
+        foreach (var wheel in rearWheels)
+        {
+            Brake(wheel);
+            Accelerate(wheel);
+        }
+
+        // Front wheels
+        foreach (var wheel in frontWheels)
+        {
+            Steer(wheel);
+            Accelerate(wheel);
+        }
+
+        // Update positions of wheels last
+        foreach (WheelCollider wheel in wheels)
+        {
+            UpdateWheelPoses(wheel);
+        }
+    }
+
+
+
+    // Simulating stabilizer bars
+    void StabilizeAxis(WheelCollider leftWheel, WheelCollider rightWheel)
+    {
+        WheelHit hit = new WheelHit();
+        
+        // Travel means the travel of the suspension
+        float leftTravel = 0.5f;
+        float rightTravel = 0.5f;
+
+        // Check if wheel is touching the ground
+        bool leftGrounded = leftWheel.isGrounded;
+        leftWheel.GetGroundHit(out hit);
+
+        // Update travel if wheel is touching the ground
+        if (leftGrounded)
+        {
+            leftTravel = (-leftWheel.transform.InverseTransformPoint(hit.point).y - leftWheel.radius) / leftWheel.suspensionDistance;
+        }
+
+        // Check if wheel is touching the ground
+        bool rightGrounded = rightWheel.isGrounded;
+        rightWheel.GetGroundHit(out hit);
+
+        // Update travel if wheel is touching the ground
+        if (rightGrounded)
+        {
+            rightTravel = (-rightWheel.transform.InverseTransformPoint(hit.point).y - rightWheel.radius) / rightWheel.suspensionDistance;
+        }
+
+        // Calculate the force to apply to each axis
+        float antiRollForce = (leftTravel - rightTravel) * antiRollSpring;
+
+        // Add force to wheels if wheel is grounded
+        if (leftGrounded)
+        {
+            GetComponent<Rigidbody>().AddForceAtPosition(leftWheel.transform.up * -antiRollForce, leftWheel.transform.position);
+        }
+
+        if (rightGrounded)
+        {
+            GetComponent<Rigidbody>().AddForceAtPosition(rightWheel.transform.up * antiRollForce, rightWheel.transform.position);
         }
     }
 }
