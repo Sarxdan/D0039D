@@ -21,15 +21,22 @@ public class Car : MonoBehaviour {
     public WheelCollider[] wheels;
     public WheelCollider[] frontWheels;
     public WheelCollider[] rearWheels;
+    public GameObject steeringWheel, acceleratorPad, breakPad, clutchPad;
 
     public float maxSteeringAngle = 60;
+    public float maxSteeringWheelRot = 450;
+    public float maxPedalPress = 30;
     public float enginePower = 500;
 
     public float antiRollSpring = 50000;
 
     void Start()
     {
+        //Moves the centerofmass
         GetComponent<Rigidbody>().centerOfMass = new Vector3(0, 0.15f, 0);
+
+        steeringWheel = GameObject.FindWithTag("SteeringWheel");
+
         //Get all the Wheel Colliders for the car
         wheels = GetComponentsInChildren<WheelCollider>();
         for(int i = 0; i<wheels.Length; i++)
@@ -113,6 +120,12 @@ public class Car : MonoBehaviour {
         brakeInput = (Input.GetAxis("Brake") + 1) / 2;
     }
 
+    void RotateSteeringWheel(GameObject steeringWheel)
+    {
+
+        steeringWheel.transform.localEulerAngles = new Vector3(0, -horizontalInput * maxSteeringWheelRot, 0);
+    }
+
     //Rotate the wheels when steering
     void Steer(WheelCollider wheel)
     {
@@ -148,6 +161,7 @@ public class Car : MonoBehaviour {
     void FixedUpdate()
     {
         GetInput();
+        RotateSteeringWheel(steeringWheel);
         //Does something for every wheel collider in the car
         foreach (WheelCollider wheel in wheels)
         {
