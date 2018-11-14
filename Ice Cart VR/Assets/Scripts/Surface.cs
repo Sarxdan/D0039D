@@ -22,8 +22,6 @@ public class Surface : MonoBehaviour {
     
     public float resistance = 0.1f;
 	void Start () {
-        wheel.forwardFriction = forwardFriction;
-        wheel.sidewaysFriction = sidewaysFriction;
         forwardFriction.asymptoteValue = asValue;
         forwardFriction.extremumValue = exValue;
         forwardFriction.extremumSlip = exSlip;
