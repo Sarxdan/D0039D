@@ -12,6 +12,7 @@ TagManager:
   - AccelleratorPad
   - BreakPad
   - ClutchPad
+  - Checkpoint
   layers:
   - Default
   - TransparentFX
