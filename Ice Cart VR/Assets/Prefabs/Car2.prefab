@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 136527578922080748}
   - component: {fileID: 114516271111496042}
   m_Layer: 0
-  m_Name: pocket2
+  m_Name: Car2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
