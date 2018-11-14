@@ -16,13 +16,12 @@ public class Surface : MonoBehaviour {
     public float exSlip = 0.8f;
     [Range(0, 20000)]
     public float exValue = 18000;
+    
 
 
     
     public float resistance = 0.1f;
 	void Start () {
-        
-        forwardFriction.asymptoteSlip = asSlip;
         forwardFriction.asymptoteValue = asValue;
         forwardFriction.extremumValue = exValue;
         forwardFriction.extremumSlip = exSlip;
