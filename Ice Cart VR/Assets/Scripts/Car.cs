@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class Car : MonoBehaviour {
 
-    enum wheelDrive { four, front, rear };
+    public enum wheelDrive { four, front, rear };
+    public enum ControllerType { keyboard, xboxController, ps4Controller, steeringWheel };
+
     public float  ght;
     public Wheel wheel;
     public float velocity;
 
     public WheelFrictionCurve ff;
     public WheelFrictionCurve sf;
+    public ControllerType inputType;
     public float horizontalInput;
     public float verticalInput;
     public float gasInput = 0.0F;
@@ -33,6 +36,7 @@ public class Car : MonoBehaviour {
 
     void Start()
     {
+        inputType = ControllerType.xboxController;
         //Moves the centerofmass
         GetComponent<Rigidbody>().centerOfMass = new Vector3(0, 0.15f, 0);
         
@@ -119,11 +123,25 @@ public class Car : MonoBehaviour {
     //Get input from controller
     void GetInput()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
-        verticalInput = Input.GetAxis("Vertical");
-        gasInput = (Input.GetAxis("Gas") +  1) / 2;
-        brakeInput = (Input.GetAxis("Brake") + 1) / 2;
-        clutchInput = (Input.GetAxis("Vertical")) / 2;
+        if (inputType == ControllerType.xboxController)
+        {
+            horizontalInput = Input.GetAxis("Horizontal");
+            verticalInput = Input.GetAxis("Vertical");
+            gasInput = (Input.GetAxis("Gas"));
+            brakeInput = (Input.GetAxis("Brake"));
+            clutchInput = (Input.GetAxis("Vertical")) / 2;
+        }
+        if (inputType == ControllerType.ps4Controller)
+        {
+            horizontalInput = Input.GetAxis("Horizontal");
+            verticalInput = Input.GetAxis("Vertical");
+            gasInput = (Input.GetAxis("Gas") + 1) / 2;
+            brakeInput = (Input.GetAxis("Brake") + 1) / 2;
+            clutchInput = (Input.GetAxis("Vertical") + 1) / 2;
+        }
+
+
+
     }
 
     void RotateSteeringWheel(GameObject steeringWheel)
@@ -151,7 +169,7 @@ public class Car : MonoBehaviour {
     }
     void Brake(WheelCollider wheel)
     {
-        wheel.brakeTorque = brakeInput * enginePower;
+        wheel.brakeTorque = brakeInput * enginePower * 10;
     }
 
     //Updates the position of the wheel prefabs according to the wheel colliders
