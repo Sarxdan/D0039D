@@ -15,6 +15,7 @@ public class Car : MonoBehaviour {
     public float verticalInput;
     public float gasInput = 0.0F;
     public float brakeInput = 0.0F;
+    public float clutchInput = 0.0F;
     private float steeringAngle;
     
     public GameObject wheelShape;
@@ -34,8 +35,12 @@ public class Car : MonoBehaviour {
     {
         //Moves the centerofmass
         GetComponent<Rigidbody>().centerOfMass = new Vector3(0, 0.15f, 0);
-
+        
+        //Kosmetic object
         steeringWheel = GameObject.FindWithTag("SteeringWheel");
+        acceleratorPad = GameObject.FindWithTag("AccelleratorPad");
+        breakPad = GameObject.FindWithTag("BreakPad");
+        clutchPad = GameObject.FindWithTag("ClutchPad");
 
         //Get all the Wheel Colliders for the car
         wheels = GetComponentsInChildren<WheelCollider>();
@@ -118,12 +123,18 @@ public class Car : MonoBehaviour {
         verticalInput = Input.GetAxis("Vertical");
         gasInput = (Input.GetAxis("Gas") +  1) / 2;
         brakeInput = (Input.GetAxis("Brake") + 1) / 2;
+        clutchInput = (Input.GetAxis("Vertical")) / 2;
     }
 
     void RotateSteeringWheel(GameObject steeringWheel)
     {
-
         steeringWheel.transform.localEulerAngles = new Vector3(0, -horizontalInput * maxSteeringWheelRot, 0);
+    }
+    void PressPedals(GameObject accelerator, GameObject breaker, GameObject clutch)
+    {
+        accelerator.transform.localEulerAngles = new Vector3(-140 + gasInput * maxPedalPress,0,0);
+        breaker.transform.localEulerAngles = new Vector3(-140 + brakeInput * maxPedalPress, 0, 0);
+        clutch.transform.localEulerAngles = new Vector3(-140 + clutchInput * maxPedalPress, 0, 0);
     }
 
     //Rotate the wheels when steering
@@ -161,7 +172,11 @@ public class Car : MonoBehaviour {
     void FixedUpdate()
     {
         GetInput();
+
+
         RotateSteeringWheel(steeringWheel);
+        PressPedals(acceleratorPad, breakPad, clutchPad);
+
         //Does something for every wheel collider in the car
         foreach (WheelCollider wheel in wheels)
         {
