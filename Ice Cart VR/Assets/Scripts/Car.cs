@@ -174,15 +174,15 @@ public class Car : MonoBehaviour {
                 // changes the effectivness of the wheel while on tarmac!
                 if (hit.collider.tag == "tarmac")
                 {
-                    ff.asymptoteSlip = 2.0f;
-                    ff.asymptoteValue = 0.8f;
-                    ff.extremumSlip = 1.0f;
-                    ff.extremumValue = 10;
+                    ff.asymptoteSlip = 0.8f;
+                    ff.asymptoteValue = 0.5f;
+                    ff.extremumSlip = 0.4f;
+                    ff.extremumValue = 1.0f;
                     ff.stiffness = 1;
-                    sf.asymptoteSlip = 2.0f;
-                    sf.asymptoteValue = 10.0f;
-                    sf.extremumSlip = 1.0f;
-                    sf.extremumValue = 20.0f;
+                    sf.asymptoteSlip = 0.5f;
+                    sf.asymptoteValue = 0.75f;
+                    sf.extremumSlip = 0.2f;
+                    sf.extremumValue = 1.0f;
                     sf.stiffness = 1;
                     wheel.forwardFriction = ff;
                     wheel.sidewaysFriction = sf;
@@ -211,7 +211,8 @@ public class Car : MonoBehaviour {
         foreach (var wheel in frontWheels)
         {
             Steer(wheel);
-            Accelerate(wheel);
+            Brake(wheel);
+            //Accelerate(wheel);
         }
 
         // Update positions of wheels last
