@@ -281,6 +281,18 @@ Prefab:
       propertyPath: m_Name
       value: Pedelboard
       objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: 3cda78c080e3f3e46b66c1f1a55c7316, type: 3}
+      propertyPath: m_TagString
+      value: AccelleratorPad
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 3cda78c080e3f3e46b66c1f1a55c7316, type: 3}
+      propertyPath: m_TagString
+      value: BreakPad
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 3cda78c080e3f3e46b66c1f1a55c7316, type: 3}
+      propertyPath: m_TagString
+      value: ClutchPad
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3cda78c080e3f3e46b66c1f1a55c7316, type: 3}
   m_IsPrefabAsset: 0
@@ -409,6 +421,11 @@ WheelCollider:
     m_AsymptoteValue: 0.75
     m_Stiffness: 1
   m_Enabled: 1
+--- !u!1 &302829930 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100014, guid: 4958ca90e8077134e96fa9e1628b1bae,
+    type: 3}
+  m_PrefabInternal: {fileID: 1631419840}
 --- !u!1 &402717121
 GameObject:
   m_ObjectHideFlags: 0
@@ -549,7 +566,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f2fd035ff93701a41bbac093a61e6d46, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.157
+      value: 1.866
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f2fd035ff93701a41bbac093a61e6d46, type: 3}
       propertyPath: m_LocalPosition.z
@@ -577,15 +594,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f2fd035ff93701a41bbac093a61e6d46, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f2fd035ff93701a41bbac093a61e6d46, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.1
+      value: 0.06
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f2fd035ff93701a41bbac093a61e6d46, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.6
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: f2fd035ff93701a41bbac093a61e6d46, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -633,17 +650,23 @@ MonoBehaviour:
   ght: 0
   wheel: {fileID: 0}
   velocity: 0
+  inputType: 0
   horizontalInput: 0
   verticalInput: 0
   gasInput: 0
   brakeInput: 0
+  clutchInput: 0
   wheelShape: {fileID: 1438684924315436, guid: 1e1b039d722ec204a83436b65b887cfd, type: 2}
   wheels: []
   frontWheels: []
   rearWheels: []
-  steeringWheel: {fileID: 0}
-  maxSteeringAngle: 60
+  steeringWheel: {fileID: 302829930}
+  acceleratorPad: {fileID: 0}
+  breakPad: {fileID: 0}
+  clutchPad: {fileID: 0}
+  maxSteeringAngle: 30
   maxSteeringWheelRot: 450
+  maxPedalPress: 30
   enginePower: 900
   antiRollSpring: 50000
 --- !u!136 &580692439
@@ -701,8 +724,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 580692437}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.7, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalPosition: {x: 0, y: -2.8, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1822694912}
   - {fileID: 2069464746}
@@ -861,7 +884,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1277589964
 Transform:
   m_ObjectHideFlags: 0
@@ -1124,7 +1147,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400014, guid: 4958ca90e8077134e96fa9e1628b1bae, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 400014, guid: 4958ca90e8077134e96fa9e1628b1bae, type: 3}
       propertyPath: m_LocalScale.y
@@ -1132,7 +1155,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400014, guid: 4958ca90e8077134e96fa9e1628b1bae, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 400014, guid: 4958ca90e8077134e96fa9e1628b1bae, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1301,7 +1324,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1822694911}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.34, z: -0.29}
+  m_LocalPosition: {x: 0, y: 2.775, z: 0.531}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1277589964}
@@ -1339,7 +1362,7 @@ Camera:
     height: 1
   near clip plane: 0.01
   far clip plane: 1000
-  field of view: 32
+  field of view: 40
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
