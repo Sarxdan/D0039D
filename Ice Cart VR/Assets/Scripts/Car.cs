@@ -15,21 +15,33 @@ public class Car : MonoBehaviour {
     public float verticalInput;
     public float gasInput = 0.0F;
     public float brakeInput = 0.0F;
+    public float clutchInput = 0.0F;
     private float steeringAngle;
     
     public GameObject wheelShape;
     public WheelCollider[] wheels;
     public WheelCollider[] frontWheels;
     public WheelCollider[] rearWheels;
+    public GameObject steeringWheel, acceleratorPad, breakPad, clutchPad;
 
     public float maxSteeringAngle = 60;
+    public float maxSteeringWheelRot = 450;
+    public float maxPedalPress = 30;
     public float enginePower = 500;
 
     public float antiRollSpring = 50000;
 
     void Start()
     {
+        //Moves the centerofmass
         GetComponent<Rigidbody>().centerOfMass = new Vector3(0, 0.15f, 0);
+        
+        //Kosmetic object
+        steeringWheel = GameObject.FindWithTag("SteeringWheel");
+        acceleratorPad = GameObject.FindWithTag("AccelleratorPad");
+        breakPad = GameObject.FindWithTag("BreakPad");
+        clutchPad = GameObject.FindWithTag("ClutchPad");
+
         //Get all the Wheel Colliders for the car
         wheels = GetComponentsInChildren<WheelCollider>();
         for(int i = 0; i<wheels.Length; i++)
@@ -111,6 +123,18 @@ public class Car : MonoBehaviour {
         verticalInput = Input.GetAxis("Vertical");
         gasInput = (Input.GetAxis("Gas") +  1) / 2;
         brakeInput = (Input.GetAxis("Brake") + 1) / 2;
+        clutchInput = (Input.GetAxis("Vertical")) / 2;
+    }
+
+    void RotateSteeringWheel(GameObject steeringWheel)
+    {
+        steeringWheel.transform.localEulerAngles = new Vector3(0, -horizontalInput * maxSteeringWheelRot, 0);
+    }
+    void PressPedals(GameObject accelerator, GameObject breaker, GameObject clutch)
+    {
+        accelerator.transform.localEulerAngles = new Vector3(-140 + gasInput * maxPedalPress,0,0);
+        breaker.transform.localEulerAngles = new Vector3(-140 + brakeInput * maxPedalPress, 0, 0);
+        clutch.transform.localEulerAngles = new Vector3(-140 + clutchInput * maxPedalPress, 0, 0);
     }
 
     //Rotate the wheels when steering
@@ -148,6 +172,11 @@ public class Car : MonoBehaviour {
     void FixedUpdate()
     {
         GetInput();
+
+
+        RotateSteeringWheel(steeringWheel);
+        PressPedals(acceleratorPad, breakPad, clutchPad);
+
         //Does something for every wheel collider in the car
         foreach (WheelCollider wheel in wheels)
         {
