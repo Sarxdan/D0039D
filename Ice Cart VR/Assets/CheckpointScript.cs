@@ -7,6 +7,7 @@ using System.Diagnostics;
 
 public class CheckpointScript : MonoBehaviour {
     public Stopwatch timer;
+    // Start at negative one to avoid a special case for the first checkpoint
     public int prevCheckpoint = -1;
 
 	// Use this for initialization
@@ -14,12 +15,13 @@ public class CheckpointScript : MonoBehaviour {
         timer = new Stopwatch();
         timer.Start();
 	}
-
+    // Player collides with a trigger colliders (checkpoint)
     void OnTriggerEnter(Collider collision)
     {
+        // Check for false collisions
         if(collision != null)
         {
-
+            // Check that the colliders is actully a checkpoint
             if (collision.tag == "Checkpoint")
             {
                 int checkpoint = collision.gameObject.GetComponent<checkpoint>().index;
@@ -37,6 +39,7 @@ public class CheckpointScript : MonoBehaviour {
                     {
                         //Player passed finish line
                     }
+                    // If a player passes the right checkpoint
                     prevCheckpoint = checkpoint;
                     UnityEngine.Debug.Log(timer.Elapsed);
                 }
