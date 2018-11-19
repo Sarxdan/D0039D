@@ -7,6 +7,12 @@ TagManager:
   - dirt
   - ice
   - tarmac
+  - Ground
+  - SteeringWheel
+  - AccelleratorPad
+  - BreakPad
+  - ClutchPad
+  - Checkpoint
   layers:
   - Default
   - TransparentFX

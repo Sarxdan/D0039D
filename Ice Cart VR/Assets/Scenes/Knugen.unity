@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 197307642}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: tarmac
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -437,7 +437,7 @@ MonoBehaviour:
   frontWheels: []
   rearWheels: []
   maxSteeringAngle: 30
-  enginePower: 500
+  enginePower: 600
   antiRollSpring: 0
 --- !u!4 &1209860231 stripped
 Transform:

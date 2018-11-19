@@ -4,37 +4,56 @@ using UnityEngine;
 
 public class Car : MonoBehaviour {
 
-    enum wheelDrive { four, front, rear };
+    public enum wheelDrive { four, front, rear };
+    public enum ControllerType { keyboard, xboxController, ps4Controller, steeringWheel };
+
     public float  ght;
     public Wheel wheel;
     public float velocity;
 
     public WheelFrictionCurve ff;
     public WheelFrictionCurve sf;
+    public ControllerType inputType;
     public float horizontalInput;
     public float verticalInput;
     public float gasInput = 0.0F;
     public float brakeInput = 0.0F;
+    public float clutchInput = 0.0F;
     private float steeringAngle;
     
     public GameObject wheelShape;
     public WheelCollider[] wheels;
     public WheelCollider[] frontWheels;
     public WheelCollider[] rearWheels;
+    public GameObject steeringWheel, acceleratorPad, breakPad, clutchPad;
 
     public float maxSteeringAngle = 60;
+    public float maxSteeringWheelRot = 450;
+    public float maxPedalPress = 30;
     public float enginePower = 500;
 
     public float antiRollSpring = 50000;
 
     void Start()
     {
+<<<<<<< HEAD
         
     }
 
     public void Init()
     {
+=======
+        inputType = ControllerType.xboxController;
+        //Moves the centerofmass
+>>>>>>> 1aad1bfd69a9fb5670446a81ecadca247744d594
         GetComponent<Rigidbody>().centerOfMass = new Vector3(0, 0.15f, 0);
+        
+        //Kosmetic object
+        steeringWheel = GameObject.FindWithTag("SteeringWheel");
+        acceleratorPad = GameObject.FindWithTag("AccelleratorPad");
+        breakPad = GameObject.FindWithTag("BreakPad");
+        clutchPad = GameObject.FindWithTag("ClutchPad");
+
         //Get all the Wheel Colliders for the car
         wheels = GetComponentsInChildren<WheelCollider>();
         for (int i = 0; i < wheels.Length; i++)
@@ -111,10 +130,36 @@ public class Car : MonoBehaviour {
     //Get input from controller
     void GetInput()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
-        verticalInput = Input.GetAxis("Vertical");
-        gasInput = (Input.GetAxis("Gas") +  1) / 2;
-        brakeInput = (Input.GetAxis("Brake") + 1) / 2;
+        if (inputType == ControllerType.xboxController)
+        {
+            horizontalInput = Input.GetAxis("Horizontal");
+            verticalInput = Input.GetAxis("Vertical");
+            gasInput = (Input.GetAxis("Gas"));
+            brakeInput = (Input.GetAxis("Brake"));
+            clutchInput = (Input.GetAxis("Vertical")) / 2;
+        }
+        if (inputType == ControllerType.ps4Controller)
+        {
+            horizontalInput = Input.GetAxis("Horizontal");
+            verticalInput = Input.GetAxis("Vertical");
+            gasInput = (Input.GetAxis("Gas") + 1) / 2;
+            brakeInput = (Input.GetAxis("Brake") + 1) / 2;
+            clutchInput = (Input.GetAxis("Vertical") + 1) / 2;
+        }
+
+
+
+    }
+
+    void RotateSteeringWheel(GameObject steeringWheel)
+    {
+        steeringWheel.transform.localEulerAngles = new Vector3(0, -horizontalInput * maxSteeringWheelRot, 0);
+    }
+    void PressPedals(GameObject accelerator, GameObject breaker, GameObject clutch)
+    {
+        accelerator.transform.localEulerAngles = new Vector3(-140 + gasInput * maxPedalPress,0,0);
+        breaker.transform.localEulerAngles = new Vector3(-140 + brakeInput * maxPedalPress, 0, 0);
+        clutch.transform.localEulerAngles = new Vector3(-140 + clutchInput * maxPedalPress, 0, 0);
     }
 
     //Rotate the wheels when steering
@@ -131,7 +176,7 @@ public class Car : MonoBehaviour {
     }
     void Brake(WheelCollider wheel)
     {
-        wheel.brakeTorque = brakeInput * enginePower;
+        wheel.brakeTorque = brakeInput * enginePower * 10;
     }
 
     //Updates the position of the wheel prefabs according to the wheel colliders
@@ -152,6 +197,11 @@ public class Car : MonoBehaviour {
     void FixedUpdate()
     {
         GetInput();
+
+
+        RotateSteeringWheel(steeringWheel);
+        PressPedals(acceleratorPad, breakPad, clutchPad);
+
         //Does something for every wheel collider in the car
         foreach (WheelCollider wheel in wheels)
         {
@@ -178,15 +228,15 @@ public class Car : MonoBehaviour {
                 // changes the effectivness of the wheel while on tarmac!
                 if (hit.collider.tag == "tarmac")
                 {
-                    ff.asymptoteSlip = 2.0f;
-                    ff.asymptoteValue = 0.8f;
-                    ff.extremumSlip = 1.0f;
-                    ff.extremumValue = 10;
+                    ff.asymptoteSlip = 0.8f;
+                    ff.asymptoteValue = 0.5f;
+                    ff.extremumSlip = 0.4f;
+                    ff.extremumValue = 1.0f;
                     ff.stiffness = 1;
-                    sf.asymptoteSlip = 2.0f;
-                    sf.asymptoteValue = 10.0f;
-                    sf.extremumSlip = 1.0f;
-                    sf.extremumValue = 20.0f;
+                    sf.asymptoteSlip = 0.5f;
+                    sf.asymptoteValue = 0.75f;
+                    sf.extremumSlip = 0.2f;
+                    sf.extremumValue = 1.0f;
                     sf.stiffness = 1;
                     wheel.forwardFriction = ff;
                     wheel.sidewaysFriction = sf;
@@ -215,7 +265,8 @@ public class Car : MonoBehaviour {
         foreach (var wheel in frontWheels)
         {
             Steer(wheel);
-            Accelerate(wheel);
+            Brake(wheel);
+            //Accelerate(wheel);
         }
 
         // Update positions of wheels last
