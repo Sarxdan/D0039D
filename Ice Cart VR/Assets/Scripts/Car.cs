@@ -29,10 +29,15 @@ public class Car : MonoBehaviour {
 
     void Start()
     {
+        
+    }
+
+    public void Init()
+    {
         GetComponent<Rigidbody>().centerOfMass = new Vector3(0, 0.15f, 0);
         //Get all the Wheel Colliders for the car
         wheels = GetComponentsInChildren<WheelCollider>();
-        for(int i = 0; i<wheels.Length; i++)
+        for (int i = 0; i < wheels.Length; i++)
         {
             WheelCollider thisWheel = wheels[i];
             thisWheel.ConfigureVehicleSubsteps(500, 450, 500);
@@ -101,7 +106,6 @@ public class Car : MonoBehaviour {
                 }
             }
         }
-        Debug.Log("hey");
     }
 
     //Get input from controller
