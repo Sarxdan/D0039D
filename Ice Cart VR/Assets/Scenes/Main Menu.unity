@@ -451,7 +451,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67c790a781de2bd4e80cbe22f03456de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiManager: {fileID: 0}
+  uiManager: {fileID: 444867498}
   carPrefabs:
   - {fileID: 791190181}
   - {fileID: 2094104634}
