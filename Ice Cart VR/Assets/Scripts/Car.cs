@@ -36,16 +36,14 @@ public class Car : MonoBehaviour {
 
     void Start()
     {
-<<<<<<< HEAD
+        
         
     }
 
     public void Init()
     {
-=======
         inputType = ControllerType.xboxController;
         //Moves the centerofmass
->>>>>>> 1aad1bfd69a9fb5670446a81ecadca247744d594
         GetComponent<Rigidbody>().centerOfMass = new Vector3(0, 0.15f, 0);
         
         //Kosmetic object
