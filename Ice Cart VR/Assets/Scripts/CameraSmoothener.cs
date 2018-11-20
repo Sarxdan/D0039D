@@ -28,7 +28,6 @@ public class CameraSmoothener : MonoBehaviour {
         {
             targetZRotation = 0;
         }
-
         if (targetXRotation > xLockAngle ^ -targetXRotation < xLockAngle - 360)
         {
             targetXRotation = 0;
