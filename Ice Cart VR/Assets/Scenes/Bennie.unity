@@ -123,6 +123,7 @@ GameObject:
   - component: {fileID: 348098836}
   - component: {fileID: 348098838}
   - component: {fileID: 348098837}
+  - component: {fileID: 348098839}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -190,6 +191,17 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &348098839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 348098835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3047a8618a80261439a21993d26653a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &504918877
 GameObject:
   m_ObjectHideFlags: 0
@@ -521,6 +533,7 @@ MonoBehaviour:
   ght: 0
   wheel: {fileID: 0}
   velocity: 0
+  inputType: 0
   horizontalInput: 0
   verticalInput: 0
   gasInput: 0
