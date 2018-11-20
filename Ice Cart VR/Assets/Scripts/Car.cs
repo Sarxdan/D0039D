@@ -45,7 +45,7 @@ public class Car : MonoBehaviour {
     {
         inputType = ControllerType.xboxController;
         //Moves the centerofmass
-        GetComponent<Rigidbody>().centerOfMass = new Vector3(0, 0.15f, 0);
+        GetComponent<Rigidbody>().centerOfMass = new Vector3(0, 0.145f, 0);
         
         //Kosmetic object
         steeringWheel = GameObject.FindWithTag("SteeringWheel");
@@ -244,9 +244,9 @@ public class Car : MonoBehaviour {
                     ff.extremumValue = 1.0f;
                     ff.stiffness = 1;
                     sf.asymptoteSlip = 0.5f;
-                    sf.asymptoteValue = 0.75f;
+                    sf.asymptoteValue = 0.9f;
                     sf.extremumSlip = 0.2f;
-                    sf.extremumValue = 1.0f;
+                    sf.extremumValue = 1.2f;
                     sf.stiffness = 1;
                     wheel.forwardFriction = ff;
                     wheel.sidewaysFriction = sf;
