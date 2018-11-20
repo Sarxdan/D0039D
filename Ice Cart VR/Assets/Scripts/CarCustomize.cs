@@ -61,7 +61,6 @@ public class CarCustomize : MonoBehaviour {
             //Adds the wheel prefab to the car
             var ws = Instantiate(wheelShape);
             ws.transform.parent = thisWheel.transform;
-            //ws.transform.localScale = new Vector3(0.06F, 1f, 1F);
 
             //####UPDATE WHEEL POSE####
 
@@ -81,6 +80,7 @@ public class CarCustomize : MonoBehaviour {
     //REMEMBER TO SCALE DOWN EVERYTHING!!!
     public void Init()
     {
+        car.transform.parent = null;
         car.GetComponent<Rigidbody>().isKinematic = false;
         Car carScript = car.GetComponent<Car>();
         carScript.enabled = true;
