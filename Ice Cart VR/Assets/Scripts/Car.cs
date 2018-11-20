@@ -36,7 +36,8 @@ public class Car : MonoBehaviour {
 
     void Start()
     {
-        
+        // Needed to run test scen.
+        Init();
         
     }
 
@@ -128,6 +129,16 @@ public class Car : MonoBehaviour {
     //Get input from controller
     void GetInput()
     {
+        if (inputType == ControllerType.keyboard)
+        {
+            horizontalInput = Input.GetAxis("KeyboardHorizontal");
+            verticalInput = Input.GetAxis("Vertical");
+            if (Input.GetAxis("Vertical") > 0)
+                gasInput = Input.GetAxis("Vertical");
+            else
+                brakeInput = -Input.GetAxis("Vertical");
+
+        }
         if (inputType == ControllerType.xboxController)
         {
             horizontalInput = Input.GetAxis("Horizontal");
@@ -210,6 +221,7 @@ public class Car : MonoBehaviour {
                 // changes the effectivness of the wheel while on ice!
                 if (hit.collider.tag == "ice")
                 {
+
                     ff.asymptoteSlip = 0.4f;
                     ff.asymptoteValue = 0.25f;
                     ff.extremumSlip = 0.2f;
@@ -253,16 +265,17 @@ public class Car : MonoBehaviour {
         StabilizeAxis(rearWheels[0], rearWheels[1]);
 
 
-        foreach (var wheel in rearWheels)
-        {
-            Brake(wheel);
-            Accelerate(wheel);
-        }
+
 
         // Front wheels
         foreach (var wheel in frontWheels)
         {
+            Brake(wheel);
+            Accelerate(wheel);
             Steer(wheel);
+        }
+        foreach (var wheel in rearWheels)
+        {
             Brake(wheel);
             //Accelerate(wheel);
         }
