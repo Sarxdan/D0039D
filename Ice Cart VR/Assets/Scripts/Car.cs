@@ -19,6 +19,7 @@ public class Car : MonoBehaviour {
     public float gasInput = 0.0F;
     public float brakeInput = 0.0F;
     public float clutchInput = 0.0F;
+    public float testInput;
     private float steeringAngle;
     
     public GameObject wheelShape;
@@ -44,7 +45,7 @@ public class Car : MonoBehaviour {
 
     public void Init()
     {
-        inputType = ControllerType.xboxController;
+        inputType = ControllerType.keyboard;
         //Moves the centerofmass
         GetComponent<Rigidbody>().centerOfMass = new Vector3(0, 0.145f, 0);
         
@@ -133,28 +134,29 @@ public class Car : MonoBehaviour {
         if (inputType == ControllerType.keyboard)
         {
             horizontalInput = Input.GetAxis("KeyboardHorizontal");
-            verticalInput = Input.GetAxis("Vertical");
-            if (Input.GetAxis("Vertical") > 0)
-                gasInput = Input.GetAxis("Vertical");
+            verticalInput = Input.GetAxis("KeyboardVertical");
+            testInput = Input.GetAxis("KeyboardBack");
+            if (Input.GetAxis("KeyboardVertical") > 0)
+                gasInput = Input.GetAxis("KeyboardVertical");
             else
-                brakeInput = -Input.GetAxis("Vertical");
+                brakeInput = -Input.GetAxis("KeyboardVertical");
 
         }
         if (inputType == ControllerType.xboxController)
         {
-            horizontalInput = Input.GetAxis("Horizontal");
-            verticalInput = Input.GetAxis("Vertical");
-            gasInput = (Input.GetAxis("Gas"));
-            brakeInput = (Input.GetAxis("Brake"));
-            clutchInput = (Input.GetAxis("Vertical")) / 2;
+            horizontalInput = Input.GetAxis("XboxHorizontal");
+            verticalInput = Input.GetAxis("XboxVertical");
+            gasInput = (Input.GetAxis("XboxGas"));
+            brakeInput = (Input.GetAxis("XboxBrake"));
+            testInput = Input.GetAxis("XboxBack");
         }
         if (inputType == ControllerType.ps4Controller)
         {
-            horizontalInput = Input.GetAxis("Horizontal");
-            verticalInput = Input.GetAxis("Vertical");
-            gasInput = (Input.GetAxis("Gas") + 1) / 2;
-            brakeInput = (Input.GetAxis("Brake") + 1) / 2;
-            clutchInput = (Input.GetAxis("Vertical") + 1) / 2;
+            horizontalInput = Input.GetAxis("Ps4Horizontal");
+            verticalInput = Input.GetAxis("Ps4Vertical");
+            gasInput = (Input.GetAxis("Ps4Gas") + 1) / 2;
+            brakeInput = (Input.GetAxis("Ps4Brake") + 1) / 2;
+            testInput = Input.GetAxis("Ps4Back");
         }
 
 
@@ -207,7 +209,6 @@ public class Car : MonoBehaviour {
     void FixedUpdate()
     {
         GetInput();
-
 
         RotateSteeringWheel(steeringWheel);
         PressPedals(acceleratorPad, breakPad, clutchPad);

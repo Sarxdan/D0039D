@@ -1820,6 +1820,7 @@ MonoBehaviour:
   gasInput: 0
   brakeInput: 0
   clutchInput: 0
+  testInput: 0
   wheelShape: {fileID: 1438684924315436, guid: 1e1b039d722ec204a83436b65b887cfd, type: 2}
   wheels: []
   frontWheels: []
