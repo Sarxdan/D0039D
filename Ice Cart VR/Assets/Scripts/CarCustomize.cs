@@ -60,7 +60,9 @@ public class CarCustomize : MonoBehaviour {
 
             //Adds the wheel prefab to the car
             var ws = Instantiate(wheelShape);
+            Debug.Log(ws.transform.localScale);
             ws.transform.parent = thisWheel.transform;
+            Debug.Log(ws.transform.localScale);
 
             //####UPDATE WHEEL POSE####
 
@@ -74,6 +76,7 @@ public class CarCustomize : MonoBehaviour {
 
             shapeTransform.position = pos;
             shapeTransform.rotation = quat;
+            //Debug.Log(ws.transform.localScale);
         }
     }
 

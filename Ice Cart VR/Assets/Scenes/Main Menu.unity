@@ -6524,15 +6524,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4023392984733510, guid: 59cdce750149304408231b759c702729, type: 2}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4023392984733510, guid: 59cdce750149304408231b759c702729, type: 2}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4023392984733510, guid: 59cdce750149304408231b759c702729, type: 2}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 1592305395324618, guid: 59cdce750149304408231b759c702729, type: 2}
       propertyPath: m_IsActive
@@ -6550,7 +6550,7 @@ Prefab:
         type: 2}
       propertyPath: wheelShape
       value: 
-      objectReference: {fileID: 1670559825811684, guid: 72050134f63b4ad4a866f4bea1757880,
+      objectReference: {fileID: 1438684924315436, guid: 1e1b039d722ec204a83436b65b887cfd,
         type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59cdce750149304408231b759c702729, type: 2}
