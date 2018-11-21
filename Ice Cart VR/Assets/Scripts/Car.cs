@@ -47,7 +47,9 @@ public class Car : MonoBehaviour {
     {
         inputType = ControllerType.keyboard;
         //Moves the centerofmass
-        GetComponent<Rigidbody>().centerOfMass = new Vector3(0, 0.145f, 0);
+        //GetComponent<Rigidbody>().centerOfMass = GetComponentInChildren<WheelCollider>().transform.position.y
+        float y = GetComponentInChildren<WheelCollider>().transform.position.y;
+        GetComponent<Rigidbody>().centerOfMass = new Vector3(0, 0.145f, 0.1f);
         
         //Kosmetic object
         steeringWheel = GameObject.FindWithTag("SteeringWheel");
@@ -241,14 +243,14 @@ public class Car : MonoBehaviour {
                 if (hit.collider.tag == "tarmac")
                 {
                     ff.asymptoteSlip = 0.8f;
-                    ff.asymptoteValue = 0.5f;
+                    ff.asymptoteValue = 0.9f;
                     ff.extremumSlip = 0.4f;
-                    ff.extremumValue = 1.0f;
+                    ff.extremumValue = 0.8f;
                     ff.stiffness = 1;
-                    sf.asymptoteSlip = 0.5f;
-                    sf.asymptoteValue = 0.9f;
-                    sf.extremumSlip = 0.2f;
-                    sf.extremumValue = 1.2f;
+                    sf.asymptoteSlip = 0.7f;
+                    sf.asymptoteValue = 0.5f;
+                    sf.extremumSlip = 0.5f;
+                    sf.extremumValue = 0.8f;
                     sf.stiffness = 1;
                     wheel.forwardFriction = ff;
                     wheel.sidewaysFriction = sf;
