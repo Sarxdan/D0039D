@@ -661,15 +661,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ght: 0
-  wheel: {fileID: 0}
   velocity: 0
-  inputType: 0
+  inputType: 1
   horizontalInput: 0
   verticalInput: 0
   gasInput: 0
   brakeInput: 0
   clutchInput: 0
-  wheelShape: {fileID: 1670559825811684, guid: 72050134f63b4ad4a866f4bea1757880, type: 2}
+  testInput: 0
+  wheelShape: {fileID: 1430321568609506, guid: c0da0c81cbcc43b4fa8671255b0110ee, type: 2}
   wheels: []
   frontWheels: []
   rearWheels: []
@@ -680,7 +680,7 @@ MonoBehaviour:
   maxSteeringAngle: 30
   maxSteeringWheelRot: 450
   maxPedalPress: 30
-  enginePower: 300
+  enginePower: 200
   antiRollSpring: 0
 --- !u!136 &491833022
 CapsuleCollider:
