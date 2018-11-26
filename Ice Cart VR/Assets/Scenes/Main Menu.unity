@@ -2461,7 +2461,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: 120}
   m_SizeDelta: {x: 2160, y: 1200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &721628365
@@ -4079,7 +4079,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.01
-  far clip plane: 1040
+  far clip plane: 2000
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -6496,11 +6496,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4023392984733510, guid: 59cdce750149304408231b759c702729, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -0.4
+      value: -118.5
       objectReference: {fileID: 0}
     - target: {fileID: 4023392984733510, guid: 59cdce750149304408231b759c702729, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -1039.15
+      value: -1035
       objectReference: {fileID: 0}
     - target: {fileID: 4023392984733510, guid: 59cdce750149304408231b759c702729, type: 2}
       propertyPath: m_LocalRotation.x
@@ -6544,7 +6544,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1292891602364442, guid: 59cdce750149304408231b759c702729, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114783417693158798, guid: 59cdce750149304408231b759c702729,
         type: 2}
