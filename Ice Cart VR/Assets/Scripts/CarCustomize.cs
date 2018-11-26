@@ -38,6 +38,12 @@ public class CarCustomize : MonoBehaviour {
 
     public void SetCar()
     {
+        string[] names = Input.GetJoystickNames();
+        for(int i = 0; i < names.Length; i++)
+        {
+            Debug.Log(names[i]);
+        }
+
         if(car != null)
         {
             wheels = car.GetComponentsInChildren<WheelCollider>();
