@@ -184,6 +184,18 @@ public class LogitechSteeringWheel : MonoBehaviour
                 }
             }
 
+            //Testing done by Bennie
+            if (Input.GetKeyUp(KeyCode.Q))
+            {
+                LogitechGSDK.LogiPlaySpringForce(0, 0, 50, 0);
+                LogitechGSDK.LogiStopSpringForce(0);
+                activeForceAndEffect[0] = "Spring Force\n ";
+                if (rec.lX < 10)
+                {
+                    
+                }
+            }
+
             //Damper Force -> D
             if (Input.GetKeyUp(KeyCode.D))
             {
@@ -194,7 +206,7 @@ public class LogitechSteeringWheel : MonoBehaviour
                 }
                 else
                 {
-                    LogitechGSDK.LogiPlayDamperForce(0, 50);
+                    LogitechGSDK.LogiPlayDamperForce(0, 75);
                     activeForceAndEffect[2] = "Damper Force\n ";
                 }
             }

@@ -13,7 +13,7 @@ public class Car : MonoBehaviour {
 
     public WheelFrictionCurve ff;
     public WheelFrictionCurve sf;
-    public ControllerType inputType;
+    public ControllerType inputType = ControllerType.keyboard;
     public float horizontalInput;
     public float verticalInput;
     public float gasInput = 0.0F;
@@ -45,8 +45,24 @@ public class Car : MonoBehaviour {
 
     public void Init()
     {
-        inputType = ControllerType.keyboard;
         //Moves the centerofmass
+        string[] names = Input.GetJoystickNames();
+        for (int i = 0; i < names.Length; i++)
+        {
+            if (names[i].Equals("G29 Driving Force Racing Wheel"))
+            {
+                inputType = ControllerType.steeringWheel;
+            }
+            else if (names[i].Equals("Xbox One For Windows"))
+            {
+                inputType = ControllerType.steeringWheel;
+            }
+            else if (names[i].Equals("Wireless Controller"))
+            {
+                inputType = ControllerType.steeringWheel;
+            }
+        }
+        
         //GetComponent<Rigidbody>().centerOfMass = GetComponentInChildren<WheelCollider>().transform.position.y
         float y = GetComponentInChildren<WheelCollider>().transform.position.y;
         GetComponent<Rigidbody>().centerOfMass = new Vector3(0, 0.145f, 0.1f);
@@ -142,7 +158,6 @@ public class Car : MonoBehaviour {
                 gasInput = Input.GetAxis("KeyboardVertical");
             else
                 brakeInput = -Input.GetAxis("KeyboardVertical");
-
         }
         if (inputType == ControllerType.xboxController)
         {
@@ -159,6 +174,14 @@ public class Car : MonoBehaviour {
             gasInput = (Input.GetAxis("Ps4Gas") + 1) / 2;
             brakeInput = (Input.GetAxis("Ps4Brake") + 1) / 2;
             testInput = Input.GetAxis("Ps4Back");
+        }
+        if (inputType == ControllerType.steeringWheel)
+        {
+            horizontalInput = Input.GetAxis("Steeringwheel-wheel");
+            gasInput = ((Input.GetAxis("Steeringwheel-gas") + 1) / 2);
+            brakeInput = ((Input.GetAxis("Steeringwheel-brake") + 1) / 2);
+            clutchInput = Input.GetAxis("Steeringwheel-clutch");
+
         }
 
 
