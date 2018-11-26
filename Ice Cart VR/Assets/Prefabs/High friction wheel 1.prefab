@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23079254867201142}
   - component: {fileID: 114756733047601428}
   m_Layer: 0
-  m_Name: High friction wheel
+  m_Name: High friction wheel 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
