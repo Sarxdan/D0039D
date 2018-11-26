@@ -19,6 +19,7 @@ public class Car : MonoBehaviour {
     public float gasInput = 0.0F;
     public float brakeInput = 0.0F;
     public float clutchInput = 0.0F;
+    public float testInput;
     private float steeringAngle;
     
     public GameObject wheelShape;
@@ -36,9 +37,19 @@ public class Car : MonoBehaviour {
 
     void Start()
     {
-        inputType = ControllerType.xboxController;
+        // Needed to run test scen.
+        Init();
+
+        
+    }
+
+    public void Init()
+    {
+        inputType = ControllerType.keyboard;
         //Moves the centerofmass
-        GetComponent<Rigidbody>().centerOfMass = new Vector3(0, 0.15f, 0);
+        //GetComponent<Rigidbody>().centerOfMass = GetComponentInChildren<WheelCollider>().transform.position.y
+        float y = GetComponentInChildren<WheelCollider>().transform.position.y;
+        GetComponent<Rigidbody>().centerOfMass = new Vector3(0, 0.145f, 0.1f);
         
         //Kosmetic object
         steeringWheel = GameObject.FindWithTag("SteeringWheel");
@@ -48,7 +59,7 @@ public class Car : MonoBehaviour {
 
         //Get all the Wheel Colliders for the car
         wheels = GetComponentsInChildren<WheelCollider>();
-        for(int i = 0; i<wheels.Length; i++)
+        for (int i = 0; i < wheels.Length; i++)
         {
             WheelCollider thisWheel = wheels[i];
             thisWheel.ConfigureVehicleSubsteps(500, 450, 500);
@@ -117,27 +128,37 @@ public class Car : MonoBehaviour {
                 }
             }
         }
-        Debug.Log("hey");
     }
 
     //Get input from controller
     void GetInput()
     {
+        if (inputType == ControllerType.keyboard)
+        {
+            horizontalInput = Input.GetAxis("KeyboardHorizontal");
+            verticalInput = Input.GetAxis("KeyboardVertical");
+            testInput = Input.GetAxis("KeyboardBack");
+            if (Input.GetAxis("KeyboardVertical") > 0)
+                gasInput = Input.GetAxis("KeyboardVertical");
+            else
+                brakeInput = -Input.GetAxis("KeyboardVertical");
+
+        }
         if (inputType == ControllerType.xboxController)
         {
-            horizontalInput = Input.GetAxis("Horizontal");
-            verticalInput = Input.GetAxis("Vertical");
-            gasInput = (Input.GetAxis("Gas"));
-            brakeInput = (Input.GetAxis("Brake"));
-            clutchInput = (Input.GetAxis("Vertical")) / 2;
+            horizontalInput = Input.GetAxis("XboxHorizontal");
+            verticalInput = Input.GetAxis("XboxVertical");
+            gasInput = (Input.GetAxis("XboxGas"));
+            brakeInput = (Input.GetAxis("XboxBrake"));
+            testInput = Input.GetAxis("XboxBack");
         }
         if (inputType == ControllerType.ps4Controller)
         {
-            horizontalInput = Input.GetAxis("Horizontal");
-            verticalInput = Input.GetAxis("Vertical");
-            gasInput = (Input.GetAxis("Gas") + 1) / 2;
-            brakeInput = (Input.GetAxis("Brake") + 1) / 2;
-            clutchInput = (Input.GetAxis("Vertical") + 1) / 2;
+            horizontalInput = Input.GetAxis("Ps4Horizontal");
+            verticalInput = Input.GetAxis("Ps4Vertical");
+            gasInput = (Input.GetAxis("Ps4Gas") + 1) / 2;
+            brakeInput = (Input.GetAxis("Ps4Brake") + 1) / 2;
+            testInput = Input.GetAxis("Ps4Back");
         }
 
 
@@ -191,7 +212,6 @@ public class Car : MonoBehaviour {
     {
         GetInput();
 
-
         RotateSteeringWheel(steeringWheel);
         PressPedals(acceleratorPad, breakPad, clutchPad);
 
@@ -205,6 +225,7 @@ public class Car : MonoBehaviour {
                 // changes the effectivness of the wheel while on ice!
                 if (hit.collider.tag == "ice")
                 {
+
                     ff.asymptoteSlip = 0.4f;
                     ff.asymptoteValue = 0.25f;
                     ff.extremumSlip = 0.2f;
@@ -222,14 +243,14 @@ public class Car : MonoBehaviour {
                 if (hit.collider.tag == "tarmac")
                 {
                     ff.asymptoteSlip = 0.8f;
-                    ff.asymptoteValue = 0.5f;
+                    ff.asymptoteValue = 0.9f;
                     ff.extremumSlip = 0.4f;
-                    ff.extremumValue = 1.0f;
+                    ff.extremumValue = 0.8f;
                     ff.stiffness = 1;
-                    sf.asymptoteSlip = 0.5f;
-                    sf.asymptoteValue = 0.75f;
-                    sf.extremumSlip = 0.2f;
-                    sf.extremumValue = 1.0f;
+                    sf.asymptoteSlip = 0.7f;
+                    sf.asymptoteValue = 0.5f;
+                    sf.extremumSlip = 0.5f;
+                    sf.extremumValue = 0.8f;
                     sf.stiffness = 1;
                     wheel.forwardFriction = ff;
                     wheel.sidewaysFriction = sf;
@@ -248,16 +269,17 @@ public class Car : MonoBehaviour {
         StabilizeAxis(rearWheels[0], rearWheels[1]);
 
 
-        foreach (var wheel in rearWheels)
-        {
-            Brake(wheel);
-            Accelerate(wheel);
-        }
+
 
         // Front wheels
         foreach (var wheel in frontWheels)
         {
+            Brake(wheel);
+            Accelerate(wheel);
             Steer(wheel);
+        }
+        foreach (var wheel in rearWheels)
+        {
             Brake(wheel);
             //Accelerate(wheel);
         }
