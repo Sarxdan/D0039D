@@ -8,12 +8,11 @@ public class Car : MonoBehaviour {
     public enum ControllerType { keyboard, xboxController, ps4Controller, steeringWheel };
 
     public float  ght;
-    public Wheel wheel;
     public float velocity;
 
     public WheelFrictionCurve ff;
     public WheelFrictionCurve sf;
-    public ControllerType inputType;
+    public ControllerType inputType = ControllerType.keyboard;
     public float horizontalInput;
     public float verticalInput;
     public float gasInput = 0.0F;
@@ -39,17 +38,14 @@ public class Car : MonoBehaviour {
     {
         // Needed to run test scen.
         Init();
-
-        
     }
 
     public void Init()
     {
-        inputType = ControllerType.keyboard;
+        //inputType = ControllerType.keyboard;
         //Moves the centerofmass
         //GetComponent<Rigidbody>().centerOfMass = GetComponentInChildren<WheelCollider>().transform.position.y
-        float y = GetComponentInChildren<WheelCollider>().transform.position.y;
-        GetComponent<Rigidbody>().centerOfMass = new Vector3(0, 0.145f, 0.1f);
+        GetComponent<Rigidbody>().centerOfMass = new Vector3(0, 0.141f, 0.1f);
         
         //Kosmetic object
         steeringWheel = GameObject.FindWithTag("SteeringWheel");
@@ -222,36 +218,39 @@ public class Car : MonoBehaviour {
             WheelHit hit;
             if (wheel.GetGroundHit(out hit))
             {
+                // Modifier value gathered from wheel prefab
+                WheelModifier wheelMod = wheel.transform.GetChild(0).GetComponent<WheelModifier>();
+
                 // changes the effectivness of the wheel while on ice!
                 if (hit.collider.tag == "ice")
                 {
 
-                    ff.asymptoteSlip = 0.4f;
-                    ff.asymptoteValue = 0.25f;
-                    ff.extremumSlip = 0.2f;
-                    ff.extremumValue = 0.5f;
-                    ff.stiffness = 1;
-                    sf.asymptoteSlip = 0.1f;
-                    sf.asymptoteValue = 0.375f;
-                    sf.extremumSlip = 0.1f;
-                    sf.extremumValue = 0.5f;
-                    sf.stiffness = 1;
+                    ff.asymptoteSlip = 0.4f     * wheelMod.forwardFrictionMod;
+                    ff.asymptoteValue = 0.25f   * wheelMod.forwardFrictionMod;
+                    ff.extremumSlip = 0.2f      * wheelMod.forwardFrictionMod;
+                    ff.extremumValue = 0.5f     * wheelMod.forwardFrictionMod;
+                    ff.stiffness = 1            * wheelMod.forwardFrictionMod;
+                    sf.asymptoteSlip = 0.1f     * wheelMod.sidewaysFrictionMod;
+                    sf.asymptoteValue = 0.375f  * wheelMod.sidewaysFrictionMod;
+                    sf.extremumSlip = 0.1f      * wheelMod.sidewaysFrictionMod;
+                    sf.extremumValue = 0.5f     * wheelMod.sidewaysFrictionMod;
+                    sf.stiffness = 1            * wheelMod.sidewaysFrictionMod;
                     wheel.forwardFriction = ff;
                     wheel.sidewaysFriction = sf;
                 }
                 // changes the effectivness of the wheel while on tarmac!
                 if (hit.collider.tag == "tarmac")
                 {
-                    ff.asymptoteSlip = 0.8f;
-                    ff.asymptoteValue = 0.9f;
-                    ff.extremumSlip = 0.4f;
-                    ff.extremumValue = 0.8f;
-                    ff.stiffness = 1;
-                    sf.asymptoteSlip = 0.7f;
-                    sf.asymptoteValue = 0.5f;
-                    sf.extremumSlip = 0.5f;
-                    sf.extremumValue = 0.8f;
-                    sf.stiffness = 1;
+                    ff.asymptoteSlip = 0.4f     * wheelMod.forwardFrictionMod;
+                    ff.asymptoteValue = 1.0f    * wheelMod.forwardFrictionMod;
+                    ff.extremumSlip = 0.5f      * wheelMod.forwardFrictionMod;
+                    ff.extremumValue = 1.2f     * wheelMod.forwardFrictionMod;
+                    ff.stiffness = 1            * wheelMod.forwardFrictionMod;
+                    sf.asymptoteSlip = 0.6f     * wheelMod.sidewaysFrictionMod;
+                    sf.asymptoteValue = 1.2f    * wheelMod.sidewaysFrictionMod;
+                    sf.extremumSlip = 0.7f      * wheelMod.sidewaysFrictionMod;
+                    sf.extremumValue = 1.5f     * wheelMod.sidewaysFrictionMod;
+                    sf.stiffness = 1.0f         * wheelMod.sidewaysFrictionMod;
                     wheel.forwardFriction = ff;
                     wheel.sidewaysFriction = sf;
                 }
@@ -275,13 +274,13 @@ public class Car : MonoBehaviour {
         foreach (var wheel in frontWheels)
         {
             Brake(wheel);
-            Accelerate(wheel);
+            //Accelerate(wheel);
             Steer(wheel);
         }
         foreach (var wheel in rearWheels)
         {
             Brake(wheel);
-            //Accelerate(wheel);
+            Accelerate(wheel);
         }
 
         // Update positions of wheels last
