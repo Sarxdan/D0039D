@@ -14,7 +14,7 @@ public class CheckpointScript : MonoBehaviour {
 	void Start () {
         timer = new Stopwatch();
         timer.Start();
-	}
+    }
     // Player collides with a trigger colliders (checkpoint)
     void OnTriggerEnter(Collider collision)
     {
