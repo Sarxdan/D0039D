@@ -175,7 +175,7 @@ public class Car : MonoBehaviour {
             horizontalInput = Input.GetAxis("Steeringwheel-wheel");
             gasInput = ((Input.GetAxis("Steeringwheel-gas") + 1) / 2);
             brakeInput = ((Input.GetAxis("Steeringwheel-brake") + 1) / 2);
-            clutchInput = Input.GetAxis("Steeringwheel-clutch");
+            clutchInput = ((Input.GetAxis("Steeringwheel-clutch") + 1) / 2);
 
         }
     }

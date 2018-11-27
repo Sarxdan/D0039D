@@ -13936,7 +13936,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1114160495
 Transform:
   m_ObjectHideFlags: 0
@@ -19226,7 +19226,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ght: 0
-  wheel: {fileID: 0}
   velocity: 0
   inputType: 0
   horizontalInput: 0
@@ -19243,10 +19242,10 @@ MonoBehaviour:
   acceleratorPad: {fileID: 0}
   breakPad: {fileID: 0}
   clutchPad: {fileID: 0}
-  maxSteeringAngle: 30
+  maxSteeringAngle: 10
   maxSteeringWheelRot: 450
   maxPedalPress: 30
-  enginePower: 300
+  enginePower: 150
   antiRollSpring: 0
 --- !u!136 &1532083348
 CapsuleCollider:
@@ -19305,7 +19304,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1532083346}
   m_LocalRotation: {x: 0, y: 0, z: 0.0017452955, w: 0.9999985}
-  m_LocalPosition: {x: 0.493, y: 0.103, z: 1.2490647}
+  m_LocalPosition: {x: 24.48, y: 0.504, z: 28.05}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children:
   - {fileID: 2051921404}
@@ -25138,7 +25137,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2051921403}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.34, z: -0.29}
+  m_LocalPosition: {x: -0, y: 2.01, z: 0.67}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1532083351}
