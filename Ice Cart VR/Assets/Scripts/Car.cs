@@ -60,7 +60,7 @@ public class Car : MonoBehaviour {
         }
         
         //GetComponent<Rigidbody>().centerOfMass = GetComponentInChildren<WheelCollider>().transform.position.y
-        GetComponent<Rigidbody>().centerOfMass = new Vector3(0, 0.141f, 0.1f);
+        GetComponent<Rigidbody>().centerOfMass = new Vector3(0, 0.139f, 0.1f);
         
         //Kosmetic object
         steeringWheel = GameObject.FindWithTag("SteeringWheel");
@@ -259,16 +259,16 @@ public class Car : MonoBehaviour {
                 // changes the effectivness of the wheel while on tarmac!
                 if (hit.collider.tag == "tarmac")
                 {
-                    ff.asymptoteSlip = 0.4f     * wheelMod.forwardFrictionMod;
-                    ff.asymptoteValue = 1.0f    * wheelMod.forwardFrictionMod;
-                    ff.extremumSlip = 0.5f      * wheelMod.forwardFrictionMod;
+                    ff.asymptoteSlip = 0.1f     * wheelMod.forwardFrictionMod;
+                    ff.asymptoteValue = 0.1f    * wheelMod.forwardFrictionMod;
+                    ff.extremumSlip = 1.1f      * wheelMod.forwardFrictionMod;
                     ff.extremumValue = 1.2f     * wheelMod.forwardFrictionMod;
-                    ff.stiffness = 1            * wheelMod.forwardFrictionMod;
-                    sf.asymptoteSlip = 0.6f     * wheelMod.sidewaysFrictionMod;
-                    sf.asymptoteValue = 1.2f    * wheelMod.sidewaysFrictionMod;
-                    sf.extremumSlip = 0.7f      * wheelMod.sidewaysFrictionMod;
-                    sf.extremumValue = 1.5f     * wheelMod.sidewaysFrictionMod;
-                    sf.stiffness = 1.0f         * wheelMod.sidewaysFrictionMod;
+                    ff.stiffness = 1.2f         * wheelMod.forwardFrictionMod;
+                    sf.asymptoteSlip = 0.1f     * wheelMod.sidewaysFrictionMod;
+                    sf.asymptoteValue = 0.1f    * wheelMod.sidewaysFrictionMod;
+                    sf.extremumSlip = 1.1f      * wheelMod.sidewaysFrictionMod;
+                    sf.extremumValue = 0.9f     * wheelMod.sidewaysFrictionMod;
+                    sf.stiffness = 1.2f         * wheelMod.sidewaysFrictionMod;
                     wheel.forwardFriction = ff;
                     wheel.sidewaysFriction = sf;
                 }
