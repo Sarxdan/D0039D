@@ -411,15 +411,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4023392984733510, guid: b5f3f783de3b56e4daf1f5f01a7c39da, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0.7
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 4023392984733510, guid: b5f3f783de3b56e4daf1f5f01a7c39da, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -3.26
+      value: -118.5
       objectReference: {fileID: 0}
     - target: {fileID: 4023392984733510, guid: b5f3f783de3b56e4daf1f5f01a7c39da, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -1030.22
+      value: -1035
       objectReference: {fileID: 0}
     - target: {fileID: 4023392984733510, guid: b5f3f783de3b56e4daf1f5f01a7c39da, type: 2}
       propertyPath: m_LocalRotation.x
@@ -464,6 +464,11 @@ Prefab:
     - target: {fileID: 1292891602364442, guid: b5f3f783de3b56e4daf1f5f01a7c39da, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114783417693158798, guid: b5f3f783de3b56e4daf1f5f01a7c39da,
+        type: 2}
+      propertyPath: inputType
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5f3f783de3b56e4daf1f5f01a7c39da, type: 2}
@@ -523,9 +528,9 @@ MonoBehaviour:
   - {fileID: 336093150}
   - {fileID: 790671315}
   wheelPrefabs:
-  - {fileID: 1438684924315436, guid: 1e1b039d722ec204a83436b65b887cfd, type: 2}
-  - {fileID: 1438684924315436, guid: 01c6c9d49397b0e43a6448d3b63a143e, type: 2}
-  - {fileID: 1438684924315436, guid: 4dde85cfb62f4b74b8363cbf62938ecb, type: 2}
+  - {fileID: 1598837917487794, guid: 47b5e41721eeb0246979d53940f7e2f0, type: 2}
+  - {fileID: 1598752110066348, guid: ebb628346fd8e414ea5e4f8872cfc866, type: 2}
+  - {fileID: 1430321568609506, guid: c0da0c81cbcc43b4fa8671255b0110ee, type: 2}
   wheels: []
   chassi: {fileID: 1032269528}
   wheel: {fileID: 2006231147}
@@ -2611,15 +2616,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4023392984733510, guid: 1b011ebc87442764a83704615d2a287a, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0.7
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 4023392984733510, guid: 1b011ebc87442764a83704615d2a287a, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -3.26
+      value: -118.5
       objectReference: {fileID: 0}
     - target: {fileID: 4023392984733510, guid: 1b011ebc87442764a83704615d2a287a, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -1030.22
+      value: -1035
       objectReference: {fileID: 0}
     - target: {fileID: 4023392984733510, guid: 1b011ebc87442764a83704615d2a287a, type: 2}
       propertyPath: m_LocalRotation.x
@@ -2664,6 +2669,11 @@ Prefab:
     - target: {fileID: 1292891602364442, guid: 1b011ebc87442764a83704615d2a287a, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114783417693158798, guid: 1b011ebc87442764a83704615d2a287a,
+        type: 2}
+      propertyPath: inputType
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b011ebc87442764a83704615d2a287a, type: 2}
@@ -2974,6 +2984,7 @@ GameObject:
   m_Component:
   - component: {fileID: 999478088}
   - component: {fileID: 999478089}
+  - component: {fileID: 999478090}
   m_Layer: 5
   m_Name: Main Menu
   m_TagString: Untagged
@@ -3017,6 +3028,19 @@ MonoBehaviour:
   eventSystem: {fileID: 0}
   selectedObject: {fileID: 0}
   selectedLevel: 0
+--- !u!114 &999478090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 999478087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdd40df92a30998468972264ba0fae85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventSystem: {fileID: 1834760634}
+  targetObject: {fileID: 1366853719}
 --- !u!1 &999864368
 GameObject:
   m_ObjectHideFlags: 0
@@ -3026,6 +3050,7 @@ GameObject:
   m_Component:
   - component: {fileID: 999864369}
   - component: {fileID: 999864370}
+  - component: {fileID: 999864371}
   m_Layer: 5
   m_Name: Level Select
   m_TagString: Untagged
@@ -3070,6 +3095,19 @@ MonoBehaviour:
   eventSystem: {fileID: 0}
   selectedObject: {fileID: 0}
   selectedLevel: 0
+--- !u!114 &999864371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 999864368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdd40df92a30998468972264ba0fae85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventSystem: {fileID: 1834760634}
+  targetObject: {fileID: 402290286}
 --- !u!1 &1022172098
 GameObject:
   m_ObjectHideFlags: 0
@@ -5366,6 +5404,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1618021651}
   - component: {fileID: 1618021652}
+  - component: {fileID: 1618021653}
   m_Layer: 5
   m_Name: Car Customize
   m_TagString: Untagged
@@ -5411,6 +5450,19 @@ MonoBehaviour:
   eventSystem: {fileID: 0}
   selectedObject: {fileID: 0}
   selectedLevel: 0
+--- !u!114 &1618021653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1618021650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdd40df92a30998468972264ba0fae85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventSystem: {fileID: 1834760634}
+  targetObject: {fileID: 1032269526}
 --- !u!1 &1635847217
 GameObject:
   m_ObjectHideFlags: 0
@@ -6552,6 +6604,11 @@ Prefab:
       value: 
       objectReference: {fileID: 1438684924315436, guid: 1e1b039d722ec204a83436b65b887cfd,
         type: 2}
+    - target: {fileID: 114783417693158798, guid: 59cdce750149304408231b759c702729,
+        type: 2}
+      propertyPath: inputType
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59cdce750149304408231b759c702729, type: 2}
   m_IsPrefabAsset: 0

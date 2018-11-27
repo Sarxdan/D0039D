@@ -36,14 +36,10 @@ public class CarCustomize : MonoBehaviour {
         
 	}
 
+    //Setup the car with correct prefab and wheels
     public void SetCar()
     {
-        string[] names = Input.GetJoystickNames();
-        for(int i = 0; i < names.Length; i++)
-        {
-            Debug.Log(names[i]);
-        }
-
+        //If there is already a car on display, delete the former wheels and deactivate the car
         if(car != null)
         {
             wheels = car.GetComponentsInChildren<WheelCollider>();
@@ -55,10 +51,12 @@ public class CarCustomize : MonoBehaviour {
             car.SetActive(false);
         }
         
+        //Take in a car and wheels depending on selection in dropdown-menu
         car = carPrefabs[chassi.value];
         wheelShape = wheelPrefabs[wheel.value];
 
         car.SetActive(true);
+        //Add the wheel models and position them according to the wheel collider
         wheels = car.GetComponentsInChildren<WheelCollider>();
         for (int i = 0; i < wheels.Length; i++)
         {
@@ -83,6 +81,7 @@ public class CarCustomize : MonoBehaviour {
         }
     }
     
+    //Makes the car ready to be imported to the level scene
     public void Init()
     {
         car.transform.parent = null;
@@ -91,6 +90,7 @@ public class CarCustomize : MonoBehaviour {
         carScript.enabled = true;
         carScript.wheelShape = wheelShape;
 
+        //Clear the wheel models
         wheels = car.GetComponentsInChildren<WheelCollider>();
         for (int i = 0; i < wheels.Length; i++)
         {
