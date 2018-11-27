@@ -31,6 +31,7 @@ public class Car : MonoBehaviour {
     public float maxSteeringWheelRot = 450;
     public float maxPedalPress = 30;
     public float enginePower = 500;
+    public float slowDownForce = 1.0f;
 
     public float antiRollSpring = 50000;
 
@@ -244,34 +245,56 @@ public class Car : MonoBehaviour {
                 if (hit.collider.tag == "ice")
                 {
                     ff.asymptoteSlip = 0.4f     * wheelMod.forwardFrictionMod;
-                    ff.asymptoteValue = 0.25f   * wheelMod.forwardFrictionMod;
-                    ff.extremumSlip = 0.2f      * wheelMod.forwardFrictionMod;
-                    ff.extremumValue = 0.5f     * wheelMod.forwardFrictionMod;
-                    ff.stiffness = 1            * wheelMod.forwardFrictionMod;
-                    sf.asymptoteSlip = 0.1f     * wheelMod.sidewaysFrictionMod;
-                    sf.asymptoteValue = 0.375f  * wheelMod.sidewaysFrictionMod;
-                    sf.extremumSlip = 0.1f      * wheelMod.sidewaysFrictionMod;
-                    sf.extremumValue = 0.5f     * wheelMod.sidewaysFrictionMod;
-                    sf.stiffness = 1            * wheelMod.sidewaysFrictionMod;
+                    ff.asymptoteValue = 0.2f    * wheelMod.forwardFrictionMod;
+                    ff.extremumSlip = 2.0f      * wheelMod.forwardFrictionMod;
+                    ff.extremumValue = 1.4f     * wheelMod.forwardFrictionMod;
+                    ff.stiffness = 3.5f         * wheelMod.forwardFrictionMod;
+                    sf.asymptoteSlip = 0.2f     * wheelMod.sidewaysFrictionMod;
+                    sf.asymptoteValue = 0.1f    * wheelMod.sidewaysFrictionMod;
+                    sf.extremumSlip = 0.6f      * wheelMod.sidewaysFrictionMod;
+                    sf.extremumValue = 0.4f     * wheelMod.sidewaysFrictionMod;
+                    sf.stiffness = 2.1f         * wheelMod.sidewaysFrictionMod;
                     wheel.forwardFriction = ff;
                     wheel.sidewaysFriction = sf;
+                    slowDownForce = 0.1f        * wheelMod.resistanceMod;
                 }
                 // changes the effectivness of the wheel while on tarmac!
                 if (hit.collider.tag == "tarmac")
                 {
-                    ff.asymptoteSlip = 0.1f     * wheelMod.forwardFrictionMod;
-                    ff.asymptoteValue = 0.1f    * wheelMod.forwardFrictionMod;
-                    ff.extremumSlip = 1.1f      * wheelMod.forwardFrictionMod;
-                    ff.extremumValue = 1.2f     * wheelMod.forwardFrictionMod;
-                    ff.stiffness = 1.2f         * wheelMod.forwardFrictionMod;
-                    sf.asymptoteSlip = 0.1f     * wheelMod.sidewaysFrictionMod;
-                    sf.asymptoteValue = 0.1f    * wheelMod.sidewaysFrictionMod;
-                    sf.extremumSlip = 1.1f      * wheelMod.sidewaysFrictionMod;
-                    sf.extremumValue = 0.9f     * wheelMod.sidewaysFrictionMod;
-                    sf.stiffness = 1.2f         * wheelMod.sidewaysFrictionMod;
+                    ff.asymptoteSlip = 0.7f     * wheelMod.forwardFrictionMod;
+                    ff.asymptoteValue = 0.7f    * wheelMod.forwardFrictionMod;
+                    ff.extremumSlip = 7.7f      * wheelMod.forwardFrictionMod;
+                    ff.extremumValue = 8.4f     * wheelMod.forwardFrictionMod;
+                    ff.stiffness = 8.4f         * wheelMod.forwardFrictionMod;
+                    sf.asymptoteSlip = 0.4f     * wheelMod.sidewaysFrictionMod;
+                    sf.asymptoteValue = 0.4f    * wheelMod.sidewaysFrictionMod;
+                    sf.extremumSlip = 4.4f      * wheelMod.sidewaysFrictionMod;
+                    sf.extremumValue = 3.6f     * wheelMod.sidewaysFrictionMod;
+                    sf.stiffness = 4.8f         * wheelMod.sidewaysFrictionMod;
                     wheel.forwardFriction = ff;
                     wheel.sidewaysFriction = sf;
+                    slowDownForce = 50.0f       * wheelMod.resistanceMod;
                 }
+
+                if (hit.collider.tag == "dirt")
+                {
+                    ff.asymptoteSlip = 0.7f * wheelMod.forwardFrictionMod;
+                    ff.asymptoteValue = 0.7f * wheelMod.forwardFrictionMod;
+                    ff.extremumSlip = 7.7f * wheelMod.forwardFrictionMod;
+                    ff.extremumValue = 8.4f * wheelMod.forwardFrictionMod;
+                    ff.stiffness = 8.4f * wheelMod.forwardFrictionMod;
+                    sf.asymptoteSlip = 0.4f * wheelMod.sidewaysFrictionMod;
+                    sf.asymptoteValue = 0.4f * wheelMod.sidewaysFrictionMod;
+                    sf.extremumSlip = 4.4f * wheelMod.sidewaysFrictionMod;
+                    sf.extremumValue = 3.6f * wheelMod.sidewaysFrictionMod;
+                    sf.stiffness = 4.8f * wheelMod.sidewaysFrictionMod;
+                    wheel.forwardFriction = ff;
+                    wheel.sidewaysFriction = sf;
+                    slowDownForce = 1000.0f * wheelMod.resistanceMod;
+                }
+
+                // Apply natural slowdown
+                GetComponent<Rigidbody>().AddForce(GetComponent<Rigidbody>().velocity.normalized * -slowDownForce);
             }
         }
 
