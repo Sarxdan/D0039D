@@ -247,12 +247,12 @@ public class Car : MonoBehaviour {
                     ff.asymptoteSlip = 0.4f     * wheelMod.forwardFrictionMod;
                     ff.asymptoteValue = 0.2f    * wheelMod.forwardFrictionMod;
                     ff.extremumSlip = 2.0f      * wheelMod.forwardFrictionMod;
-                    ff.extremumValue = 1.4f     * wheelMod.forwardFrictionMod;
+                    ff.extremumValue = 0.8f     * wheelMod.forwardFrictionMod;
                     ff.stiffness = 3.5f         * wheelMod.forwardFrictionMod;
                     sf.asymptoteSlip = 0.2f     * wheelMod.sidewaysFrictionMod;
-                    sf.asymptoteValue = 0.1f    * wheelMod.sidewaysFrictionMod;
+                    sf.asymptoteValue = 0.2f    * wheelMod.sidewaysFrictionMod;
                     sf.extremumSlip = 0.6f      * wheelMod.sidewaysFrictionMod;
-                    sf.extremumValue = 0.4f     * wheelMod.sidewaysFrictionMod;
+                    sf.extremumValue = 0.5f     * wheelMod.sidewaysFrictionMod;
                     sf.stiffness = 2.1f         * wheelMod.sidewaysFrictionMod;
                     wheel.forwardFriction = ff;
                     wheel.sidewaysFriction = sf;
