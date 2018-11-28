@@ -13,82 +13,93 @@ public class HighScore : MonoBehaviour {
     public Text third;
     public Text fourth;
     public Text fifth;
+    private List<Text> list;
 
     
 
 
-	// Use this for initialization
+	// Add all the text boxes to a list and load all the highscores from the PlayerPrefs to the local arrays
 	void Start () {
-        Debug.Log(PlayerPrefs.GetFloat("hello"));
-        if (!PlayerPrefs.HasKey("0name"))
-        {
-            for (int i = 0; i < 5; i++)
-            {
-               // PlayerPrefs.SetString(i + "name", "none");
-                //PlayerPrefs.SetInt(i + "time", 9999);
-            }
+        list.Add(first);
+        list.Add(second);
+        list.Add(third);
+        list.Add(fourth);
+        list.Add(fifth);
 
-        }
+        Debug.Log(PlayerPrefs.GetString("hello"));
         for (int i = 0; i < 5; i++)
         {
-            //names[i] = PlayerPrefs.GetString(i + "name", "none");
-            //times[i] = PlayerPrefs.GetInt(i + "time", 99999);
+            names[i] = PlayerPrefs.GetString(i + "name", "none");
+            times[i] = PlayerPrefs.GetInt(i + "time", 0);
            
         }
         
-       /* first.text = names[0] + " " + times[0].ToString(); 
-        first.text = names[1] + " " + times[1].ToString(); 
-        first.text = names[2] + " " + times[2].ToString(); 
-        first.text = names[3] + " " + times[3].ToString(); 
-        first.text = names[4] + " " + times[4].ToString(); */
+
 	}
-
-    public void updateScoreBoard()
+    
+    // Update all the text elements to the values stored in the arrays 
+    private void updateScoreBoard()
     {
-        //for (int i = 0; i < length; i++)
-        //{
+        for (int i = 0; i < 5; i++)
+        {
+            if(times[i] == 0)
+            {
+                // Text to show when a highscore is empty
+                list[i].text = "-";
+            }
+            else
+            {
+                // Show the name and highscore 
+                list[i].text = names[i] + " " + times[0].ToString();
+            }
 
-        //}
-        first.text = names[0] + " " + times[0].ToString();
-        first.text = names[1] + " " + times[1].ToString();
-        first.text = names[2] + " " + times[2].ToString();
-        first.text = names[3] + " " + times[3].ToString();
-        first.text = names[4] + " " + times[4].ToString();
+        }
+        
+    }
+    // Swap two ints in an array
+    private void swapInt(int[] array, int firstIndex, int secondIndex)
+    {
+        int temp = array[firstIndex];
+        array[firstIndex] = array[secondIndex];
+        array[secondIndex] = temp;
 
     }
+    // Swap two strings in an array
+    private void swapString(string[] array, int firstIndex, int secondIndex)
+    {
+        string temp = array[firstIndex];
+        array[firstIndex] = array[secondIndex];
+        array[secondIndex] = temp;
 
+    }
+    // Save the highscores to the PlayerPrefs
+    private void saveHighscores()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            PlayerPrefs.SetInt(i + "time", times[i]);
+            PlayerPrefs.SetString(i + "name", names[i]);
+        }
+    }
+    // Add a new score the the list and place it in the right place, then update the scoreboard and save the highscores to the PlayerPrefs
     public void addScore(string name, int time)
     {
         names[5] = name;
         times[5] = time;
-        int i, j;
-        int N = times.Length;
-
-        for (j = N - 1; j > 0; j--)
+        for (int i = 5; i > 0; i--)
         {
-            for ( i = 0; i < j; i++)
+            if(times[i] < times[i - 1])
             {
-                if (times[i] > times[i + 1])
-                {
-                    int tempTime = times[i];
-                    string tempName = names[i];
-                    times[i] = times[i + 1];
-                    names[i] = names[i + 1];
-                    times[i + 1] = tempTime;
-                    names[i + 1] = tempName;
-                            
-                }
-                            
+                swapInt(times, i, i - 1);
+                swapString(names, i, i - 1);
             }
         }
-
-        names[5] = "none";
-        times[5] = 99999;
 
 
             
         
         updateScoreBoard();
+        saveHighscores();
     }
 	
 	// Update is called once per frame
