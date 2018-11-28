@@ -57,8 +57,8 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100002, guid: 4a9a081f1ce533c4ea8437b67a862e71, type: 3}
-  - {fileID: 2100000, guid: 4a9a081f1ce533c4ea8437b67a862e71, type: 3}
+  - {fileID: 2100000, guid: 2feac3d5475c8944b97db6ff71bb5eae, type: 2}
+  - {fileID: 2100000, guid: 2feac3d5475c8944b97db6ff71bb5eae, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -96,6 +96,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28c199f342c870742b642fe78b95c590, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resistanceMod: 0.3
-  forwardFrictionMod: 2.5
-  sidewaysFrictionMod: 2.5
+  resistanceMod: 0.2
+  forwardFrictionMod: 3
+  sidewaysFrictionMod: 3

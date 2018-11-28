@@ -97,5 +97,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resistanceMod: 0.8
-  forwardFrictionMod: 1.4
-  sidewaysFrictionMod: 1.3
+  forwardFrictionMod: 1.6
+  sidewaysFrictionMod: 1.5
