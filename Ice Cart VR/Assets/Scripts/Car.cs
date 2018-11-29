@@ -63,7 +63,7 @@ public class Car : MonoBehaviour {
         //GetComponent<Rigidbody>().centerOfMass = GetComponentInChildren<WheelCollider>().transform.position.y
         GetComponent<Rigidbody>().centerOfMass = new Vector3(0, 0.139f, 0.1f);
         
-        //Kosmetic object
+        //Cosmetic object
         steeringWheel = GameObject.FindWithTag("SteeringWheel");
         acceleratorPad = GameObject.FindWithTag("AccelleratorPad");
         breakPad = GameObject.FindWithTag("BreakPad");
@@ -257,6 +257,7 @@ public class Car : MonoBehaviour {
                     wheel.forwardFriction = ff;
                     wheel.sidewaysFriction = sf;
                     slowDownForce = 0.1f        * wheelMod.resistanceMod;
+                    Debug.Log("ice");
                 }
                 // changes the effectivness of the wheel while on tarmac!
                 if (hit.collider.tag == "tarmac")
@@ -274,6 +275,7 @@ public class Car : MonoBehaviour {
                     wheel.forwardFriction = ff;
                     wheel.sidewaysFriction = sf;
                     slowDownForce = 50.0f       * wheelMod.resistanceMod;
+                    Debug.Log("tarmac");
                 }
 
                 if (hit.collider.tag == "dirt")
@@ -291,6 +293,7 @@ public class Car : MonoBehaviour {
                     wheel.forwardFriction = ff;
                     wheel.sidewaysFriction = sf;
                     slowDownForce = 1000.0f * wheelMod.resistanceMod;
+                    Debug.Log("dirt");
                 }
 
                 // Apply natural slowdown
@@ -317,6 +320,7 @@ public class Car : MonoBehaviour {
             Brake(wheel);
             //Accelerate(wheel);
             Steer(wheel);
+            
         }
         foreach (var wheel in rearWheels)
         {
