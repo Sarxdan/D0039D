@@ -26,8 +26,7 @@ public class HighScore : MonoBehaviour {
         list.Add(fourth);
         list.Add(fifth);
 
-        Debug.Log(PlayerPrefs.GetString("hello"));
-        for (int i = 0; i < 5; i++)
+         for (int i = 0; i < 5; i++)
         {
             names[i] = PlayerPrefs.GetString(i + "name", "none");
             times[i] = PlayerPrefs.GetInt(i + "time", 0);
@@ -50,7 +49,7 @@ public class HighScore : MonoBehaviour {
             else
             {
                 // Show the name and highscore 
-                list[i].text = names[i] + " " + times[0].ToString();
+                list[i].text = names[i] + " " + times[i].ToString();
             }
 
         }
@@ -88,7 +87,7 @@ public class HighScore : MonoBehaviour {
         times[5] = time;
         for (int i = 5; i > 0; i--)
         {
-            if(times[i] < times[i - 1])
+            if(times[i] < times[i - 1] || times[i - 1] == 0)
             {
                 swapInt(times, i, i - 1);
                 swapString(names, i, i - 1);
@@ -102,6 +101,6 @@ public class HighScore : MonoBehaviour {
         saveHighscores();
     }
 	
-	// Update is called once per frame
+
 
 }
