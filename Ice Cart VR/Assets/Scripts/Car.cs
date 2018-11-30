@@ -1,51 +1,68 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 using UnityEngine;
 
 public class Car : MonoBehaviour {
 
+    StandaloneInputModule InputModule;
+    
+    
+
+    // Enum used to make choices easy.
     public enum wheelDrive { four, front, rear };
     public enum ControllerType { keyboard, xboxController, ps4Controller, steeringWheel };
 
-    public float  ght;
+    
+    public float ght;
     public float velocity;
 
+    // WheelFrictionCurve used to set the wheelfriction on diffrent surfaces.
     public WheelFrictionCurve ff;
     public WheelFrictionCurve sf;
+
+    // Input related variables.
     public ControllerType inputType = ControllerType.keyboard;
     public float horizontalInput;
     public float verticalInput;
     public float gasInput = 0.0F;
     public float brakeInput = 0.0F;
     public float clutchInput = 0.0F;
-    public float testInput = 0.0F;
     public float backInput = 0.0F;
     public float submitInput = 0.0F;
-    private float steeringAngle;
+
+
+    // ? 
     private new Rigidbody rigidbody;
     private InputManager inputScript;
+   
+    // used to change the steeringangle of the wheel. 
+    private float steeringAngle;
 
+    // Tyre shape and colliders for all the wheel.
     public GameObject wheelShape;
     public WheelCollider[] wheels;
     public WheelCollider[] frontWheels;
     public WheelCollider[] rearWheels;
+
+    // Cosmetics for all the padels and steeringwheel.
     public GameObject steeringWheel, acceleratorPad, breakPad, clutchPad;
 
-    public float maxSteeringAngle = 60;
-    public float maxSteeringWheelRot = 450;
-    public float maxPedalPress = 30;
-    public float enginePower = 300;
+    // Set values for diffrent things. 
+    public float maxSteeringAngle = 10;         // max angle the wheels can turn.
+    public float maxSteeringWheelRot = 450;     // max degrees the steeringwheel can turn. (in one direction, + and - )
+    public float maxPedalPress = 30;            // max degrees the pedals can be pressed down.
+    public float enginePower = 300;             // max power the engine can put out.
+    public float slowDownForce = 100.0f;        // the force pushing the car in the opposite direction
+    public float antiRollSpring = 50000;        // spring force is used to stableize the car.
     public int gear = 0;
+
     // The distance between gears in units per second
     public float gearDistance = 3.0f;
-    public float slowDownForce = 100.0f;
-
-    public float antiRollSpring = 50000;
 
     void Start()
     {
-        // Needed to run test scen.
-        Init();
+        Init();         // Needed to run test scen.
     }
 
     public void Init()
@@ -54,29 +71,32 @@ public class Car : MonoBehaviour {
 
         rigidbody = GetComponent<Rigidbody>();
         
-        //rigidbody.centerOfMass = GetComponentInChildren<WheelCollider>().transform.position.y
+        // Hard coding to change the center of mass to make the car more stable.
         rigidbody.centerOfMass = new Vector3(0, 0.139f, 0.1f);
         
-        //Cosmetic object
+        //Cosmetic objects (used to rotate the wheel and pedals)
         steeringWheel = GameObject.FindWithTag("SteeringWheel");
         acceleratorPad = GameObject.FindWithTag("AccelleratorPad");
         breakPad = GameObject.FindWithTag("BreakPad");
         clutchPad = GameObject.FindWithTag("ClutchPad");
 
-        //Get all the Wheel Colliders for the car
+        // Get all the Wheel Colliders for the car
         wheels = GetComponentsInChildren<WheelCollider>();
         for (int i = 0; i < wheels.Length; i++)
         {
             WheelCollider thisWheel = wheels[i];
+            // Changes the frequency of updates.
             thisWheel.ConfigureVehicleSubsteps(500, 450, 500);
 
-            //Adds the wheel prefab to the car
+            // Adds the wheel prefab to the car.
             if (wheelShape != null)
             {
                 var ws = Instantiate(wheelShape);
                 ws.transform.parent = thisWheel.transform;
             }
         }
+
+        //--------------------------------------------------------------------------------------------\\
 
         // Divide wheels into front and rear wheels
 
@@ -225,12 +245,15 @@ public class Car : MonoBehaviour {
     {
         GetInput();
 
+        
+
         RotateSteeringWheel(steeringWheel);
         PressPedals(acceleratorPad, breakPad, clutchPad);
 
         //Does something for every wheel collider in the car
         foreach (WheelCollider wheel in wheels)
         {
+            Debug.Log(wheel.rpm > velocity);
             // checks if the wheel is on a new surface.
             WheelHit hit;
             if (wheel.GetGroundHit(out hit))
@@ -238,7 +261,7 @@ public class Car : MonoBehaviour {
                 // Modifier value gathered from wheel prefab
                 WheelModifier wheelMod = wheel.transform.GetChild(0).GetComponent<WheelModifier>();
 
-                // changes the effectivness of the wheel depending on the material
+                // Changes the effectivness of the wheel depending on the material
                 if (hit.collider.tag == "ice")
                 {
                     ff.asymptoteSlip = 0.4f     * wheelMod.forwardFrictionMod;
@@ -296,7 +319,6 @@ public class Car : MonoBehaviour {
             }
         }
 
-        // Rear wheels
         
 
         // Call axis stabilizer function using only the first two wheels in each axis
@@ -317,6 +339,8 @@ public class Car : MonoBehaviour {
             Steer(wheel);
             
         }
+
+        // Rear wheels
         foreach (var wheel in rearWheels)
         {
             Brake(wheel);
@@ -369,7 +393,7 @@ public class Car : MonoBehaviour {
         {
             rigidbody.AddForceAtPosition(leftWheel.transform.up * -antiRollForce, leftWheel.transform.position);
         }
-
+        // Add force to wheels if wheel is grounded
         if (rightGrounded)
         {
             rigidbody.AddForceAtPosition(rightWheel.transform.up * antiRollForce, rightWheel.transform.position);
