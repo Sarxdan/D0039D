@@ -13644,6 +13644,31 @@ Prefab:
       propertyPath: InitialModule.startSpeed.scalar
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 199340416413858762, guid: a8e3513060234c84b8bec4cd575538af,
+        type: 2}
+      propertyPath: m_RenderAlignment
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198731230404189900, guid: a8e3513060234c84b8bec4cd575538af,
+        type: 2}
+      propertyPath: InitialModule.rotation3D
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198731230404189900, guid: a8e3513060234c84b8bec4cd575538af,
+        type: 2}
+      propertyPath: InitialModule.startRotationX.minScalar
+      value: 3.1415925
+      objectReference: {fileID: 0}
+    - target: {fileID: 198731230404189900, guid: a8e3513060234c84b8bec4cd575538af,
+        type: 2}
+      propertyPath: InitialModule.startRotationY.minScalar
+      value: 3.1415925
+      objectReference: {fileID: 0}
+    - target: {fileID: 198731230404189900, guid: a8e3513060234c84b8bec4cd575538af,
+        type: 2}
+      propertyPath: InitialModule.startRotation.minScalar
+      value: 3.1415925
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8e3513060234c84b8bec4cd575538af, type: 2}
   m_IsPrefabAsset: 0
