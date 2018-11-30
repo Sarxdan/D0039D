@@ -18,9 +18,13 @@ public class Car : MonoBehaviour {
     public float gasInput = 0.0F;
     public float brakeInput = 0.0F;
     public float clutchInput = 0.0F;
-    public float testInput;
+    public float testInput = 0.0F;
+    public float backInput = 0.0F;
+    public float submitInput = 0.0F;
     private float steeringAngle;
-    
+    private new Rigidbody rigidbody;
+    private InputManager inputScript;
+
     public GameObject wheelShape;
     public WheelCollider[] wheels;
     public WheelCollider[] frontWheels;
@@ -30,8 +34,11 @@ public class Car : MonoBehaviour {
     public float maxSteeringAngle = 60;
     public float maxSteeringWheelRot = 450;
     public float maxPedalPress = 30;
-    public float enginePower = 500;
-    public float slowDownForce = 1.0f;
+    public float enginePower = 300;
+    public int gear = 0;
+    // The distance between gears in units per second
+    public float gearDistance = 3.0f;
+    public float slowDownForce = 100.0f;
 
     public float antiRollSpring = 50000;
 
@@ -43,12 +50,41 @@ public class Car : MonoBehaviour {
 
     public void Init()
     {
+<<<<<<< HEAD
         inputScript = GetComponent<InputManager>();
 
         rigidbody = GetComponent<Rigidbody>();
 
 
         GetComponent<Rigidbody>().centerOfMass = new Vector3(0, 0.139f, 0.1f);
+||||||| merged common ancestors
+        string[] names = Input.GetJoystickNames();
+        for (int i = 0; i < names.Length; i++)
+        {
+            if (names[i].Equals("G29 Driving Force Racing Wheel"))
+            {
+                inputType = ControllerType.steeringWheel;
+            }
+            else if (names[i].Equals("Xbox One For Windows"))
+            {
+                inputType = ControllerType.steeringWheel;
+            }
+            else if (names[i].Equals("Wireless Controller"))
+            {
+                inputType = ControllerType.steeringWheel;
+            }
+        }
+        
+        //GetComponent<Rigidbody>().centerOfMass = GetComponentInChildren<WheelCollider>().transform.position.y
+        GetComponent<Rigidbody>().centerOfMass = new Vector3(0, 0.139f, 0.1f);
+=======
+        inputScript = GetComponent<InputManager>();
+
+        rigidbody = GetComponent<Rigidbody>();
+        
+        //rigidbody.centerOfMass = GetComponentInChildren<WheelCollider>().transform.position.y
+        rigidbody.centerOfMass = new Vector3(0, 0.139f, 0.1f);
+>>>>>>> knugen
         
         //Cosmetic object
         steeringWheel = GameObject.FindWithTag("SteeringWheel");
@@ -132,40 +168,11 @@ public class Car : MonoBehaviour {
     //Get input from controller
     void GetInput()
     {
-        if (inputType == ControllerType.keyboard)
-        {
-            horizontalInput = Input.GetAxis("KeyboardHorizontal");
-            verticalInput = Input.GetAxis("KeyboardVertical");
-            testInput = Input.GetAxis("KeyboardBack");
-            if (Input.GetAxis("KeyboardVertical") > 0)
-                gasInput = Input.GetAxis("KeyboardVertical");
-            else
-                brakeInput = -Input.GetAxis("KeyboardVertical");
-        }
-        if (inputType == ControllerType.xboxController)
-        {
-            horizontalInput = Input.GetAxis("XboxHorizontal");
-            verticalInput = Input.GetAxis("XboxVertical");
-            gasInput = (Input.GetAxis("XboxGas"));
-            brakeInput = (Input.GetAxis("XboxBrake"));
-            testInput = Input.GetAxis("XboxBack");
-        }
-        if (inputType == ControllerType.ps4Controller)
-        {
-            horizontalInput = Input.GetAxis("Ps4Horizontal");
-            verticalInput = Input.GetAxis("Ps4Vertical");
-            gasInput = (Input.GetAxis("Ps4Gas") + 1) / 2;
-            brakeInput = (Input.GetAxis("Ps4Brake") + 1) / 2;
-            testInput = Input.GetAxis("Ps4Back");
-        }
-        if (inputType == ControllerType.steeringWheel)
-        {
-            horizontalInput = Input.GetAxis("Steeringwheel-wheel");
-            gasInput = ((Input.GetAxis("Steeringwheel-gas") + 1) / 2);
-            brakeInput = ((Input.GetAxis("Steeringwheel-brake") + 1) / 2);
-            clutchInput = ((Input.GetAxis("Steeringwheel-clutch") + 1) / 2);
-
-        }
+        horizontalInput = inputScript.getHorizontal();
+        gasInput = inputScript.getGas();
+        brakeInput = inputScript.getBrake();
+        clutchInput = inputScript.getClutch();
+        gear = inputScript.getGear();
     }
 
     void RotateSteeringWheel(GameObject steeringWheel)
@@ -189,11 +196,43 @@ public class Car : MonoBehaviour {
     //Make the car move according to the input
     void Accelerate(WheelCollider wheel)
     {
-        wheel.motorTorque = gasInput * enginePower;
+        //Debug.Log("Gear: " + gear + ", Velocity (km/h):" + ((zVel * 3) * 3.6));
+
+        // The velocity in positive z direction of the car
+        float zVel = transform.InverseTransformDirection(rigidbody.velocity).z;
+
+        // Generates a -x^2 curve where velocity is x and y is torque output. The curve is moved in the x-axis depending on the gear and gearDistance
+        float motorTorque = -((zVel - (Mathf.Abs(gear) - 1) * gearDistance) * (zVel - (Mathf.Abs(gear) - 1) * gearDistance) * (enginePower / (gearDistance * gearDistance))) + gasInput * enginePower;
+        
+        if (motorTorque < 0 && gear >= 0 )
+        {
+            motorTorque = 0;
+        }
+        else if (gear < 0)
+        {
+            // Makes sure reversing gets same negative torque as its positive gear counterpart
+            motorTorque = -motorTorque;
+            if (motorTorque > 0)
+            {
+                motorTorque = 0;
+            }
+        }
+
+        wheel.motorTorque = motorTorque;
     }
+
+    // Gets the ideal gear to be used for automatic shifting
+    public int getIdealGear()
+    {
+        // Finds the gear that should output the most power. 
+        // Uses the gearDistance, meaning the distance in velocity between gears
+        float zVel = transform.InverseTransformDirection(rigidbody.velocity).z;
+        return (int)Mathf.Ceil((zVel + 1) / gearDistance);
+    }
+
     void Brake(WheelCollider wheel)
     {
-        wheel.brakeTorque = brakeInput * enginePower * 10;
+        wheel.brakeTorque = brakeInput * enginePower;
     }
 
     //Updates the position of the wheel prefabs according to the wheel colliders
@@ -228,7 +267,7 @@ public class Car : MonoBehaviour {
                 // Modifier value gathered from wheel prefab
                 WheelModifier wheelMod = wheel.transform.GetChild(0).GetComponent<WheelModifier>();
 
-                // changes the effectivness of the wheel while on ice!
+                // changes the effectivness of the wheel depending on the material
                 if (hit.collider.tag == "ice")
                 {
                     ff.asymptoteSlip = 0.4f     * wheelMod.forwardFrictionMod;
@@ -246,8 +285,24 @@ public class Car : MonoBehaviour {
                     slowDownForce = 0.1f        * wheelMod.resistanceMod;
                     Debug.Log("ice");
                 }
-                // changes the effectivness of the wheel while on tarmac!
-                if (hit.collider.tag == "tarmac")
+                else if (hit.collider.tag == "tarmac")
+                {
+                    ff.asymptoteSlip = 0.7f     * wheelMod.forwardFrictionMod;
+                    ff.asymptoteValue = 0.7f    * wheelMod.forwardFrictionMod;
+                    ff.extremumSlip = 7.7f      * wheelMod.forwardFrictionMod;
+                    ff.extremumValue = 8.4f     * wheelMod.forwardFrictionMod;
+                    ff.stiffness = 8.4f         * wheelMod.forwardFrictionMod;
+                    sf.asymptoteSlip = 0.4f     * wheelMod.sidewaysFrictionMod;
+                    sf.asymptoteValue = 0.6f    * wheelMod.sidewaysFrictionMod;
+                    sf.extremumSlip = 4.4f      * wheelMod.sidewaysFrictionMod;
+                    sf.extremumValue = 6.8f     * wheelMod.sidewaysFrictionMod;
+                    sf.stiffness = 4.8f         * wheelMod.sidewaysFrictionMod;
+                    wheel.forwardFriction = ff;
+                    wheel.sidewaysFriction = sf;
+                    slowDownForce = 50.0f       * wheelMod.resistanceMod;
+                    Debug.Log("tarmac");
+                }
+                else if (hit.collider.tag == "dirt")
                 {
                     ff.asymptoteSlip = 0.7f     * wheelMod.forwardFrictionMod;
                     ff.asymptoteValue = 0.7f    * wheelMod.forwardFrictionMod;
@@ -261,30 +316,18 @@ public class Car : MonoBehaviour {
                     sf.stiffness = 4.8f         * wheelMod.sidewaysFrictionMod;
                     wheel.forwardFriction = ff;
                     wheel.sidewaysFriction = sf;
-                    slowDownForce = 50.0f       * wheelMod.resistanceMod;
-                    Debug.Log("tarmac");
-                }
-
-                if (hit.collider.tag == "dirt")
-                {
-                    ff.asymptoteSlip = 0.7f * wheelMod.forwardFrictionMod;
-                    ff.asymptoteValue = 0.7f * wheelMod.forwardFrictionMod;
-                    ff.extremumSlip = 7.7f * wheelMod.forwardFrictionMod;
-                    ff.extremumValue = 8.4f * wheelMod.forwardFrictionMod;
-                    ff.stiffness = 8.4f * wheelMod.forwardFrictionMod;
-                    sf.asymptoteSlip = 0.4f * wheelMod.sidewaysFrictionMod;
-                    sf.asymptoteValue = 0.4f * wheelMod.sidewaysFrictionMod;
-                    sf.extremumSlip = 4.4f * wheelMod.sidewaysFrictionMod;
-                    sf.extremumValue = 3.6f * wheelMod.sidewaysFrictionMod;
-                    sf.stiffness = 4.8f * wheelMod.sidewaysFrictionMod;
-                    wheel.forwardFriction = ff;
-                    wheel.sidewaysFriction = sf;
+<<<<<<< HEAD
                     slowDownForce = 1000.0f * wheelMod.resistanceMod;
                     Debug.Log("dirt");
+||||||| merged common ancestors
+                    slowDownForce = 1000.0f * wheelMod.resistanceMod;
+=======
+                    slowDownForce = 1000.0f     * wheelMod.resistanceMod;
+>>>>>>> knugen
                 }
 
                 // Apply natural slowdown
-                GetComponent<Rigidbody>().AddForce(GetComponent<Rigidbody>().velocity.normalized * -slowDownForce);
+                rigidbody.AddForce(rigidbody.velocity.normalized * -slowDownForce);
             }
         }
 
@@ -359,12 +402,12 @@ public class Car : MonoBehaviour {
         // Add force to wheels if wheel is grounded
         if (leftGrounded)
         {
-            GetComponent<Rigidbody>().AddForceAtPosition(leftWheel.transform.up * -antiRollForce, leftWheel.transform.position);
+            rigidbody.AddForceAtPosition(leftWheel.transform.up * -antiRollForce, leftWheel.transform.position);
         }
 
         if (rightGrounded)
         {
-            GetComponent<Rigidbody>().AddForceAtPosition(rightWheel.transform.up * antiRollForce, rightWheel.transform.position);
+            rigidbody.AddForceAtPosition(rightWheel.transform.up * antiRollForce, rightWheel.transform.position);
         }
     }
 }
