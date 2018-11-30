@@ -50,41 +50,12 @@ public class Car : MonoBehaviour {
 
     public void Init()
     {
-<<<<<<< HEAD
-        inputScript = GetComponent<InputManager>();
-
-        rigidbody = GetComponent<Rigidbody>();
-
-
-        GetComponent<Rigidbody>().centerOfMass = new Vector3(0, 0.139f, 0.1f);
-||||||| merged common ancestors
-        string[] names = Input.GetJoystickNames();
-        for (int i = 0; i < names.Length; i++)
-        {
-            if (names[i].Equals("G29 Driving Force Racing Wheel"))
-            {
-                inputType = ControllerType.steeringWheel;
-            }
-            else if (names[i].Equals("Xbox One For Windows"))
-            {
-                inputType = ControllerType.steeringWheel;
-            }
-            else if (names[i].Equals("Wireless Controller"))
-            {
-                inputType = ControllerType.steeringWheel;
-            }
-        }
-        
-        //GetComponent<Rigidbody>().centerOfMass = GetComponentInChildren<WheelCollider>().transform.position.y
-        GetComponent<Rigidbody>().centerOfMass = new Vector3(0, 0.139f, 0.1f);
-=======
         inputScript = GetComponent<InputManager>();
 
         rigidbody = GetComponent<Rigidbody>();
         
         //rigidbody.centerOfMass = GetComponentInChildren<WheelCollider>().transform.position.y
         rigidbody.centerOfMass = new Vector3(0, 0.139f, 0.1f);
->>>>>>> knugen
         
         //Cosmetic object
         steeringWheel = GameObject.FindWithTag("SteeringWheel");
@@ -282,8 +253,8 @@ public class Car : MonoBehaviour {
                     sf.stiffness = 2.1f         * wheelMod.sidewaysFrictionMod;
                     wheel.forwardFriction = ff;
                     wheel.sidewaysFriction = sf;
+
                     slowDownForce = 0.1f        * wheelMod.resistanceMod;
-                    Debug.Log("ice");
                 }
                 else if (hit.collider.tag == "tarmac")
                 {
@@ -299,8 +270,8 @@ public class Car : MonoBehaviour {
                     sf.stiffness = 4.8f         * wheelMod.sidewaysFrictionMod;
                     wheel.forwardFriction = ff;
                     wheel.sidewaysFriction = sf;
+
                     slowDownForce = 50.0f       * wheelMod.resistanceMod;
-                    Debug.Log("tarmac");
                 }
                 else if (hit.collider.tag == "dirt")
                 {
@@ -316,14 +287,8 @@ public class Car : MonoBehaviour {
                     sf.stiffness = 4.8f         * wheelMod.sidewaysFrictionMod;
                     wheel.forwardFriction = ff;
                     wheel.sidewaysFriction = sf;
-<<<<<<< HEAD
-                    slowDownForce = 1000.0f * wheelMod.resistanceMod;
-                    Debug.Log("dirt");
-||||||| merged common ancestors
-                    slowDownForce = 1000.0f * wheelMod.resistanceMod;
-=======
+
                     slowDownForce = 1000.0f     * wheelMod.resistanceMod;
->>>>>>> knugen
                 }
 
                 // Apply natural slowdown
