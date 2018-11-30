@@ -43,24 +43,11 @@ public class Car : MonoBehaviour {
 
     public void Init()
     {
-        string[] names = Input.GetJoystickNames();
-        for (int i = 0; i < names.Length; i++)
-        {
-            if (names[i].Equals("G29 Driving Force Racing Wheel"))
-            {
-                inputType = ControllerType.steeringWheel;
-            }
-            else if (names[i].Equals("Xbox One For Windows"))
-            {
-                inputType = ControllerType.steeringWheel;
-            }
-            else if (names[i].Equals("Wireless Controller"))
-            {
-                inputType = ControllerType.steeringWheel;
-            }
-        }
-        
-        //GetComponent<Rigidbody>().centerOfMass = GetComponentInChildren<WheelCollider>().transform.position.y
+        inputScript = GetComponent<InputManager>();
+
+        rigidbody = GetComponent<Rigidbody>();
+
+
         GetComponent<Rigidbody>().centerOfMass = new Vector3(0, 0.139f, 0.1f);
         
         //Cosmetic object
