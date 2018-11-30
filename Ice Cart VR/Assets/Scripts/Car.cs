@@ -1,88 +1,112 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 using UnityEngine;
 
 public class Car : MonoBehaviour {
 
+    StandaloneInputModule InputModule;
+    
+    
+
+    // Enum used to make choices easy.
     public enum wheelDrive { four, front, rear };
     public enum ControllerType { keyboard, xboxController, ps4Controller, steeringWheel };
 
-    public float  ght;
+    
+    public float ght;
     public float velocity;
 
+    // WheelFrictionCurve used to set the wheelfriction on diffrent surfaces.
     public WheelFrictionCurve ff;
     public WheelFrictionCurve sf;
+
+    // Input related variables.
     public ControllerType inputType = ControllerType.keyboard;
     public float horizontalInput;
     public float verticalInput;
     public float gasInput = 0.0F;
     public float brakeInput = 0.0F;
     public float clutchInput = 0.0F;
-    public float testInput;
+
+    // used to change the steeringangle of the wheel. 
     private float steeringAngle;
-    
+   
+    // Tyre shape and colliders for all the wheel. 
     public GameObject wheelShape;
     public WheelCollider[] wheels;
     public WheelCollider[] frontWheels;
     public WheelCollider[] rearWheels;
+
+    // Cosmetics for all the padels and steeringwheel.
     public GameObject steeringWheel, acceleratorPad, breakPad, clutchPad;
 
-    public float maxSteeringAngle = 60;
-    public float maxSteeringWheelRot = 450;
-    public float maxPedalPress = 30;
-    public float enginePower = 500;
-    public float slowDownForce = 1.0f;
+    // Set values for diffrent things. 
+    public float maxSteeringAngle = 10;         // max angle the wheels can turn.
+    public float maxSteeringWheelRot = 450;     // max degrees the steeringwheel can turn. (in one direction, + and - )
+    public float maxPedalPress = 30;            // max degrees the pedals can be pressed down.
+    public float enginePower = 500;             // max power the engine can put out.
+    public float slowDownForce = 1.0f;          // the force pushing the car in the opposite direction
 
-    public float antiRollSpring = 50000;
+    public float antiRollSpring = 50000;        // spring force is used to stableize the car.
 
     void Start()
     {
-        // Needed to run test scen.
-        Init();
+        Init();         // Needed to run test scen.
     }
 
     public void Init()
     {
+        // sets the input type to the first type of controller. (based on order in the machine) 
         string[] names = Input.GetJoystickNames();
         for (int i = 0; i < names.Length; i++)
         {
+            // Driving Wheel
             if (names[i].Equals("G29 Driving Force Racing Wheel"))
             {
                 inputType = ControllerType.steeringWheel;
+                break;
             }
+            // Xbox Controller
             else if (names[i].Equals("Xbox One For Windows"))
             {
                 inputType = ControllerType.steeringWheel;
+                break;
             }
+            // Ps4 Controller
             else if (names[i].Equals("Wireless Controller"))
             {
-                inputType = ControllerType.steeringWheel;
+                inputType = ControllerType.ps4Controller;
+                break;
             }
         }
         
-        //GetComponent<Rigidbody>().centerOfMass = GetComponentInChildren<WheelCollider>().transform.position.y
+        // Hard coding to change the center of mass to make the car more stable.
         GetComponent<Rigidbody>().centerOfMass = new Vector3(0, 0.139f, 0.1f);
         
-        //Kosmetic object
+        // Kosmetic object. (used to rotate the wheel and pedals)
         steeringWheel = GameObject.FindWithTag("SteeringWheel");
         acceleratorPad = GameObject.FindWithTag("AccelleratorPad");
         breakPad = GameObject.FindWithTag("BreakPad");
         clutchPad = GameObject.FindWithTag("ClutchPad");
 
-        //Get all the Wheel Colliders for the car
+        // Get all the Wheel Colliders for the car
         wheels = GetComponentsInChildren<WheelCollider>();
         for (int i = 0; i < wheels.Length; i++)
         {
             WheelCollider thisWheel = wheels[i];
+            // Changes the frequency of updates.
             thisWheel.ConfigureVehicleSubsteps(500, 450, 500);
 
-            //Adds the wheel prefab to the car
+            // Adds the wheel prefab to the car.
             if (wheelShape != null)
             {
                 var ws = Instantiate(wheelShape);
                 ws.transform.parent = thisWheel.transform;
             }
         }
+
+        //--------------------------------------------------------------------------------------------\\
 
         // Divide wheels into front and rear wheels
 
@@ -149,7 +173,6 @@ public class Car : MonoBehaviour {
         {
             horizontalInput = Input.GetAxis("KeyboardHorizontal");
             verticalInput = Input.GetAxis("KeyboardVertical");
-            testInput = Input.GetAxis("KeyboardBack");
             if (Input.GetAxis("KeyboardVertical") > 0)
                 gasInput = Input.GetAxis("KeyboardVertical");
             else
@@ -161,7 +184,6 @@ public class Car : MonoBehaviour {
             verticalInput = Input.GetAxis("XboxVertical");
             gasInput = (Input.GetAxis("XboxGas"));
             brakeInput = (Input.GetAxis("XboxBrake"));
-            testInput = Input.GetAxis("XboxBack");
         }
         if (inputType == ControllerType.ps4Controller)
         {
@@ -169,7 +191,6 @@ public class Car : MonoBehaviour {
             verticalInput = Input.GetAxis("Ps4Vertical");
             gasInput = (Input.GetAxis("Ps4Gas") + 1) / 2;
             brakeInput = (Input.GetAxis("Ps4Brake") + 1) / 2;
-            testInput = Input.GetAxis("Ps4Back");
         }
         if (inputType == ControllerType.steeringWheel)
         {
@@ -228,18 +249,23 @@ public class Car : MonoBehaviour {
     {
         GetInput();
 
+        
+
         RotateSteeringWheel(steeringWheel);
         PressPedals(acceleratorPad, breakPad, clutchPad);
 
         //Does something for every wheel collider in the car
         foreach (WheelCollider wheel in wheels)
         {
+            Debug.Log(wheel.rpm > velocity);
             // checks if the wheel is on a new surface.
             WheelHit hit;
             if (wheel.GetGroundHit(out hit))
             {
                 // Modifier value gathered from wheel prefab
                 WheelModifier wheelMod = wheel.transform.GetChild(0).GetComponent<WheelModifier>();
+
+
 
                 // changes the effectivness of the wheel while on ice!
                 if (hit.collider.tag == "ice")

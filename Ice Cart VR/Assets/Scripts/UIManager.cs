@@ -6,13 +6,16 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour {
 
+    StandaloneInputModule InputModule;
+
     public EventSystem eventSystem;
     public GameObject selectedObject;
     public int selectedLevel;
 
 	// Use this for initialization
-	void Start () {
-        
+	void Start ()
+    {
+
     }
 
     void OnEnable()
