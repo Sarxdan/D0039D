@@ -33,8 +33,8 @@ public class CarCustomize : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
-	}
+
+    }
 
     //Setup the car with correct prefab and wheels
     public void SetCar()
