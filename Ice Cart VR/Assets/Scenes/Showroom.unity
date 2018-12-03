@@ -19225,7 +19225,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1532083347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19241,6 +19241,7 @@ MonoBehaviour:
   ght: 0
   velocity: 0
   inputType: 0
+  drive: 1
   horizontalInput: 0
   verticalInput: 0
   gasInput: 0
@@ -19248,7 +19249,10 @@ MonoBehaviour:
   clutchInput: 0
   backInput: 0
   submitInput: 0
+<<<<<<< HEAD
   testInput: 0
+=======
+>>>>>>> origin/sanders
   wheelShape: {fileID: 1670559825811684, guid: 72050134f63b4ad4a866f4bea1757880, type: 2}
   wheels: []
   frontWheels: []
@@ -19260,11 +19264,19 @@ MonoBehaviour:
   maxSteeringAngle: 10
   maxSteeringWheelRot: 450
   maxPedalPress: 30
+<<<<<<< HEAD
   enginePower: 300
   slowDownForce: 100
   antiRollSpring: 0
   gear: 0
   gearDistance: 2.2
+=======
+  enginePower: 150
+  slowDownForce: 100
+  antiRollSpring: 0
+  gear: 0
+  gearDistance: 3
+>>>>>>> origin/sanders
 --- !u!136 &1532083348
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -1728,7 +1728,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -1806,20 +1806,22 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1292891602364442}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3a9e420831fa00a499b91f14c6627ec1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ght: 0
-  wheel: {fileID: 0}
   velocity: 0
   inputType: 0
+  drive: 0
   horizontalInput: 0
   verticalInput: 0
   gasInput: 0
   brakeInput: 0
   clutchInput: 0
+  backInput: 0
+  submitInput: 0
   wheelShape: {fileID: 1438684924315436, guid: 1e1b039d722ec204a83436b65b887cfd, type: 2}
   wheels: []
   frontWheels: []
@@ -1832,7 +1834,10 @@ MonoBehaviour:
   maxSteeringWheelRot: 450
   maxPedalPress: 30
   enginePower: 900
+  slowDownForce: 100
   antiRollSpring: 50000
+  gear: 0
+  gearDistance: 3
 --- !u!136 &136199844684566682
 CapsuleCollider:
   m_ObjectHideFlags: 1

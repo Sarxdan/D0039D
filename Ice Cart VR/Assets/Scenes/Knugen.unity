@@ -811,13 +811,14 @@ GameObject:
   - component: {fileID: 491833023}
   - component: {fileID: 491833022}
   - component: {fileID: 491833021}
+  - component: {fileID: 491833026}
   m_Layer: 0
   m_Name: Car3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &491833021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -833,12 +834,12 @@ MonoBehaviour:
   ght: 0
   velocity: 0
   inputType: 1
+  drive: 1
   horizontalInput: 0
   verticalInput: 0
   gasInput: 0
   brakeInput: 0
   clutchInput: 0
-  testInput: 0
   backInput: 0
   submitInput: 0
   wheelShape: {fileID: 1598837917487794, guid: 47b5e41721eeb0246979d53940f7e2f0, type: 2}
@@ -853,10 +854,10 @@ MonoBehaviour:
   maxSteeringWheelRot: 450
   maxPedalPress: 30
   enginePower: 300
-  gear: 0
-  gearDistance: 2.1
   slowDownForce: 1
   antiRollSpring: 0
+  gear: 0
+  gearDistance: 2.1
 --- !u!136 &491833022
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -933,6 +934,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.2}
+--- !u!114 &491833026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 491833020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b428254012c34f4fa4afff0007af88b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputType: 0
+  shiftType: 0
 --- !u!1 &525709730
 GameObject:
   m_ObjectHideFlags: 0
