@@ -14,12 +14,14 @@ public class InputManager : MonoBehaviour {
 
     private int gear = 0;
 
-    // Use this for initialization
     void Start ()
     {
+        // Store main car script
         carScript = GetComponent<Car>();
 
+        // Get the names of all joysticks connected
         string[] names = Input.GetJoystickNames();
+        // Set current inputType to first connected joystick depending on the joysticks name
         for (int i = 0; i < names.Length; i++)
         {
             if (names[i].Equals("G29 Driving Force Racing Wheel"))
@@ -40,6 +42,8 @@ public class InputManager : MonoBehaviour {
 
     void Update()
     {
+        // Paddleshift (Currently only supports Xbox-controller)
+        // 
         if (shiftType == gearShiftType.paddleShift)
         {
             if (Input.GetButtonDown("XboxSubmit"))
