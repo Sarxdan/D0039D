@@ -23,6 +23,7 @@ public class Car : MonoBehaviour {
 
     // Input related variables.
     public ControllerType inputType = ControllerType.keyboard;
+    public wheelDrive drive = wheelDrive.front;
     public float horizontalInput;
     public float verticalInput;
     public float gasInput = 0.0F;

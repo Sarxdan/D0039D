@@ -545,6 +545,10 @@ Prefab:
       propertyPath: inputType
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1701936030221756, guid: b5f3f783de3b56e4daf1f5f01a7c39da, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5f3f783de3b56e4daf1f5f01a7c39da, type: 2}
   m_IsPrefabAsset: 0
@@ -598,7 +602,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiManager: {fileID: 444867498}
   carPrefabs:
-  - {fileID: 0}
+  - {fileID: 1215293598}
   - {fileID: 336093150}
   - {fileID: 790671315}
   wheelPrefabs:
@@ -965,6 +969,19 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4023392984733510, guid: 1b011ebc87442764a83704615d2a287a,
     type: 2}
   m_PrefabInternal: {fileID: 781296334}
+--- !u!114 &336093156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 336093150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b428254012c34f4fa4afff0007af88b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputType: 0
+  shiftType: 0
 --- !u!1 &341236491
 GameObject:
   m_ObjectHideFlags: 0
@@ -3333,6 +3350,10 @@ Prefab:
       propertyPath: inputType
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1701936030221756, guid: 1b011ebc87442764a83704615d2a287a, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b011ebc87442764a83704615d2a287a, type: 2}
   m_IsPrefabAsset: 0
@@ -3346,6 +3367,19 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4023392984733510, guid: b5f3f783de3b56e4daf1f5f01a7c39da,
     type: 2}
   m_PrefabInternal: {fileID: 132615839}
+--- !u!114 &790671321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 790671315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b428254012c34f4fa4afff0007af88b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputType: 0
+  shiftType: 0
 --- !u!1 &844143228
 GameObject:
   m_ObjectHideFlags: 0
@@ -4135,6 +4169,7 @@ GameObject:
   - component: {fileID: 1076417289}
   - component: {fileID: 1076417291}
   - component: {fileID: 1076417290}
+  - component: {fileID: 1076417292}
   m_Layer: 5
   m_Name: Controls
   m_TagString: Untagged
@@ -4192,6 +4227,47 @@ MonoBehaviour:
   eventSystem: {fileID: 0}
   selectedObject: {fileID: 0}
   selectedLevel: 0
+--- !u!114 &1076417292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1076417288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 16
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1076417288}
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 999478087}
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  delegates: []
 --- !u!1 &1107149575
 GameObject:
   m_ObjectHideFlags: 0
@@ -4712,6 +4788,24 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1206242133}
   m_CullTransparentMesh: 0
+--- !u!1 &1215293598 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1292891602364442, guid: 59cdce750149304408231b759c702729,
+    type: 2}
+  m_PrefabInternal: {fileID: 2044500845}
+--- !u!114 &1215293603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1215293598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b428254012c34f4fa4afff0007af88b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputType: 0
+  shiftType: 0
 --- !u!1 &1238766906
 GameObject:
   m_ObjectHideFlags: 0
@@ -4766,16 +4860,27 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
-          m_MethodName: 
-          m_Mode: 1
+        - m_Target: {fileID: 999478087}
+          m_MethodName: SetActive
+          m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: 
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1076417288}
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
           m_CallState: 2
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -8402,6 +8507,10 @@ Prefab:
         type: 2}
       propertyPath: inputType
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1701936030221756, guid: 59cdce750149304408231b759c702729, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59cdce750149304408231b759c702729, type: 2}

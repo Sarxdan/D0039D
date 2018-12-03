@@ -19212,7 +19212,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1532083347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19228,12 +19228,14 @@ MonoBehaviour:
   ght: 0
   velocity: 0
   inputType: 0
+  drive: 1
   horizontalInput: 0
   verticalInput: 0
   gasInput: 0
   brakeInput: 0
   clutchInput: 0
-  testInput: 0
+  backInput: 0
+  submitInput: 0
   wheelShape: {fileID: 1670559825811684, guid: 72050134f63b4ad4a866f4bea1757880, type: 2}
   wheels: []
   frontWheels: []
@@ -19246,7 +19248,10 @@ MonoBehaviour:
   maxSteeringWheelRot: 450
   maxPedalPress: 30
   enginePower: 150
+  slowDownForce: 100
   antiRollSpring: 0
+  gear: 0
+  gearDistance: 3
 --- !u!136 &1532083348
 CapsuleCollider:
   m_ObjectHideFlags: 0
