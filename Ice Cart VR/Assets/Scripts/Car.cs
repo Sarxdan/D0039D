@@ -23,6 +23,7 @@ public class Car : MonoBehaviour {
 
     // Input related variables.
     public ControllerType inputType = ControllerType.keyboard;
+    public int index = 0;
     public wheelDrive drive = wheelDrive.front;
     public float horizontalInput;
     public float verticalInput;
@@ -57,7 +58,7 @@ public class Car : MonoBehaviour {
     public float maxPedalPress = 30;            // max degrees the pedals can be pressed down.
     public float enginePower = 300;             // max power the engine can put out.
     public float slowDownForce = 100.0f;        // the force pushing the car in the opposite direction
-    public float antiRollSpring = 50000;        // spring force is used to stableize the car.
+    public float antiRollSpring = 0;            // spring force is used to stableize the car.
     public int gear = 0;
 
     // The distance between gears in units per second
@@ -65,11 +66,22 @@ public class Car : MonoBehaviour {
 
     void Start()
     {
-        Init();         // Needed to run test scen.
+        //Init();         // Needed to run test scen.
     }
 
     public void Init()
     {
+        string[] names = Input.GetJoystickNames();
+
+        Debug.Log("log " + names.Length);
+        for (int i = 0; i <= names.Length; i++)
+        {
+            if (LogitechGSDK.LogiIsConnected(i))
+            {
+                index = i;
+            }
+        }
+
         this.gameObject.transform.position = new Vector3(24.48f, 0.504f, 28.05f);
         this.gameObject.transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
 
@@ -167,7 +179,7 @@ public class Car : MonoBehaviour {
     {
         horizontalInput = inputScript.getHorizontal();
         gasInput = inputScript.getGas();
-        brakeInput = inputScript.getBrake();
+        brakeInput =  inputScript.getBrake();
         clutchInput = inputScript.getClutch();
         gear = inputScript.getGear();
 
@@ -256,8 +268,11 @@ public class Car : MonoBehaviour {
     void FixedUpdate()
     {
         GetInput();
+        LogitechGSDK.LogiUpdate();
+        Debug.Log("sterringwheel in index pos: " + LogitechGSDK.LogiIsConnected(index));
 
-        
+
+
 
         RotateSteeringWheel(steeringWheel);
         PressPedals(acceleratorPad, breakPad, clutchPad);
@@ -275,6 +290,11 @@ public class Car : MonoBehaviour {
                 // Changes the effectivness of the wheel depending on the material
                 if (hit.collider.tag == "ice")
                 {
+                    LogitechGSDK.LogiStopBumpyRoadEffect(index);
+                    LogitechGSDK.LogiStopDamperForce(index);
+
+                    LogitechGSDK.LogiPlaySlipperyRoadEffect(index, 50);
+
                     ff.asymptoteSlip = 0.4f     * wheelMod.forwardFrictionMod;
                     ff.asymptoteValue = 0.2f    * wheelMod.forwardFrictionMod;
                     ff.extremumSlip = 2.0f      * wheelMod.forwardFrictionMod;
@@ -292,6 +312,11 @@ public class Car : MonoBehaviour {
                 }
                 else if (hit.collider.tag == "tarmac")
                 {
+                    LogitechGSDK.LogiStopBumpyRoadEffect(index);
+                    LogitechGSDK.LogiStopSlipperyRoadEffect(index);
+
+                    LogitechGSDK.LogiPlayDamperForce(index, 50);
+
                     ff.asymptoteSlip = 0.7f     * wheelMod.forwardFrictionMod;
                     ff.asymptoteValue = 0.7f    * wheelMod.forwardFrictionMod;
                     ff.extremumSlip = 7.7f      * wheelMod.forwardFrictionMod;
@@ -309,6 +334,13 @@ public class Car : MonoBehaviour {
                 }
                 else if (hit.collider.tag == "dirt")
                 {
+                    LogitechGSDK.LogiStopSlipperyRoadEffect(index);
+                    LogitechGSDK.LogiStopDamperForce(index);
+
+                    LogitechGSDK.LogiPlayDamperForce(index, 75);
+                    LogitechGSDK.LogiPlayBumpyRoadEffect(index, 50);
+
+
                     ff.asymptoteSlip = 0.7f     * wheelMod.forwardFrictionMod;
                     ff.asymptoteValue = 0.7f    * wheelMod.forwardFrictionMod;
                     ff.extremumSlip = 7.7f      * wheelMod.forwardFrictionMod;

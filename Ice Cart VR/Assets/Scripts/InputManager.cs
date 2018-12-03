@@ -93,8 +93,6 @@ public class InputManager : MonoBehaviour {
             {
                 gear = 0;
             }
-            Debug.Log("input : " + Input.GetAxis("Steeringwheel-gear1"));
-            Debug.Log("gear : " + gear);
         }
         else if (shiftType == gearShiftType.automatic)
         {
