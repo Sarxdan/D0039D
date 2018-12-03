@@ -26,6 +26,8 @@ public class Car : MonoBehaviour {
     public WheelCollider[] frontWheels;
     public WheelCollider[] rearWheels;
     public GameObject steeringWheel, acceleratorPad, breakPad, clutchPad;
+    public ParticleSystem system;
+
 
     public float maxSteeringAngle = 60;
     public float maxSteeringWheelRot = 450;
@@ -34,7 +36,8 @@ public class Car : MonoBehaviour {
     public float slowDownForce = 1.0f;
 
     public float antiRollSpring = 50000;
-
+    
+    
     void Start()
     {
         // Needed to run test scen.
@@ -207,6 +210,7 @@ public class Car : MonoBehaviour {
     void Brake(WheelCollider wheel)
     {
         wheel.brakeTorque = brakeInput * enginePower * 10;
+        
     }
 
     //Updates the position of the wheel prefabs according to the wheel colliders
@@ -295,7 +299,7 @@ public class Car : MonoBehaviour {
                     slowDownForce = 1000.0f * wheelMod.resistanceMod;
                     Debug.Log("dirt");
                 }
-
+                
                 // Apply natural slowdown
                 GetComponent<Rigidbody>().AddForce(GetComponent<Rigidbody>().velocity.normalized * -slowDownForce);
             }
