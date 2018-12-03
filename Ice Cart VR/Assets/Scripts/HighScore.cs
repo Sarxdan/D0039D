@@ -20,6 +20,7 @@ public class HighScore : MonoBehaviour {
 
 	// Add all the text boxes to a list and load all the highscores from the PlayerPrefs to the local arrays
 	void Start () {
+        // List is used to show all the scores on the screen
         list.Add(first);
         list.Add(second);
         list.Add(third);
@@ -32,6 +33,7 @@ public class HighScore : MonoBehaviour {
             times[i] = PlayerPrefs.GetInt(i + "time", 0);
            
         }
+
         
 
 	}
@@ -70,6 +72,14 @@ public class HighScore : MonoBehaviour {
         array[firstIndex] = array[secondIndex];
         array[secondIndex] = temp;
 
+    }
+    private void test()
+    {
+        Debug.Log(PlayerPrefs.GetInt("0time"));
+        Debug.Log(PlayerPrefs.GetInt("1time"));
+        Debug.Log(PlayerPrefs.GetInt("2time"));
+        Debug.Log(PlayerPrefs.GetInt("3time"));
+        Debug.Log(PlayerPrefs.GetInt("4time"));
     }
     // Save the highscores to the PlayerPrefs
     private void saveHighscores()
