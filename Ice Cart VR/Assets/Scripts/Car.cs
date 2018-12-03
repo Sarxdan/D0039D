@@ -71,6 +71,7 @@ public class Car : MonoBehaviour {
     public void Init()
     {
         this.gameObject.transform.position = new Vector3(24.48f, 0.504f, 28.05f);
+        this.gameObject.transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
 
         inputScript = GetComponent<InputManager>();
 
