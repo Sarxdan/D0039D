@@ -70,6 +70,8 @@ public class Car : MonoBehaviour {
 
     public void Init()
     {
+        this.gameObject.transform.position = new Vector3(24.48f, 0.504f, 28.05f);
+
         inputScript = GetComponent<InputManager>();
 
         rigidbody = GetComponent<Rigidbody>();

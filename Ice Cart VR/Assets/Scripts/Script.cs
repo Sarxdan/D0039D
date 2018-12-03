@@ -15,7 +15,6 @@ public class Script : MonoBehaviour {
         InputModule = this.gameObject.GetComponent<StandaloneInputModule>();
         // sets the input type to the first type of controller. (based on order in the machine) 
         string[] names = Input.GetJoystickNames();
-        Debug.Log(names[0]);
         if (names.Length == 0)
         {
             InputModule.horizontalAxis  = "KeyboardHorizontal";
