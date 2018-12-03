@@ -187,6 +187,7 @@ public class Car : MonoBehaviour {
     //Make the car move according to the input
     void Accelerate(WheelCollider wheel)
     {
+        
         //Debug.Log("Gear: " + gear + ", Velocity (km/h):" + ((zVel * 3) * 3.6));
 
         // The velocity in positive z direction of the car
@@ -208,6 +209,8 @@ public class Car : MonoBehaviour {
                 motorTorque = 0;
             }
         }
+
+        //Debug.Log("RPM: " + ((zVel - gear * gearDistance) + gearDistance) * 1000);
 
         wheel.motorTorque = motorTorque;
     }
