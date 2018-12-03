@@ -31,6 +31,8 @@ public class Car : MonoBehaviour {
     public float backInput = 0.0F;
     public float submitInput = 0.0F;
 
+    public float vertucaltest;
+    public float horizontaltest;
 
     // ? 
     private new Rigidbody rigidbody;
@@ -164,6 +166,9 @@ public class Car : MonoBehaviour {
         brakeInput = inputScript.getBrake();
         clutchInput = inputScript.getClutch();
         gear = inputScript.getGear();
+
+        vertucaltest = Input.GetAxis("SteeringwheelVertical");
+        horizontaltest = Input.GetAxis("SteeringwheelHorizontal");
     }
 
     void RotateSteeringWheel(GameObject steeringWheel)
@@ -253,7 +258,6 @@ public class Car : MonoBehaviour {
         //Does something for every wheel collider in the car
         foreach (WheelCollider wheel in wheels)
         {
-            Debug.Log(wheel.rpm > velocity);
             // checks if the wheel is on a new surface.
             WheelHit hit;
             if (wheel.GetGroundHit(out hit))

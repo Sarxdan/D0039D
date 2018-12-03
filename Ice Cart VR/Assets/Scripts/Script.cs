@@ -18,23 +18,21 @@ public class Script : MonoBehaviour {
         Debug.Log(names[0]);
         if (names.Length == 0)
         {
-            InputModule.horizontalAxis = "KeyboardHorizontal";
-            InputModule.verticalAxis = "KeyboardVertical";
-            InputModule.submitButton = "KeyboardSubmit";
-            InputModule.cancelButton = "KeyboardBack";
+            InputModule.horizontalAxis  = "KeyboardHorizontal";
+            InputModule.verticalAxis    = "KeyboardVertical";
+            InputModule.submitButton    = "KeyboardSubmit";
+            InputModule.cancelButton    = "KeyboardBack";
         }
 
         for (int i = 0; i < names.Length; i++)
         {
-            Debug.Log("HEJ");
             // SteeringWheel
             if (names[i].Equals("G29 Driving Force Racing Wheel"))
             {
-                Debug.Log("HEJ");
-                InputModule.horizontalAxis = "SteeringwheelHorizontal";
-                InputModule.verticalAxis = "SteeringwheelVertical";
-                InputModule.submitButton = "SteeringwheelSubmit";
-                InputModule.cancelButton = "SteeringwheelBack";
+                InputModule.horizontalAxis  = "SteeringwheelHorizontal";
+                InputModule.verticalAxis    = "SteeringwheelVertical";
+                InputModule.submitButton    = "SteeringwheelSubmit";
+                InputModule.cancelButton    = "SteeringwheelBack";
                 break;
             }
             // Xbox Controller
@@ -58,10 +56,10 @@ public class Script : MonoBehaviour {
             }
             else
             {
-                InputModule.horizontalAxis = "KeyboardHorizontal";
-                InputModule.verticalAxis = "KeyboardVertical";
-                InputModule.submitButton = "KeyboardSubmit";
-                InputModule.cancelButton = "KeyboardBack";
+                InputModule.horizontalAxis  = "KeyboardHorizontal";
+                InputModule.verticalAxis    = "KeyboardVertical";
+                InputModule.submitButton    = "KeyboardSubmit";
+                InputModule.cancelButton    = "KeyboardBack";
             }
         }
     }
@@ -71,3 +69,12 @@ public class Script : MonoBehaviour {
 		
 	}
 }
+
+
+
+
+
+
+
+
+

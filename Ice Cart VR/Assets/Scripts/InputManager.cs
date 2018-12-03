@@ -37,6 +37,7 @@ public class InputManager : MonoBehaviour {
         }
     }
 
+
     void Update()
     {
         if (shiftType == gearShiftType.paddleShift)
@@ -51,33 +52,36 @@ public class InputManager : MonoBehaviour {
                 gear--;
             }
         }
-        else if (shiftType == gearShiftType.hShift)
+    }
+    private void FixedUpdate()
+    {
+        if (shiftType == gearShiftType.hShift)
         {
-            if (Input.GetKey("Steeringwheel-gear1"))
+            if (Input.GetAxis("Steeringwheel-gear1") >= 0.75)
             {
                 gear = 1;
             }
-            else if (Input.GetKey("Steeringwheel-gear2"))
+            else if (Input.GetAxis("Steeringwheel-gear2") >= 0.75)
             {
                 gear = 2;
             }
-            else if (Input.GetKey("Steeringwheel-gear3"))
+            else if (Input.GetAxis("Steeringwheel-gear3") >= 0.75)
             {
                 gear = 3;
             }
-            else if (Input.GetKey("Steeringwheel-gear4"))
+            else if (Input.GetAxis("Steeringwheel-gear4") >= 0.75)
             {
                 gear = 4;
             }
-            else if (Input.GetKey("Steeringwheel-gear5"))
+            else if (Input.GetAxis("Steeringwheel-gear5") >= 0.75)
             {
                 gear = 5;
             }
-            else if (Input.GetKey("Steeringwheel-gear6"))
+            else if (Input.GetAxis("Steeringwheel-gear6") >= 0.75)
             {
                 gear = 6;
             }
-            else if (Input.GetKey("Steeringwheel-gearReverse"))
+            else if (Input.GetAxis("Steeringwheel-gearReverse") >= 0.75)
             {
                 gear = -1;
             }
@@ -85,6 +89,8 @@ public class InputManager : MonoBehaviour {
             {
                 gear = 0;
             }
+            Debug.Log("input : " + Input.GetAxis("Steeringwheel-gear1"));
+            Debug.Log("gear : " + gear);
         }
         else if (shiftType == gearShiftType.automatic)
         {
