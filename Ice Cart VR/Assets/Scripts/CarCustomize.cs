@@ -18,6 +18,7 @@ public class CarCustomize : MonoBehaviour {
 
     private void Awake()
     {
+        //Disables physics and input and more for each of the car prefabs
         foreach(GameObject car in carPrefabs)
         {
             car.GetComponent<Rigidbody>().isKinematic = true;
@@ -90,6 +91,7 @@ public class CarCustomize : MonoBehaviour {
         Car carScript = car.GetComponent<Car>();
         carScript.enabled = true;
 
+        //Sets the wheel drive
         if(drive.value == 0)
             carScript.drive = Car.wheelDrive.front;
         else if(drive.value == 1)
@@ -107,6 +109,7 @@ public class CarCustomize : MonoBehaviour {
             DestroyImmediate(wheelObj);
         }
 
+        //Activate the camera
         car.transform.GetChild(0).gameObject.SetActive(true);
         
         carScript.Init();
