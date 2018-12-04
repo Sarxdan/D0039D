@@ -13,7 +13,7 @@ public class CheckpointScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         timer = new Stopwatch();
-
+        timer.Start();
     }
     // Player collides with a trigger colliders (checkpoint)
     void OnTriggerEnter(Collider collision)
@@ -37,13 +37,7 @@ public class CheckpointScript : MonoBehaviour {
                 {
                     if (collision.gameObject.GetComponent<checkpoint>().isFinishLine == true)
                     {
-                        UnityEngine.Debug.Log("Timer stopped");
-                        timer.Stop();
                         //Player passed finish line
-                    }else if(collision.gameObject.GetComponent<checkpoint>().inStartLine == true)
-                    {
-                        UnityEngine.Debug.Log("Timer started");
-                        timer.Start();
                     }
                     // If a player passes the right checkpoint
                     prevCheckpoint = checkpoint;

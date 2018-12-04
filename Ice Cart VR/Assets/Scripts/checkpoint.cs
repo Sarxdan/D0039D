@@ -6,6 +6,5 @@ public class checkpoint : MonoBehaviour {
 
     public int index = 0;
     public bool isFinishLine = false;
-    public bool inStartLine = false;
 
 }
