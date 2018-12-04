@@ -9,6 +9,9 @@ public class CheckpointScript : MonoBehaviour {
     public Stopwatch timer;
     // Start at negative one to avoid a special case for the first checkpoint
     public int prevCheckpoint = -1;
+    // Use these to spawn at a checkpoint 
+    public Vector3 lastCheckpointPosition;
+    public Vector3 lastCheckpointRotation;
 
 	// Use this for initialization
 	void Start () {
@@ -37,11 +40,16 @@ public class CheckpointScript : MonoBehaviour {
                 {
                     if (collision.gameObject.GetComponent<checkpoint>().isFinishLine == true)
                     {
-                        //Player passed finish line
+                        timer.Stop();
+                    }else if(collision.gameObject.GetComponent<checkpoint>().isStartLine== true)
+                    {
+                        timer.Start();
                     }
                     // If a player passes the right checkpoint
                     prevCheckpoint = checkpoint;
                     UnityEngine.Debug.Log(timer.Elapsed);
+                    lastCheckpointPosition = collision.GetComponent<Transform>().position;
+                    lastCheckpointRotation = collision.GetComponent<Transform>().rotation.eulerAngles;
                 }
                 
             }
