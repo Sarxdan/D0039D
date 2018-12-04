@@ -13930,13 +13930,14 @@ GameObject:
   - component: {fileID: 1114160498}
   - component: {fileID: 1114160497}
   - component: {fileID: 1114160496}
+  - component: {fileID: 1114160499}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1114160495
 Transform:
   m_ObjectHideFlags: 0
@@ -14015,6 +14016,17 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &1114160499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1114160494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3047a8618a80261439a21993d26653a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &1117866739
 Mesh:
   m_ObjectHideFlags: 0
@@ -19206,13 +19218,14 @@ GameObject:
   - component: {fileID: 1532083349}
   - component: {fileID: 1532083348}
   - component: {fileID: 1532083347}
+  - component: {fileID: 1532083352}
   m_Layer: 0
   m_Name: Car3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1532083347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19228,12 +19241,14 @@ MonoBehaviour:
   ght: 0
   velocity: 0
   inputType: 0
+  drive: 1
   horizontalInput: 0
   verticalInput: 0
   gasInput: 0
   brakeInput: 0
   clutchInput: 0
-  testInput: 0
+  backInput: 0
+  submitInput: 0
   wheelShape: {fileID: 1670559825811684, guid: 72050134f63b4ad4a866f4bea1757880, type: 2}
   wheels: []
   frontWheels: []
@@ -19245,8 +19260,11 @@ MonoBehaviour:
   maxSteeringAngle: 10
   maxSteeringWheelRot: 450
   maxPedalPress: 30
-  enginePower: 150
+  enginePower: 300
+  slowDownForce: 100
   antiRollSpring: 0
+  gear: 0
+  gearDistance: 2.2
 --- !u!136 &1532083348
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -19323,6 +19341,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.2}
+--- !u!114 &1532083352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1532083346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b428254012c34f4fa4afff0007af88b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputType: 0
+  shiftType: 1
 --- !u!134 &1534141681
 PhysicMaterial:
   m_ObjectHideFlags: 0

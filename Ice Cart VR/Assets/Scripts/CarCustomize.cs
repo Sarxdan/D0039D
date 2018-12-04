@@ -33,8 +33,8 @@ public class CarCustomize : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
-	}
+
+    }
 
     //Setup the car with correct prefab and wheels
     public void SetCar()
@@ -56,6 +56,7 @@ public class CarCustomize : MonoBehaviour {
         wheelShape = wheelPrefabs[wheel.value];
 
         car.SetActive(true);
+        
         //Add the wheel models and position them according to the wheel collider
         wheels = car.GetComponentsInChildren<WheelCollider>();
         for (int i = 0; i < wheels.Length; i++)
@@ -88,6 +89,14 @@ public class CarCustomize : MonoBehaviour {
         car.GetComponent<Rigidbody>().isKinematic = false;
         Car carScript = car.GetComponent<Car>();
         carScript.enabled = true;
+
+        if(drive.value == 0)
+            carScript.drive = Car.wheelDrive.front;
+        else if(drive.value == 1)
+            carScript.drive = Car.wheelDrive.rear;
+        else if(drive.value == 2)
+            carScript.drive = Car.wheelDrive.four;
+
         carScript.wheelShape = wheelShape;
 
         //Clear the wheel models

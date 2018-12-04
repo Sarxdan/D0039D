@@ -13,6 +13,7 @@ TagManager:
   - BreakPad
   - ClutchPad
   - Checkpoint
+  - ParticleSys
   layers:
   - Default
   - TransparentFX
