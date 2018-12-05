@@ -140,9 +140,10 @@ GameObject:
   - component: {fileID: 54458810380097104}
   - component: {fileID: 136199844684566682}
   - component: {fileID: 114783417693158798}
+  - component: {fileID: 114817330941427436}
   m_Layer: 0
   m_Name: BlueCar
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1812,14 +1813,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ght: 0
-  wheel: {fileID: 0}
   velocity: 0
   inputType: 0
+  index: 0
+  drive: 1
   horizontalInput: 0
   verticalInput: 0
   gasInput: 0
   brakeInput: 0
   clutchInput: 0
+  backInput: 0
+  submitInput: 0
   wheelShape: {fileID: 1438684924315436, guid: 1e1b039d722ec204a83436b65b887cfd, type: 2}
   wheels: []
   frontWheels: []
@@ -1828,11 +1832,28 @@ MonoBehaviour:
   acceleratorPad: {fileID: 0}
   breakPad: {fileID: 0}
   clutchPad: {fileID: 0}
-  maxSteeringAngle: 60
+  maxSteeringAngle: 20
   maxSteeringWheelRot: 450
   maxPedalPress: 30
-  enginePower: 900
-  antiRollSpring: 50000
+  enginePower: 300
+  slowDownForce: 100
+  antiRollSpring: 0
+  gear: 0
+  gearDistance: 3
+--- !u!114 &114817330941427436
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1292891602364442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e3c3df20855b8442b2842b0e4e07381, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prevCheckpoint: -1
+  lastCheckpointPosition: {x: 0, y: 0, z: 0}
+  lastCheckpointRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!136 &136199844684566682
 CapsuleCollider:
   m_ObjectHideFlags: 1

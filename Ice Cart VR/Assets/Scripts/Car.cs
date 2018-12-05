@@ -33,9 +33,6 @@ public class Car : MonoBehaviour {
     public float backInput = 0.0F;
     public float submitInput = 0.0F;
 
-    public float vertucaltest;
-    public float horizontaltest;
-
     // ? 
     private new Rigidbody rigidbody;
     private InputManager inputScript;
@@ -82,6 +79,7 @@ public class Car : MonoBehaviour {
             }
         }
 
+        // Set the starting position of the car in Showroom.
         this.gameObject.transform.position = new Vector3(24.48f, 0.504f, 28.05f);
         this.gameObject.transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
 
@@ -182,9 +180,6 @@ public class Car : MonoBehaviour {
         brakeInput =  inputScript.getBrake();
         clutchInput = inputScript.getClutch();
         gear = inputScript.getGear();
-
-        vertucaltest = Input.GetAxis("SteeringwheelVertical");
-        horizontaltest = Input.GetAxis("SteeringwheelHorizontal");
     }
 
     void RotateSteeringWheel(GameObject steeringWheel)

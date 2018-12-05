@@ -140,9 +140,10 @@ GameObject:
   - component: {fileID: 54458810380097104}
   - component: {fileID: 136199844684566682}
   - component: {fileID: 114783417693158798}
+  - component: {fileID: 114121719273445724}
   m_Layer: 0
   m_Name: GreenCar
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1800,13 +1801,27 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114121719273445724
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1292891602364442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e3c3df20855b8442b2842b0e4e07381, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prevCheckpoint: -1
+  lastCheckpointPosition: {x: 0, y: 0, z: 0}
+  lastCheckpointRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &114783417693158798
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1292891602364442}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3a9e420831fa00a499b91f14c6627ec1, type: 3}
   m_Name: 
@@ -1814,6 +1829,7 @@ MonoBehaviour:
   ght: 0
   velocity: 0
   inputType: 0
+  index: 0
   drive: 0
   horizontalInput: 0
   verticalInput: 0
@@ -1830,12 +1846,12 @@ MonoBehaviour:
   acceleratorPad: {fileID: 0}
   breakPad: {fileID: 0}
   clutchPad: {fileID: 0}
-  maxSteeringAngle: 60
+  maxSteeringAngle: 20
   maxSteeringWheelRot: 450
   maxPedalPress: 30
-  enginePower: 900
+  enginePower: 300
   slowDownForce: 100
-  antiRollSpring: 50000
+  antiRollSpring: 0
   gear: 0
   gearDistance: 3
 --- !u!136 &136199844684566682
