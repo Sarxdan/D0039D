@@ -946,7 +946,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputType: 1
-  shiftType: 0
+  shiftType: 2
 --- !u!1 &525709730
 GameObject:
   m_ObjectHideFlags: 0
