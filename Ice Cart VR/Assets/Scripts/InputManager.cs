@@ -13,6 +13,7 @@ public class InputManager : MonoBehaviour {
     private Car carScript;
 
     private int gear = 0;
+    private int lastGear = 0;
 
     void Start ()
     {
@@ -219,6 +220,22 @@ public class InputManager : MonoBehaviour {
     // Returns gear as calculated in Update and FixedUpdate
     public int getGear()
     {
+        // If you are trying to shift gears using h-shift (if the last gear is neutral and the current gear is not)
+        if (shiftType == gearShiftType.hShift && lastGear == 0 && gear != 0)
+        {
+            // If the clutch is pushed down enough
+            if (getClutch() <= 0.2f)
+            {
+                lastGear = gear;
+                return gear;
+            }
+            else
+            {
+                // If you don't push down the clutch, put the car in neutral instead
+                return 0;
+            }
+        }
+
         // Make sure the gear is within range
         if (gear < -1)
         {
@@ -229,7 +246,7 @@ public class InputManager : MonoBehaviour {
             gear = 6;
         }
 
+        lastGear = gear;
         return gear;
     }
-
 }

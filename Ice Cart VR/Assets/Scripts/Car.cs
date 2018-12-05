@@ -208,11 +208,10 @@ public class Car : MonoBehaviour {
     //Make the car move according to the input
     void Accelerate(WheelCollider wheel)
     {
-        
-        //Debug.Log("Gear: " + gear + ", Velocity (km/h):" + ((zVel * 3) * 3.6));
-
         // The velocity in positive z direction of the car
         float zVel = transform.InverseTransformDirection(rigidbody.velocity).z;
+
+        //Debug.Log("Gear: " + gear + ", Velocity (km/h):" + ((zVel * 3) * 3.6));
 
         // Generates a -x^2 curve where velocity is x and y is torque output. The curve is moved in the x-axis depending on the gear and gearDistance
         float motorTorque = -((zVel - (Mathf.Abs(gear) - 1) * gearDistance) * (zVel - (Mathf.Abs(gear) - 1) * gearDistance) * (enginePower / (gearDistance * gearDistance))) + gasInput * enginePower;
