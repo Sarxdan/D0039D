@@ -183,14 +183,14 @@ InputManager:
     joyNum: 0
   - serializedVersion: 3
     m_Name: XboxVertical
-    descriptiveName: Not used
+    descriptiveName: Used for inputting text after completing map
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: joystick button 2
     altNegativeButton: 
     altPositiveButton: 
     gravity: 0
-    dead: 0.19
+    dead: 0.21
     sensitivity: 1
     snap: 0
     invert: 1
