@@ -66,7 +66,7 @@ public class Car : MonoBehaviour {
 
     void Start()
     {
-        //Init();         // Needed to run test scen.
+        Init();         // Needed to run test scen.
     }
 
     public void Init()
@@ -193,7 +193,7 @@ public class Car : MonoBehaviour {
     }
     void PressPedals(GameObject accelerator, GameObject breaker, GameObject clutch)
     {
-        accelerator.transform.localEulerAngles = new Vector3(-140 + gasInput * maxPedalPress,0,0);
+        accelerator.transform.localEulerAngles = new Vector3(-140 + gasInput * maxPedalPress, 0, 0);
         breaker.transform.localEulerAngles = new Vector3(-140 + brakeInput * maxPedalPress, 0, 0);
         clutch.transform.localEulerAngles = new Vector3(-140 + clutchInput * maxPedalPress, 0, 0);
     }
@@ -269,11 +269,6 @@ public class Car : MonoBehaviour {
     {
         GetInput();
         LogitechGSDK.LogiUpdate();
-        Debug.Log("sterringwheel in index pos: " + LogitechGSDK.LogiIsConnected(index));
-
-
-
-
         RotateSteeringWheel(steeringWheel);
         PressPedals(acceleratorPad, breakPad, clutchPad);
 

@@ -818,7 +818,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &491833021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -834,6 +834,7 @@ MonoBehaviour:
   ght: 0
   velocity: 0
   inputType: 1
+  index: 0
   drive: 1
   horizontalInput: 0
   verticalInput: 0
@@ -842,6 +843,8 @@ MonoBehaviour:
   clutchInput: 0
   backInput: 0
   submitInput: 0
+  vertucaltest: 0
+  horizontaltest: 0
   wheelShape: {fileID: 1598837917487794, guid: 47b5e41721eeb0246979d53940f7e2f0, type: 2}
   wheels: []
   frontWheels: []
@@ -946,7 +949,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputType: 1
-  shiftType: 2
+  shiftType: 0
 --- !u!1 &525709730
 GameObject:
   m_ObjectHideFlags: 0

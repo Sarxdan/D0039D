@@ -43,9 +43,11 @@ public class InputManager : MonoBehaviour {
     void Update()
     {
         // Paddleshift (Currently only supports Xbox-controller)
-        // 
+        // Paddleshift means using only 2 buttons. One for shifting up, and one for shifting down
         if (shiftType == gearShiftType.paddleShift)
         {
+            // Shift the gear up and down when the corresponding buttons are pressed
+            // GetButtonDown is only called on the first frame the button is pressed
             if (Input.GetButtonDown("XboxSubmit"))
             {
                 gear++;
@@ -57,10 +59,15 @@ public class InputManager : MonoBehaviour {
             }
         }
     }
-    private void FixedUpdate()
+
+    void FixedUpdate()
     {
+        // H-shift (Currently only works with logitech stick-shift)
+        // H-shift means you have one button per gear
         if (shiftType == gearShiftType.hShift)
         {
+            // Set the correct gear depending on the gear-button pressed
+            // GetAxis returns a value between 0 and 1 for the stickshift
             if (Input.GetAxis("Steeringwheel-gear1") >= 0.75)
             {
                 gear = 1;
@@ -97,25 +104,18 @@ public class InputManager : MonoBehaviour {
         else if (shiftType == gearShiftType.automatic)
         {
             // Needs more code because it doesn't support reversing or neutral gear
+            // Gets the ideal gear calculated by the car-script
             gear = carScript.getIdealGear();
-        }
-
-        if (gear < -1)
-        {
-            gear = -1;
-        }
-        else if (gear > 6)
-        {
-            gear = 6;
         }
     }
 
+    // Horizontal input used for steering
     public float getHorizontal()
     {
+        // Depending on the ControllerType, use the correct input
         if (inputType == ControllerType.keyboard)
         {
             return Input.GetAxis("KeyboardHorizontal");
-
         }
         else if (inputType == ControllerType.xboxController)
         {
@@ -134,10 +134,14 @@ public class InputManager : MonoBehaviour {
         return 0;
     }
 
+    // Gas input used for accelerating
     public float getGas()
     {
+        // Depending on the ControllerType, use the correct input
         if (inputType == ControllerType.keyboard)
         {
+            // KeybordVertical has both a positive and negative button
+            // Make sure the gas is only returned when positive, otherwise return 0 (no acceleration)
             if (Input.GetAxis("KeyboardVertical") > 0)
             {
                 return Input.GetAxis("KeyboardVertical");
@@ -151,20 +155,27 @@ public class InputManager : MonoBehaviour {
         }
         else if (inputType == ControllerType.ps4Controller)
         {
+            // This input has a value between -1 and 1 but we want it between 0 and 1, therefore the (.. + 1) / 2
             return (Input.GetAxis("Ps4Gas") + 1) / 2;
         }
         else if (inputType == ControllerType.steeringWheel)
         {
+            // This input has a value between -1 and 1 but we want it between 0 and 1, therefore the (.. + 1) / 2
             return (Input.GetAxis("Steeringwheel-gas") + 1) / 2;
         }
 
         return 0;
     }
 
+    // Brake input used for braking
     public float getBrake()
     {
+        // Depending on the ControllerType, use the correct input
         if (inputType == ControllerType.keyboard)
         {
+            // KeybordVertical has both a positive and negative button
+            // Make sure the brake is only returned when input is negative
+            // If it is negative, return the positive version of the number, otherwise return 0 (no braking)
             if (Input.GetAxis("KeyboardVertical") < 0)
             {
                 return -Input.GetAxis("KeyboardVertical");
@@ -178,28 +189,46 @@ public class InputManager : MonoBehaviour {
         }
         else if (inputType == ControllerType.ps4Controller)
         {
+            // This input has a value between -1 and 1 but we want it between 0 and 1, therefore the (.. + 1) / 2
             return (Input.GetAxis("Ps4Brake") + 1) / 2;
         }
         else if (inputType == ControllerType.steeringWheel)
         {
+            // This input has a value between -1 and 1 but we want it between 0 and 1, therefore the (.. + 1) / 2
             return (Input.GetAxis("Steeringwheel-brake") + 1) / 2;
         }
 
         return 0;
     }
 
+    // Clutch input used for gearing up and down
     public float getClutch()
     {
+        // Depending on the ControllerType, use the correct input
         if (inputType == ControllerType.steeringWheel)
         {
+            // This input has a value between -1 and 1 but we want it between 0 and 1, therefore the (.. + 1) / 2
             return (Input.GetAxis("Steeringwheel-clutch") + 1) / 2;
         }
 
+        // If no clutch is connected, return 0
+        // This means H-shift will be broken
         return 0;
     }
 
+    // Returns gear as calculated in Update and FixedUpdate
     public int getGear()
     {
+        // Make sure the gear is within range
+        if (gear < -1)
+        {
+            gear = -1;
+        }
+        else if (gear > 6)
+        {
+            gear = 6;
+        }
+
         return gear;
     }
 
