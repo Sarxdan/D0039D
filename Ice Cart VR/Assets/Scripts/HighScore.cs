@@ -13,7 +13,7 @@ public class HighScore : MonoBehaviour {
     public Text third;
     public Text fourth;
     public Text fifth;
-    private List<Text> list;
+    private List<Text> list = new List<Text>();
 
     
 
@@ -35,7 +35,6 @@ public class HighScore : MonoBehaviour {
         }
 
         
-
 	}
     
     // Update all the text elements to the values stored in the arrays 

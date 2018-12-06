@@ -29,7 +29,7 @@ public class InputManager : MonoBehaviour {
             {
                 inputType = ControllerType.steeringWheel;
             }
-            else if (names[i].Equals("Xbox One For Windows"))
+            else if (names[i].Equals("Xbox One For Windows") || names[i].Equals("Controller (XBOX 360 For Windows)"))
             {
                 inputType = ControllerType.xboxController;
             }
