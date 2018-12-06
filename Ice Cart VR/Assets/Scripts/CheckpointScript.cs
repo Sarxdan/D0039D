@@ -13,11 +13,14 @@ public class CheckpointScript : MonoBehaviour
     // Use these to spawn at a checkpoint 
     public Vector3 lastCheckpointPosition;
     public Quaternion lastCheckpointRotation;
+    public bool isTrackComplete = false;
+    public float time;
+    private InputManager inputScript;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start ()
+    {
         timer = new Stopwatch();
-        timer.Start();
     }
     // Player collides with a trigger colliders (checkpoint)
     void OnTriggerEnter(Collider collision)
@@ -41,9 +44,14 @@ public class CheckpointScript : MonoBehaviour
                 {
                     if (collision.gameObject.GetComponent<checkpoint>().isFinishLine == true)
                     {
+                        UnityEngine.Debug.Log("finish");
                         timer.Stop();
-                    }else if(collision.gameObject.GetComponent<checkpoint>().isStartLine== true)
+                        isTrackComplete = true;
+                        time = timer.ElapsedMilliseconds / 1000f;
+                    }
+                    else if(collision.gameObject.GetComponent<checkpoint>().isStartLine== true)
                     {
+                        UnityEngine.Debug.Log("start");
                         timer.Start();
                     }
                     // If a player passes the right checkpoint

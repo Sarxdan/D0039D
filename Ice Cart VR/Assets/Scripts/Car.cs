@@ -22,7 +22,6 @@ public class Car : MonoBehaviour {
     public WheelFrictionCurve sf;
 
     // Input related variables.
-    public ControllerType inputType = ControllerType.keyboard;
     public int index = 0;
     public wheelDrive drive = wheelDrive.front;
     public float horizontalInput;
@@ -70,7 +69,6 @@ public class Car : MonoBehaviour {
     {
         string[] names = Input.GetJoystickNames();
 
-        Debug.Log("log " + names.Length);
         for (int i = 0; i <= names.Length; i++)
         {
             if (LogitechGSDK.LogiIsConnected(i))
@@ -84,6 +82,7 @@ public class Car : MonoBehaviour {
         this.gameObject.transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
 
         inputScript = GetComponent<InputManager>();
+        inputScript.enabled = true;
 
         rigidbody = GetComponent<Rigidbody>();
         
@@ -176,6 +175,7 @@ public class Car : MonoBehaviour {
     void GetInput()
     {
         horizontalInput = inputScript.getHorizontal();
+        verticalInput = inputScript.getVertical();
         gasInput = inputScript.getGas();
         brakeInput =  inputScript.getBrake();
         clutchInput = inputScript.getClutch();

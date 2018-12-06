@@ -642,6 +642,11 @@ Prefab:
       propertyPath: antiRollSpring
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114783417693158798, guid: b5f3f783de3b56e4daf1f5f01a7c39da,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5f3f783de3b56e4daf1f5f01a7c39da, type: 2}
   m_IsPrefabAsset: 0
@@ -3556,6 +3561,11 @@ Prefab:
       propertyPath: antiRollSpring
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114783417693158798, guid: 1b011ebc87442764a83704615d2a287a,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b011ebc87442764a83704615d2a287a, type: 2}
   m_IsPrefabAsset: 0
@@ -5017,13 +5027,13 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1215293598}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4b428254012c34f4fa4afff0007af88b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   inputType: 0
-  shiftType: 1
+  shiftType: 2
 --- !u!1 &1238766906
 GameObject:
   m_ObjectHideFlags: 0
@@ -8822,6 +8832,11 @@ Prefab:
         type: 2}
       propertyPath: antiRollSpring
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114783417693158798, guid: 59cdce750149304408231b759c702729,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59cdce750149304408231b759c702729, type: 2}

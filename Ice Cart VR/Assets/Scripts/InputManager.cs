@@ -37,6 +37,10 @@ public class InputManager : MonoBehaviour {
             {
                 inputType = ControllerType.ps4Controller;
             }
+            else
+            {
+                inputType = ControllerType.keyboard;
+            }
         }
     }
 
@@ -125,13 +129,34 @@ public class InputManager : MonoBehaviour {
         else if (inputType == ControllerType.ps4Controller)
         {
             return Input.GetAxis("Ps4Horizontal");
-
         }
         else if (inputType == ControllerType.steeringWheel)
         {
             return Input.GetAxis("Steeringwheel-wheel");
         }
+        return 0;
+    }
 
+    // Vertical input
+    public float getVertical()
+    {
+        // Depending on the ControllerType, use the correct input
+        if (inputType == ControllerType.keyboard)
+        {
+            return Input.GetAxis("KeyboardVertical");
+        }
+        else if (inputType == ControllerType.xboxController)
+        {
+            return Input.GetAxis("XboxVertical");
+        }
+        else if (inputType == ControllerType.ps4Controller)
+        {
+            return Input.GetAxis("Ps4Vertical");
+        }
+        else if (inputType == ControllerType.steeringWheel)
+        {
+            return Input.GetAxis("SteeringwheelVertical");
+        }
         return 0;
     }
 

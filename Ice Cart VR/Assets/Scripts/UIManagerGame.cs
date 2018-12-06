@@ -4,32 +4,34 @@ using UnityEngine;
 
 public class UIManagerGame : MonoBehaviour
 {
-    public Car.ControllerType inputType = Car.ControllerType.keyboard;
+    public InputManager.ControllerType inputType = InputManager.ControllerType.keyboard;
 
     public GameObject pause;
     public GameObject panel;
+    public GameObject complete;
     public GameObject car;
     public string pauseButtonName;
+    public bool isTrackComplete = false;
 
 	// Use this for initialization
 	void Start ()
     {
         car = GameObject.FindGameObjectWithTag("Player");
-        inputType = car.GetComponent<Car>().inputType;
+        inputType = car.GetComponent<InputManager>().inputType;
 
-        if (inputType == Car.ControllerType.keyboard)
+        if (inputType == InputManager.ControllerType.keyboard)
         {
             pauseButtonName = "KeyboardPause";
         }
-        else if (inputType == Car.ControllerType.ps4Controller)
+        else if (inputType == InputManager.ControllerType.ps4Controller)
         {
             pauseButtonName = "Ps4Pause";
         }
-        else if (inputType == Car.ControllerType.steeringWheel)
+        else if (inputType == InputManager.ControllerType.steeringWheel)
         {
             pauseButtonName = "SteeringwheelPause";
         }
-        else if (inputType == Car.ControllerType.xboxController)
+        else if (inputType == InputManager.ControllerType.xboxController)
         {
             pauseButtonName = "XboxPause";
         }
@@ -38,11 +40,18 @@ public class UIManagerGame : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-		if(Input.GetButton(pauseButtonName) && pause.active == false)
+        isTrackComplete = car.GetComponent<CheckpointScript>().isTrackComplete;
+		if(Input.GetButton(pauseButtonName) && pause.active == false && isTrackComplete == false)
         {
             panel.active = true;
             pause.active = true;
             Time.timeScale = 0;
+        }
+        if (isTrackComplete)
+        {
+            panel.active = true;
+            complete.active = true;
+            Time.timeScale = 1;
         }
 	}
 
