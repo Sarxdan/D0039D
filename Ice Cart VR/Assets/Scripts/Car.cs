@@ -63,7 +63,7 @@ public class Car : MonoBehaviour {
 
     void Start()
     {
-        //Init();         // Needed to run test scen.
+        Init();         // Needed to run test scen.
     }
 
     public void Init()
@@ -188,7 +188,7 @@ public class Car : MonoBehaviour {
     }
     void PressPedals(GameObject accelerator, GameObject breaker, GameObject clutch)
     {
-        accelerator.transform.localEulerAngles = new Vector3(-140 + gasInput * maxPedalPress,0,0);
+        accelerator.transform.localEulerAngles = new Vector3(-140 + gasInput * maxPedalPress, 0, 0);
         breaker.transform.localEulerAngles = new Vector3(-140 + brakeInput * maxPedalPress, 0, 0);
         clutch.transform.localEulerAngles = new Vector3(-140 + clutchInput * maxPedalPress, 0, 0);
     }
@@ -203,11 +203,10 @@ public class Car : MonoBehaviour {
     //Make the car move according to the input
     void Accelerate(WheelCollider wheel)
     {
-        
-        //Debug.Log("Gear: " + gear + ", Velocity (km/h):" + ((zVel * 3) * 3.6));
-
         // The velocity in positive z direction of the car
         float zVel = transform.InverseTransformDirection(rigidbody.velocity).z;
+
+        //Debug.Log("Gear: " + gear + ", Velocity (km/h):" + ((zVel * 3) * 3.6));
 
         // Generates a -x^2 curve where velocity is x and y is torque output. The curve is moved in the x-axis depending on the gear and gearDistance
         float motorTorque = -((zVel - (Mathf.Abs(gear) - 1) * gearDistance) * (zVel - (Mathf.Abs(gear) - 1) * gearDistance) * (enginePower / (gearDistance * gearDistance))) + gasInput * enginePower;
@@ -264,11 +263,6 @@ public class Car : MonoBehaviour {
     {
         GetInput();
         LogitechGSDK.LogiUpdate();
-        Debug.Log("sterringwheel in index pos: " + LogitechGSDK.LogiIsConnected(index));
-
-
-
-
         RotateSteeringWheel(steeringWheel);
         PressPedals(acceleratorPad, breakPad, clutchPad);
 
