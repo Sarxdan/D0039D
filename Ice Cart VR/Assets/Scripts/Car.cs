@@ -60,12 +60,21 @@ public class Car : MonoBehaviour {
     public float antiRollSpring = 50000;        // spring force is used to stableize the car.
     public int gear = 0;
 
+    // Declaring an array (ps) to store the four particle systems
+    ParticleSystem[] ps;
+
+    public bool includeChildren = true;
+
     // The distance between gears in units per second
     public float gearDistance = 3.0f;
 
     void Start()
     {
         Init();         // Needed to run test scen.
+        
+        // The particle systems that are children of the car gets inserted into the array ps
+        ps = GetComponentsInChildren<ParticleSystem>(includeChildren);
+        
     }
 
     public void Init()
@@ -219,7 +228,24 @@ public class Car : MonoBehaviour {
             }
         }
 
-        //Debug.Log("RPM: " + ((zVel - gear * gearDistance) + gearDistance) * 1000);
+        // Checks if the wheels rotate more than needed in regards to the z velocity. If they are the particle systems starts emitting and if they already are they stop.
+        if (wheel.rpm / (60 * wheel.radius * 2 * 3.1415f * 2) > zVel )
+        {
+            //Debug.Log("vadsomhelst");
+            for (int i = 0; i < ps.Length; i++)
+            {
+                ps[i].Play();
+                Debug.Log("play");
+            }
+        }
+        else if (ps[0].IsAlive() == true)
+        {
+            
+            for (int i = 0; i < ps.Length; i++)
+            {
+                ps[i].Stop();
+            }
+        }
 
         wheel.motorTorque = motorTorque;
     }
@@ -289,6 +315,7 @@ public class Car : MonoBehaviour {
                     wheel.sidewaysFriction = sf;
 
                     slowDownForce = 0.1f        * wheelMod.resistanceMod;
+                    
                 }
                 else if (hit.collider.tag == "tarmac")
                 {
