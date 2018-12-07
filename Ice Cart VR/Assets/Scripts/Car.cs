@@ -67,29 +67,22 @@ public class Car : MonoBehaviour {
 
     public void Init()
     {
-        string[] names = Input.GetJoystickNames();
-
-        for (int i = 0; i <= names.Length; i++)
+        // MOVE
         {
-            if (LogitechGSDK.LogiIsConnected(i))
-            {
-                index = i;
-            }
+            // Set the starting position of the car in Showroom.
+            this.gameObject.transform.position = new Vector3(24.48f, 0.504f, 28.05f);
+            this.gameObject.transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
         }
 
-        // Set the starting position of the car in Showroom.
-        this.gameObject.transform.position = new Vector3(24.48f, 0.504f, 28.05f);
-        this.gameObject.transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
-
+        // Sets inputScript. 
         inputScript = GetComponent<InputManager>();
-        inputScript.enabled = true;
+        inputScript.enabled = true;                                 // activates the input, used to make the menu not error out.
 
+        // Sets rigidbody
         rigidbody = GetComponent<Rigidbody>();
-        
-        // Hard coding to change the center of mass to make the car more stable.
-        rigidbody.centerOfMass = new Vector3(0, 0.139f, 0.1f);
-        
-        //Cosmetic objects (used to rotate the wheel and pedals)
+        rigidbody.centerOfMass = new Vector3(0, 0.139f, 0.1f);      // Hard coding to change the center of mass to make the car more stable.
+
+        // Binds cosmetic objects (used to rotate the wheel and pedals)
         steeringWheel = GameObject.FindWithTag("SteeringWheel");
         acceleratorPad = GameObject.FindWithTag("AccelleratorPad");
         breakPad = GameObject.FindWithTag("BreakPad");
@@ -110,8 +103,6 @@ public class Car : MonoBehaviour {
                 ws.transform.parent = thisWheel.transform;
             }
         }
-
-        //--------------------------------------------------------------------------------------------\\
 
         // Divide wheels into front and rear wheels
 
@@ -138,8 +129,10 @@ public class Car : MonoBehaviour {
         // Insert front and rear wheels into their respective arrays where left wheels are even numbers and right wheels are odd numbers.
         foreach (WheelCollider wheel in wheels)
         {
+            // Checks if position of wheel is infront of local midpoint.
             if (wheel.transform.localPosition.z < 0)
             {
+                // Checks if positon of wheel is to the left of local midline.
                 if (wheel.transform.localPosition.x < 0)
                 {
                     // Rear left tire
@@ -155,6 +148,7 @@ public class Car : MonoBehaviour {
             }
             else
             {
+                // Checks if positon of wheel is to the right of local midline.
                 if (wheel.transform.localPosition.x < 0)
                 {
                     // Front left tire
@@ -171,7 +165,7 @@ public class Car : MonoBehaviour {
         }
     }
 
-    //Get input from controller
+    // Get input from controller
     void GetInput()
     {
         horizontalInput = inputScript.getHorizontal();
@@ -181,11 +175,12 @@ public class Car : MonoBehaviour {
         clutchInput = inputScript.getClutch();
         gear = inputScript.getGear();
     }
-
+    // Only cosmetic rotation of the steeringwheel model.
     void RotateSteeringWheel(GameObject steeringWheel)
     {
         steeringWheel.transform.localEulerAngles = new Vector3(0, -horizontalInput * maxSteeringWheelRot, 0);
     }
+    // Only cosmetic pressing of the pedals.
     void PressPedals(GameObject accelerator, GameObject breaker, GameObject clutch)
     {
         accelerator.transform.localEulerAngles = new Vector3(-140 + gasInput * maxPedalPress, 0, 0);
