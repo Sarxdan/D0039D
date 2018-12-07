@@ -141,13 +141,14 @@ GameObject:
   - component: {fileID: 136199844684566682}
   - component: {fileID: 114783417693158798}
   - component: {fileID: 114033846762707554}
+  - component: {fileID: 114466373017004436}
   m_Layer: 0
   m_Name: RedCar
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1407653301900986
 GameObject:
   m_ObjectHideFlags: 0
@@ -276,12 +277,12 @@ GameObject:
   - component: {fileID: 20704238644696384}
   - component: {fileID: 81873459385829848}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: FPS CAM
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1612934220985948
 GameObject:
   m_ObjectHideFlags: 1
@@ -1815,6 +1816,21 @@ MonoBehaviour:
   prevCheckpoint: -1
   lastCheckpointPosition: {x: 0, y: 0, z: 0}
   lastCheckpointRotation: {x: 0, y: 0, z: 0, w: 0}
+  isTrackComplete: 0
+  time: 0
+--- !u!114 &114466373017004436
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1292891602364442}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b428254012c34f4fa4afff0007af88b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputType: 0
+  shiftType: 2
 --- !u!114 &114783417693158798
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1828,7 +1844,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ght: 0
   velocity: 0
-  inputType: 0
   index: 0
   drive: 0
   horizontalInput: 0
@@ -1846,14 +1861,14 @@ MonoBehaviour:
   acceleratorPad: {fileID: 0}
   breakPad: {fileID: 0}
   clutchPad: {fileID: 0}
-  maxSteeringAngle: 20
+  maxSteeringAngle: 10
   maxSteeringWheelRot: 450
   maxPedalPress: 30
-  enginePower: 300
+  enginePower: 200
   slowDownForce: 100
   antiRollSpring: 0
   gear: 0
-  gearDistance: 3
+  gearDistance: 2.2
 --- !u!136 &136199844684566682
 CapsuleCollider:
   m_ObjectHideFlags: 1
