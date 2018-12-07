@@ -227,20 +227,17 @@ public class Car : MonoBehaviour {
                 motorTorque = 0;
             }
         }
-
+        
         // Checks if the wheels rotate more than needed in regards to the z velocity. If they are the particle systems starts emitting and if they already are they stop.
         if (wheel.rpm / (60 * wheel.radius * 2 * 3.1415f * 2) > zVel )
         {
-            //Debug.Log("vadsomhelst");
             for (int i = 0; i < ps.Length; i++)
             {
                 ps[i].Play();
-                Debug.Log("play");
             }
         }
         else if (ps[0].IsAlive() == true)
         {
-            
             for (int i = 0; i < ps.Length; i++)
             {
                 ps[i].Stop();
