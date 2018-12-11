@@ -14,6 +14,8 @@ TagManager:
   - ClutchPad
   - Checkpoint
   - ParticleSys
+  - Speedomiter
+  - SpeedNeedle
   layers:
   - Default
   - TransparentFX
