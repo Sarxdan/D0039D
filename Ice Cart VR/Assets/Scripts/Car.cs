@@ -66,10 +66,8 @@ public class Car : MonoBehaviour
 
     void Start()
     {
-        Init();         // Needed to run test scen.
-
-        // The particle systems that are children of the car gets inserted into the array ps
-        ps = GetComponentsInChildren<ParticleSystem>(includeChildren);
+        //PlayerPrefs.DeleteAll();
+        //Init();         // Needed to run test scen.
     }
 
     void FixedUpdate()
@@ -202,12 +200,6 @@ public class Car : MonoBehaviour
 
     public void Init()
     {
-        // MOVE
-        {
-            // Set the starting position of the car in Showroom.
-            this.gameObject.transform.position = new Vector3(24.48f, 0.504f, 28.05f);
-            this.gameObject.transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
-        }
 
         // Sets inputScript. 
         inputScript = GetComponent<InputManager>();
@@ -222,6 +214,8 @@ public class Car : MonoBehaviour
         acceleratorPad  = GameObject.FindWithTag("AccelleratorPad");
         breakPad        = GameObject.FindWithTag("BreakPad");
         clutchPad       = GameObject.FindWithTag("ClutchPad");
+        // The particle systems that are children of the car gets inserted into the array ps
+        ps = GetComponentsInChildren<ParticleSystem>(includeChildren);
 
         // Get all the Wheel Colliders for the car
         wheels = GetComponentsInChildren<WheelCollider>();

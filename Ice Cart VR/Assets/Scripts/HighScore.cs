@@ -33,7 +33,6 @@ public class HighScore : MonoBehaviour {
             times[i] = PlayerPrefs.GetFloat(i + "time", 0);
         }
         updateScoreBoard();
-        
 	}
     
     // Update all the text elements to the values stored in the arrays 

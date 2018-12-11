@@ -74,6 +74,7 @@ public class UIManagerGame : MonoBehaviour
         car.GetComponent<Rigidbody>().velocity = new Vector3(0f, 0f, 0f);
         pause.active = false;
         panel.active = false;
+        panel2.active = true;
         Time.timeScale = 1;
     }
 }

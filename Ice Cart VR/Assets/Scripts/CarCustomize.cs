@@ -110,7 +110,18 @@ public class CarCustomize : MonoBehaviour {
         car.transform.GetChild(0).gameObject.SetActive(true);
         
         carScript.Init();
-        
+        if (uiManager.selectedLevel == 1)
+        {
+            // Set the starting position of the car in Showroom.
+            car.transform.position = new Vector3(24.48f, 0.504f, 28.05f);
+            car.transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
+        }
+        else if (uiManager.selectedLevel == 2)
+        {
+            // Set the starting position of the car in Level 2.
+            car.transform.position = new Vector3(0f, 0f, 0f);
+            car.transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
+        }
         DontDestroyOnLoad(car);
         SceneManager.LoadScene(uiManager.selectedLevel);
     }
