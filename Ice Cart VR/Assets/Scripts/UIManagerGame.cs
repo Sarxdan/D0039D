@@ -1,14 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManagerGame : MonoBehaviour
 {
     public InputManager.ControllerType inputType = InputManager.ControllerType.keyboard;
 
-    public GameObject pause;
     public GameObject panel;
+    public GameObject pause;
     public GameObject complete;
+
+    public GameObject panel2;
+
     public GameObject car;
     public string pauseButtonName;
     public bool isTrackComplete = false;
@@ -45,13 +49,14 @@ public class UIManagerGame : MonoBehaviour
         {
             panel.active = true;
             pause.active = true;
+            panel2.active = false;
+
             Time.timeScale = 0;
         }
         if (isTrackComplete)
         {
             panel.active = true;
             complete.active = true;
-            Time.timeScale = 1;
         }
 	}
 
@@ -59,6 +64,7 @@ public class UIManagerGame : MonoBehaviour
     {
         pause.active = false;
         panel.active = false;
+        panel2.active = true;
         Time.timeScale = 1;
     }
     public void Reset()

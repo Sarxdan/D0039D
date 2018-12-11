@@ -345,7 +345,7 @@ public class Car : MonoBehaviour
 
         test = 30 * velocityZ;
 
-        needle.transform.Rotate(0, 0, -10 * velocityZ);
+        needle.transform.localRotation = Quaternion.Euler(0, 0, 205 - ((velocityZ - 1 - gear * gearDistance) + gearDistance) * 70);
 
         //ui.GetComponentsInChildren<Image>()[1].transform.rotation.SetEulerAngles(0, 0, 30*velocityZ);
         
@@ -372,7 +372,7 @@ public class Car : MonoBehaviour
                 motorTorque = 0;
             }
         }
-        //Debug.Log("RPM: " + ((zVel - gear * gearDistance) + gearDistance) * 1000);
+        Debug.Log("RPM: " + ((velocityZ - (gear - 1) * gearDistance)) * 1000);
 
     }
 
