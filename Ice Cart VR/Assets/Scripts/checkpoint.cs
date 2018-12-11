@@ -12,9 +12,12 @@ public class checkpoint : MonoBehaviour {
 
     void Start()
     {
-        //this.GetComponent<MeshRenderer>().renderer.enabled = false;
-        this.GetComponent<MeshRenderer>().material.color = new Color(1.0f, 0.5f, 1.0f, 1.00f);
-        //this.GetComponent<Renderer>().material.shader = Shader.Find("Diffuse");
+        if (index == 0)
+        {
+            this.GetComponent<SpriteRenderer>().color = new Color(0, 1, 0, 0.25f);
+        }
+        else
+            this.GetComponent<SpriteRenderer>().color = new Color(1, 1, 0, 0.25f);
     }
 
 }
