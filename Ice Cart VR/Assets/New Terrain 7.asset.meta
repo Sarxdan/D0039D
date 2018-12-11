@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 3c206431d9f281f459b856669db565d0
+=======
+guid: a202878a5ae2537498ca68ad525dbe90
+>>>>>>> origin/krig
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 15600000
