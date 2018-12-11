@@ -56,11 +56,17 @@ public class Car : MonoBehaviour
     public float RPM = 1000;                    // current RPM of motor.
     public float test;
 
+    // Declaring an array (ps) to store the four particle systems
+    ParticleSystem[] ps;
+
+    public bool includeChildren = true;
+
     // The distance between gears in units per second
     public float gearDistance = 3.0f;
 
     void Start()
     {
+<<<<<<< HEAD
         //Init();         // Needed to run test scen.
     }
 
@@ -190,6 +196,13 @@ public class Car : MonoBehaviour
         {
             UpdateWheelPoses(wheel);
         }
+=======
+        Init();         // Needed to run test scen.
+        
+        // The particle systems that are children of the car gets inserted into the array ps
+        ps = GetComponentsInChildren<ParticleSystem>(includeChildren);
+        
+>>>>>>> origin/floof
     }
 
     public void Init()
@@ -400,8 +413,22 @@ public class Car : MonoBehaviour
                 motorTorque = 0;
             }
         }
-
-        //Debug.Log("RPM: " + ((zVel - gear * gearDistance) + gearDistance) * 1000);
+        
+        // Checks if the wheels rotate more than needed in regards to the z velocity. If they are the particle systems starts emitting and if they already are they stop.
+        if (wheel.rpm / (60 * wheel.radius * 2 * 3.1415f * 2) > zVel )
+        {
+            for (int i = 0; i < ps.Length; i++)
+            {
+                ps[i].Play();
+            }
+        }
+        else if (ps[0].IsAlive() == true)
+        {
+            for (int i = 0; i < ps.Length; i++)
+            {
+                ps[i].Stop();
+            }
+        }
 
         wheel.motorTorque = motorTorque;
     }
@@ -435,6 +462,121 @@ public class Car : MonoBehaviour
         shapeTransform.rotation = quat;
     }
     
+<<<<<<< HEAD
+=======
+    void FixedUpdate()
+    {
+        GetInput();
+
+        
+
+        RotateSteeringWheel(steeringWheel);
+        PressPedals(acceleratorPad, breakPad, clutchPad);
+
+        //Does something for every wheel collider in the car
+        foreach (WheelCollider wheel in wheels)
+        {
+            // checks if the wheel is on a new surface.
+            WheelHit hit;
+            if (wheel.GetGroundHit(out hit))
+            {
+                // Modifier value gathered from wheel prefab
+                WheelModifier wheelMod = wheel.transform.GetChild(0).GetComponent<WheelModifier>();
+
+                // Changes the effectivness of the wheel depending on the material
+                if (hit.collider.tag == "ice")
+                {
+                    ff.asymptoteSlip = 0.4f     * wheelMod.forwardFrictionMod;
+                    ff.asymptoteValue = 0.2f    * wheelMod.forwardFrictionMod;
+                    ff.extremumSlip = 2.0f      * wheelMod.forwardFrictionMod;
+                    ff.extremumValue = 0.8f     * wheelMod.forwardFrictionMod;
+                    ff.stiffness = 3.5f         * wheelMod.forwardFrictionMod;
+                    sf.asymptoteSlip = 0.2f     * wheelMod.sidewaysFrictionMod;
+                    sf.asymptoteValue = 0.2f    * wheelMod.sidewaysFrictionMod;
+                    sf.extremumSlip = 0.6f      * wheelMod.sidewaysFrictionMod;
+                    sf.extremumValue = 0.5f     * wheelMod.sidewaysFrictionMod;
+                    sf.stiffness = 2.1f         * wheelMod.sidewaysFrictionMod;
+                    wheel.forwardFriction = ff;
+                    wheel.sidewaysFriction = sf;
+
+                    slowDownForce = 0.1f        * wheelMod.resistanceMod;
+                    
+                }
+                else if (hit.collider.tag == "tarmac")
+                {
+                    ff.asymptoteSlip = 0.7f     * wheelMod.forwardFrictionMod;
+                    ff.asymptoteValue = 0.7f    * wheelMod.forwardFrictionMod;
+                    ff.extremumSlip = 7.7f      * wheelMod.forwardFrictionMod;
+                    ff.extremumValue = 8.4f     * wheelMod.forwardFrictionMod;
+                    ff.stiffness = 8.4f         * wheelMod.forwardFrictionMod;
+                    sf.asymptoteSlip = 0.4f     * wheelMod.sidewaysFrictionMod;
+                    sf.asymptoteValue = 0.6f    * wheelMod.sidewaysFrictionMod;
+                    sf.extremumSlip = 4.4f      * wheelMod.sidewaysFrictionMod;
+                    sf.extremumValue = 6.8f     * wheelMod.sidewaysFrictionMod;
+                    sf.stiffness = 4.8f         * wheelMod.sidewaysFrictionMod;
+                    wheel.forwardFriction = ff;
+                    wheel.sidewaysFriction = sf;
+
+                    slowDownForce = 50.0f       * wheelMod.resistanceMod;
+                }
+                else if (hit.collider.tag == "dirt")
+                {
+                    ff.asymptoteSlip = 0.7f     * wheelMod.forwardFrictionMod;
+                    ff.asymptoteValue = 0.7f    * wheelMod.forwardFrictionMod;
+                    ff.extremumSlip = 7.7f      * wheelMod.forwardFrictionMod;
+                    ff.extremumValue = 8.4f     * wheelMod.forwardFrictionMod;
+                    ff.stiffness = 8.4f         * wheelMod.forwardFrictionMod;
+                    sf.asymptoteSlip = 0.4f     * wheelMod.sidewaysFrictionMod;
+                    sf.asymptoteValue = 0.4f    * wheelMod.sidewaysFrictionMod;
+                    sf.extremumSlip = 4.4f      * wheelMod.sidewaysFrictionMod;
+                    sf.extremumValue = 3.6f     * wheelMod.sidewaysFrictionMod;
+                    sf.stiffness = 4.8f         * wheelMod.sidewaysFrictionMod;
+                    wheel.forwardFriction = ff;
+                    wheel.sidewaysFriction = sf;
+
+                    slowDownForce = 1000.0f     * wheelMod.resistanceMod;
+                }
+
+                // Apply natural slowdown
+                rigidbody.AddForce(rigidbody.velocity.normalized * -slowDownForce);
+            }
+        }
+
+        
+
+        // Call axis stabilizer function using only the first two wheels in each axis
+        
+        // Front axis
+        StabilizeAxis(frontWheels[0], frontWheels[1]);
+        // Rear axis
+        StabilizeAxis(rearWheels[0], rearWheels[1]);
+
+
+
+
+        // Front wheels
+        foreach (var wheel in frontWheels)
+        {
+            Brake(wheel);
+            //Accelerate(wheel);
+            Steer(wheel);
+            
+        }
+
+        // Rear wheels
+        foreach (var wheel in rearWheels)
+        {
+            Brake(wheel);
+            Accelerate(wheel);
+        }
+
+        // Update positions of wheels last
+        foreach (WheelCollider wheel in wheels)
+        {
+            UpdateWheelPoses(wheel);
+        }
+    }
+>>>>>>> origin/floof
 
 
 
