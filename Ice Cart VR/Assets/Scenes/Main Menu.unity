@@ -661,7 +661,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 132615840}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3047a8618a80261439a21993d26653a8, type: 3}
   m_Name: 
@@ -3370,7 +3370,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 710038553}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3047a8618a80261439a21993d26653a8, type: 3}
   m_Name: 
@@ -9653,7 +9653,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1701936030221756, guid: 59cdce750149304408231b759c702729, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4096080061555196, guid: 59cdce750149304408231b759c702729, type: 2}
       propertyPath: m_LocalPosition.z
@@ -9758,6 +9758,11 @@ Prefab:
       propertyPath: gearDistance
       value: 2.2
       objectReference: {fileID: 0}
+    - target: {fileID: 114466373017004436, guid: 59cdce750149304408231b759c702729,
+        type: 2}
+      propertyPath: shiftType
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59cdce750149304408231b759c702729, type: 2}
   m_IsPrefabAsset: 0
@@ -9772,7 +9777,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2044500846}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3047a8618a80261439a21993d26653a8, type: 3}
   m_Name: 

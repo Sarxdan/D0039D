@@ -26,6 +26,7 @@ public class Car : MonoBehaviour
     public float backInput = 0.0F;
     public float submitInput = 0.0F;
 
+
     // ? 
     private new Rigidbody rigidbody;
     private InputManager inputScript;
@@ -41,8 +42,9 @@ public class Car : MonoBehaviour
 
     // Cosmetics.
     public GameObject steeringWheel, acceleratorPad, breakPad, clutchPad;
-    public GameObject ui;
+    public GameObject speedomiter;
     public GameObject needle;
+    public Canvas ui;
 
     // Set values for diffrent things. 
     public float maxSteeringAngle = 10;         // max angle the wheels can turn.
@@ -325,9 +327,9 @@ public class Car : MonoBehaviour
 
     void CalculateTorque()
     {
-        if (ui == null)
+        if (speedomiter == null)
         {
-            ui = GameObject.FindWithTag("Speedomiter");
+            speedomiter = GameObject.FindWithTag("Speedomiter");
             needle = GameObject.FindWithTag("SpeedNeedle");
         }
 
@@ -340,7 +342,7 @@ public class Car : MonoBehaviour
         }
         int velocityAsInt = (int)((velocityZ * 3) * 3.6);
         string velocityAsString = velocityAsInt.ToString();
-        ui.GetComponentInChildren<Text>().text = velocityAsString;
+        speedomiter.GetComponentInChildren<Text>().text = velocityAsString;
 
 
 
@@ -348,8 +350,8 @@ public class Car : MonoBehaviour
 
         needle.transform.localRotation = Quaternion.Euler(0, 0, 205 - ((velocityZ - 1 - gear * gearDistance) + gearDistance) * 70);
 
-        //ui.GetComponentsInChildren<Image>()[1].transform.rotation.SetEulerAngles(0, 0, 30*velocityZ);
-        
+        //speedomiter.GetComponentsInChildren<Image>()[1].transform.rotation.SetEulerAngles(0, 0, 30*velocityZ);
+
         if (gear < 1)
         {
             RPM = 1000 + (((velocityZ * gearDistance) / gear) * 1000) - ((velocityZ * gearDistance) / ((gear - 1) / gearDistance) * 1000);

@@ -51,12 +51,12 @@ public class CheckpointScript : MonoBehaviour
                     }
                     else if(collision.gameObject.GetComponent<checkpoint>().isStartLine== true)
                     {
-                        UnityEngine.Debug.Log("start");
+                        //UnityEngine.Debug.Log("start");
                         timer.Start();
                     }
                     // If a player passes the right checkpoint
                     prevCheckpoint = checkpoint;
-                    UnityEngine.Debug.Log(timer.Elapsed);
+                    //UnityEngine.Debug.Log(timer.Elapsed);
                     lastCheckpointPosition = collision.GetComponent<Transform>().position;
                     lastCheckpointRotation = collision.GetComponent<Transform>().rotation;
                 }
