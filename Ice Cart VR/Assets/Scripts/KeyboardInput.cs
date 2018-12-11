@@ -14,6 +14,7 @@ public class KeyboardInput : MonoBehaviour
     private int selectedIndex;
     public Text selected;
     public Text name;
+    public Text currentTime;
     private string currentTextInBox = "";
     public string verticalAxisName;
     private string submitName;
@@ -29,7 +30,10 @@ public class KeyboardInput : MonoBehaviour
     void Start ()
     {
         car = GameObject.FindGameObjectWithTag("Player");
+        time = car.GetComponent<CheckpointScript>().time;
         inputType = car.GetComponent<InputManager>().inputType;
+        currentTime.text = "Your time: " + time;
+
 
         selectedIndex = 0;
         selectedCharacter = characters[selectedIndex];
@@ -64,18 +68,12 @@ public class KeyboardInput : MonoBehaviour
             pauseName           = "KeyboardPause";
         }
     }
-
-    void getInput()
-    {
-            
-    }
    
 	// Update is called once per frame
 	void Update ()
     {
         if (Input.GetAxis(verticalAxisName) != 0)
         {
-            Debug.Log("activate 1");
             StartCoroutine(SwitchCharacterRoutine(coolDownUntilNextSwitch));
         }
         else if (Input.GetButtonDown(submitName))
@@ -102,7 +100,6 @@ public class KeyboardInput : MonoBehaviour
         }
         else if (Input.GetButtonDown(pauseName))
         {
-            time = car.GetComponent<CheckpointScript>().time;
             GetComponent<HighScore>().addScore(currentTextInBox, time);
         }
         
@@ -113,7 +110,6 @@ public class KeyboardInput : MonoBehaviour
         // Checkes if the character can be switched based on time since last change.
         if (canSwitchCharacter)
         {
-            Debug.Log("Switch ok: " + duration);
             canSwitchCharacter = false;
             SwitchCharacter();
             yield return new WaitForSeconds(duration);
@@ -122,14 +118,12 @@ public class KeyboardInput : MonoBehaviour
         }
         else
         {
-            Debug.Log("Switch FU: " + duration);
             yield return new WaitForSeconds(0f);
         }
     }
     // Switch the character about to be choosen
     public void SwitchCharacter()
     {
-        Debug.Log("Switch being done");
         // move the choosen closer to A
         if (Input.GetAxis(verticalAxisName) < 0)
         {

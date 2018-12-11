@@ -379,7 +379,7 @@ public class Car : MonoBehaviour
                 motorTorque = 0;
             }
         }
-        Debug.Log("RPM: " + ((velocityZ - (gear - 1) * gearDistance)) * 1000);
+        //Debug.Log("RPM: " + ((velocityZ - (gear - 1) * gearDistance)) * 1000);
 
     }
 
@@ -408,21 +408,21 @@ public class Car : MonoBehaviour
             }
         }
         
-        // Checks if the wheels rotate more than needed in regards to the z velocity. If they are the particle systems starts emitting and if they already are they stop.
-        if (wheel.rpm / (60 * wheel.radius * 2 * 3.1415f * 2) > zVel )
-        {
-            for (int i = 0; i < ps.Length; i++)
-            {
-                ps[i].Play();
-            }
-        }
-        else if (ps[0].IsAlive() == true)
-        {
-            for (int i = 0; i < ps.Length; i++)
-            {
-                ps[i].Stop();
-            }
-        }
+        //// Checks if the wheels rotate more than needed in regards to the z velocity. If they are the particle systems starts emitting and if they already are they stop.
+        //if (wheel.rpm / (60 * wheel.radius * 2 * 3.1415f * 2) > zVel )
+        //{
+        //    for (int i = 0; i < ps.Length; i++)
+        //    {
+        //        ps[i].Play();
+        //    }
+        //}
+        //else if (ps[0].IsAlive() == true)
+        //{
+        //    for (int i = 0; i < ps.Length; i++)
+        //    {
+        //        ps[i].Stop();
+        //    }
+        //}
 
         wheel.motorTorque = motorTorque;
     }
