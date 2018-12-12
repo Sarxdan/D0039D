@@ -81,6 +81,7 @@ public class UIManagerGame : MonoBehaviour
 
     public void ToMainMenu()
     {
+        Unpause();
         Destroy(car);
         SceneManager.LoadScene(0);
     }
