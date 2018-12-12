@@ -108,7 +108,7 @@ public class CarCustomize : MonoBehaviour {
         }
 
         car.transform.GetChild(0).gameObject.SetActive(true);
-        
+        /// test map 2 156.471     0.091   182.4104
         carScript.Init();
         
         DontDestroyOnLoad(car);

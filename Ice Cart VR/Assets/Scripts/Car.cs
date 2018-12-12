@@ -203,11 +203,11 @@ public class Car : MonoBehaviour
     public void Init()
     {
         // MOVE
-        {
+       {
             // Set the starting position of the car in Showroom.
             this.gameObject.transform.position = new Vector3(24.48f, 0.504f, 28.05f);
             this.gameObject.transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
-        }
+       }
 
         // Sets inputScript. 
         inputScript = GetComponent<InputManager>();
