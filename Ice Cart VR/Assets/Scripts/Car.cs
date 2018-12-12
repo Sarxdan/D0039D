@@ -72,6 +72,99 @@ public class Car : MonoBehaviour
         //Init();         // Needed to run test scen.
     }
 
+    public void Init()
+    {
+        // Sets inputScript. 
+        inputScript = GetComponent<InputManager>();
+        inputScript.enabled = true;                                 // activates the input, used to make the menu not error out.
+
+        // Sets rigidbody
+        rigidbody = GetComponent<Rigidbody>();
+        rigidbody.centerOfMass = new Vector3(0, 0.139f, 0.1f);      // Hard coding to change the center of mass to make the car more stable.
+
+        // Binds cosmetic objects (used to rotate the wheel and pedals)
+        steeringWheel   = GameObject.FindWithTag("SteeringWheel");
+        acceleratorPad  = GameObject.FindWithTag("AccelleratorPad");
+        breakPad        = GameObject.FindWithTag("BreakPad");
+        clutchPad       = GameObject.FindWithTag("ClutchPad");
+
+        // Get all the Wheel Colliders for the car
+        wheels = GetComponentsInChildren<WheelCollider>();
+        for (int i = 0; i < wheels.Length; i++)
+        {
+            WheelCollider thisWheel = wheels[i];
+            // Changes the frequency of updates.
+            thisWheel.ConfigureVehicleSubsteps(500, 450, 500);
+
+            // Adds the wheel prefab to the car.
+            if (wheelShape != null)
+            {
+                var ws = Instantiate(wheelShape);
+                ws.transform.parent = thisWheel.transform;
+            }
+        }
+
+        // Divide wheels into front and rear wheels
+
+        // Number of front wheels. Used to decide sizes of arrays
+        int numOfFrontWheels = 0;
+        // Loop to determine number of front wheels
+        foreach (WheelCollider wheel in wheels)
+        {
+            if (wheel.transform.localPosition.z > 0)
+            {
+                numOfFrontWheels++;
+            }
+        }
+
+        frontWheels = new WheelCollider[numOfFrontWheels];
+        rearWheels = new WheelCollider[wheels.Length - numOfFrontWheels];
+
+        // Indexes used to allow multiple tires at each axis (for example two rear right tires and two rear left tires)
+        int currentRearLeftIndex = 0;
+        int currentRearRightIndex = 1;
+        int currentFrontLeftIndex = 0;
+        int currentFrontRightIndex = 1;
+
+        // Insert front and rear wheels into their respective arrays where left wheels are even numbers and right wheels are odd numbers.
+        foreach (WheelCollider wheel in wheels)
+        {
+            // Checks if position of wheel is infront of local midpoint.
+            if (wheel.transform.localPosition.z < 0)
+            {
+                // Checks if positon of wheel is to the left of local midline.
+                if (wheel.transform.localPosition.x < 0)
+                {
+                    // Rear left tire
+                    rearWheels[currentRearLeftIndex] = wheel;
+                    currentRearLeftIndex += 2;
+                }
+                else
+                {
+                    // Rear right tire
+                    rearWheels[currentRearRightIndex] = wheel;
+                    currentRearRightIndex += 2;
+                }
+            }
+            else
+            {
+                // Checks if positon of wheel is to the right of local midline.
+                if (wheel.transform.localPosition.x < 0)
+                {
+                    // Front left tire
+                    frontWheels[currentFrontLeftIndex] = wheel;
+                    currentFrontLeftIndex += 2;
+                }
+                else
+                {
+                    // Front right tire
+                    frontWheels[currentFrontRightIndex] = wheel;
+                    currentFrontRightIndex += 2;
+                }
+            }
+        }
+    }
+
     void FixedUpdate()
     {
         GetInput();
@@ -200,101 +293,6 @@ public class Car : MonoBehaviour
         }
     }
 
-    public void Init()
-    {
-
-        // Sets inputScript. 
-        inputScript = GetComponent<InputManager>();
-        inputScript.enabled = true;                                 // activates the input, used to make the menu not error out.
-
-        // Sets rigidbody
-        rigidbody = GetComponent<Rigidbody>();
-        rigidbody.centerOfMass = new Vector3(0, 0.139f, 0.1f);      // Hard coding to change the center of mass to make the car more stable.
-
-        // Binds cosmetic objects (used to rotate the wheel and pedals)
-        steeringWheel   = GameObject.FindWithTag("SteeringWheel");
-        acceleratorPad  = GameObject.FindWithTag("AccelleratorPad");
-        breakPad        = GameObject.FindWithTag("BreakPad");
-        clutchPad       = GameObject.FindWithTag("ClutchPad");
-        // The particle systems that are children of the car gets inserted into the array ps
-        ps = GetComponentsInChildren<ParticleSystem>(includeChildren);
-
-        // Get all the Wheel Colliders for the car
-        wheels = GetComponentsInChildren<WheelCollider>();
-        for (int i = 0; i < wheels.Length; i++)
-        {
-            WheelCollider thisWheel = wheels[i];
-            // Changes the frequency of updates.
-            thisWheel.ConfigureVehicleSubsteps(500, 450, 500);
-
-            // Adds the wheel prefab to the car.
-            if (wheelShape != null)
-            {
-                var ws = Instantiate(wheelShape);
-                ws.transform.parent = thisWheel.transform;
-            }
-        }
-
-        // Divide wheels into front and rear wheels
-
-        // Number of front wheels. Used to decide sizes of arrays
-        int numOfFrontWheels = 0;
-        // Loop to determine number of front wheels
-        foreach (WheelCollider wheel in wheels)
-        {
-            if (wheel.transform.localPosition.z > 0)
-            {
-                numOfFrontWheels++;
-            }
-        }
-
-        frontWheels = new WheelCollider[numOfFrontWheels];
-        rearWheels = new WheelCollider[wheels.Length - numOfFrontWheels];
-
-        // Indexes used to allow multiple tires at each axis (for example two rear right tires and two rear left tires)
-        int currentRearLeftIndex = 0;
-        int currentRearRightIndex = 1;
-        int currentFrontLeftIndex = 0;
-        int currentFrontRightIndex = 1;
-
-        // Insert front and rear wheels into their respective arrays where left wheels are even numbers and right wheels are odd numbers.
-        foreach (WheelCollider wheel in wheels)
-        {
-            // Checks if position of wheel is infront of local midpoint.
-            if (wheel.transform.localPosition.z < 0)
-            {
-                // Checks if positon of wheel is to the left of local midline.
-                if (wheel.transform.localPosition.x < 0)
-                {
-                    // Rear left tire
-                    rearWheels[currentRearLeftIndex] = wheel;
-                    currentRearLeftIndex += 2;
-                }
-                else
-                {
-                    // Rear right tire
-                    rearWheels[currentRearRightIndex] = wheel;
-                    currentRearRightIndex += 2;
-                }
-            }
-            else
-            {
-                // Checks if positon of wheel is to the right of local midline.
-                if (wheel.transform.localPosition.x < 0)
-                {
-                    // Front left tire
-                    frontWheels[currentFrontLeftIndex] = wheel;
-                    currentFrontLeftIndex += 2;
-                }
-                else
-                {
-                    // Front right tire
-                    frontWheels[currentFrontRightIndex] = wheel;
-                    currentFrontRightIndex += 2;
-                }
-            }
-        }
-    }
 
     // Get input from controller
     void GetInput()

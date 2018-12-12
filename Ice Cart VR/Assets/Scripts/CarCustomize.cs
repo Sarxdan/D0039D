@@ -108,7 +108,7 @@ public class CarCustomize : MonoBehaviour {
         }
 
         car.transform.GetChild(0).gameObject.SetActive(true);
-        
+       
         carScript.Init();
         if (uiManager.selectedLevel == 1)
         {

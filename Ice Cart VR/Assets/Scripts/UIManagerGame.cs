@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -76,5 +77,11 @@ public class UIManagerGame : MonoBehaviour
         panel.active = false;
         panel2.active = true;
         Time.timeScale = 1;
+    }
+
+    public void ToMainMenu()
+    {
+        Destroy(car);
+        SceneManager.LoadScene(0);
     }
 }
