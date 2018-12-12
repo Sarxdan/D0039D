@@ -13,7 +13,7 @@ public class InputManager : MonoBehaviour {
     private Car carScript;
 
     private int gear = 0;
-    private int lastGear = 0;
+    private bool failedGearShift = false;
 
     void Start ()
     {
@@ -246,17 +246,23 @@ public class InputManager : MonoBehaviour {
     public int getGear()
     {
         // If you are trying to shift gears using h-shift (if the last gear is neutral and the current gear is not)
-        if (shiftType == gearShiftType.hShift && lastGear == 0 && gear != 0)
+        if (shiftType == gearShiftType.hShift)
         {
             // If the clutch is pushed down enough
-            if (getClutch() <= 0.2f)
+            if (getClutch() <= 0.2f && !failedGearShift)
             {
-                lastGear = gear;
+                return gear;
+            }
+            else if (gear == 0)
+            {
+                // If the car is put in neutral by the user, remove all eventual engine braking.
+                failedGearShift = false;
                 return gear;
             }
             else
             {
-                // If you don't push down the clutch, put the car in neutral instead
+                // If you don't push down the clutch, put the car in neutral instead and tell the car to engine brake.
+                failedGearShift = true;
                 return 0;
             }
         }
@@ -270,8 +276,12 @@ public class InputManager : MonoBehaviour {
         {
             gear = 6;
         }
-
-        lastGear = gear;
+        
         return gear;
+    }
+
+    public bool getFailedGearShift()
+    {
+        return failedGearShift;
     }
 }
