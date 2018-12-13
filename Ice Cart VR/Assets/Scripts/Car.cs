@@ -55,6 +55,7 @@ public class Car : MonoBehaviour
     public float antiRollSpring = 0;            // spring force is used to stableize the car.
     public int   gear = 0;                      // current gear.
     public float velocityZ = 0;                 // current speed in z-axis.
+    public int   velocityZInt;
     public float RPM = 1000;                    // current RPM of motor.
     public float test;
 
@@ -186,7 +187,7 @@ public class Car : MonoBehaviour
                 // Changes the effectivness of the wheel depending on the material
                 if (hit.collider.tag == "ice")
                 {
-                    LogitechGSDK.LogiStopBumpyRoadEffect(index);
+                    LogitechGSDK.LogiStopDirtRoadEffect(index);
                     LogitechGSDK.LogiStopDamperForce(index);
 
                     LogitechGSDK.LogiPlaySlipperyRoadEffect(index, 50);
@@ -208,7 +209,7 @@ public class Car : MonoBehaviour
                 }
                 else if (hit.collider.tag == "tarmac")
                 {
-                    LogitechGSDK.LogiStopBumpyRoadEffect(index);
+                    LogitechGSDK.LogiStopDirtRoadEffect(index);
                     LogitechGSDK.LogiStopSlipperyRoadEffect(index);
 
                     LogitechGSDK.LogiPlayDamperForce(index, 50);
@@ -234,7 +235,7 @@ public class Car : MonoBehaviour
                     LogitechGSDK.LogiStopDamperForce(index);
 
                     LogitechGSDK.LogiPlayDamperForce(index, 75);
-                    LogitechGSDK.LogiPlayBumpyRoadEffect(index, 50);
+                    LogitechGSDK.LogiPlayDirtRoadEffect(index, 50 * velocityZInt);
 
 
                     ff.asymptoteSlip = 0.7f     * wheelMod.forwardFrictionMod;
@@ -332,7 +333,7 @@ public class Car : MonoBehaviour
 
         // The velocity in positive z direction of the car
         velocityZ = transform.InverseTransformDirection(rigidbody.velocity).z;
-
+        velocityZInt = (int)velocityZ;
         if (velocityZ < 0.1)
         {
             velocityZ = 0;

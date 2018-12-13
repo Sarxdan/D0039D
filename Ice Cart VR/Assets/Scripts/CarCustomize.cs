@@ -115,9 +115,17 @@ public class CarCustomize : MonoBehaviour {
             car.transform.position = new Vector3(24.48f, 0.504f, 28.05f);
             car.transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
         }
+
         else if (uiManager.selectedLevel == 2)
         {
             // Set the starting position of the car in Level 2.
+            car.transform.position = new Vector3(250f, 0.5f, 250f);
+            car.transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
+        }
+
+        else if (uiManager.selectedLevel == 3)
+        {
+            // Set the starting position of the car in Krig scen 3.
             car.transform.position = new Vector3(156f, 0f, 182f);
             car.transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
         }
