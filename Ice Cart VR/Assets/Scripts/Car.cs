@@ -173,6 +173,7 @@ public class Car : MonoBehaviour
         RotateSteeringWheel(steeringWheel);
         PressPedals(acceleratorPad, breakPad, clutchPad);
         CalculateTorque();
+        LogitechGSDK.LogiPlaySpringForce(index,0,100,10*velocityZInt);
 
         // Does something for every wheel collider in the car
         foreach (WheelCollider wheel in wheels)
@@ -235,7 +236,7 @@ public class Car : MonoBehaviour
                     LogitechGSDK.LogiStopDamperForce(index);
 
                     LogitechGSDK.LogiPlayDamperForce(index, 75);
-                    LogitechGSDK.LogiPlayDirtRoadEffect(index, 50 * velocityZInt);
+                    LogitechGSDK.LogiPlayDirtRoadEffect(index, 10 * velocityZInt);
 
 
                     ff.asymptoteSlip = 0.7f     * wheelMod.forwardFrictionMod;

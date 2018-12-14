@@ -51,6 +51,7 @@ public class UIManagerGame : MonoBehaviour
             panel.active = true;
             pause.active = true;
             panel2.active = false;
+            LogitechGSDK.LogiStopDirtRoadEffect(car.GetComponent<Car>().index);
 
             Time.timeScale = 0;
         }
