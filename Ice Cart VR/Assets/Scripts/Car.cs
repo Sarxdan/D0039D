@@ -80,11 +80,7 @@ public class Car : MonoBehaviour
         for (int i = 0; i < Input.GetJoystickNames().Length; i++)
             if (Input.GetJoystickNames()[i] == "G29 Driving Force Racing Wheel")
                 index = i;
-        // activates VR if VR headset is active.
-        if (XRDevice.isPresent)
-        {
-            GameObject.Find("Camera").active = false;
-        }
+
         // 
         if (!LogitechGSDK.LogiIsConnected(index))
         {

@@ -7,6 +7,7 @@ using UnityEngine;
 public class CarCustomize : MonoBehaviour {
 
     public UIManager uiManager;
+    public InputStandalone input;
 
     public GameObject[] carPrefabs;
     public GameObject[] wheelPrefabs;
@@ -35,6 +36,8 @@ public class CarCustomize : MonoBehaviour {
 	void Update () {
 
     }
+
+    
 
     //Setup the car with correct prefab and wheels
     public void SetCar()
