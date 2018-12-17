@@ -8,7 +8,7 @@ public class CameraBinder : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-        if(XRDevice.isPresent)
+        if(!XRDevice.isPresent)
         {
             this.GetComponent<Canvas>().worldCamera = GameObject.FindGameObjectWithTag("FPS Cam").GetComponent<Camera>();
             this.GetComponent<Canvas>().planeDistance = 0.1f;
