@@ -16,6 +16,8 @@ TagManager:
   - ParticleSys
   - Speedomiter
   - SpeedNeedle
+  - TPP cam
+  - FPP cam
   layers:
   - Default
   - TransparentFX
