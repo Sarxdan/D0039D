@@ -126,8 +126,8 @@ public class CarCustomize : MonoBehaviour {
         else if (uiManager.selectedLevel == 3)
         {
             // Set the starting position of the car in Krig scen 3.
-            car.transform.position = new Vector3(156f, 0f, 182f);
-            car.transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
+            car.transform.position = new Vector3(257.109f, 0.221f, 221.2135f);
+            car.transform.rotation = new Quaternion(0f, 180f, 0f, 0f);
         }
         DontDestroyOnLoad(car);
         SceneManager.LoadScene(uiManager.selectedLevel);
