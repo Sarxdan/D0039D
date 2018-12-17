@@ -210,12 +210,22 @@ public class Car : MonoBehaviour {
 
         // Generates a -x^2 curve where velocity is x and y is torque output. The curve is moved in the x-axis depending on the gear and gearDistance
         float motorTorque = -((zVel - (Mathf.Abs(gear) - 1) * gearDistance) * (zVel - (Mathf.Abs(gear) - 1) * gearDistance) * (enginePower / (gearDistance * gearDistance))) + gasInput * enginePower;
-        
-        if (motorTorque < 0 && gear >= 0 )
+
+        // Engine braking for all gears except neutral when in the wrong gear or failed gearshift.
+        if ((inputScript.getFailedGearShift() || motorTorque < 0) && gear != 0)
         {
             motorTorque = 0;
+            // Engine braking
+            wheel.brakeTorque += enginePower / 4;
+            LogitechGSDK.LogiPlayFrontalCollisionForce(index, 50);
         }
-        else if (gear < 0)
+        else if (gear == 0)
+        {
+            // Remove all motorTorque when in neutral
+            motorTorque = 0;
+        }
+      
+        if (gear < 0)
         {
             // Makes sure reversing gets same negative torque as its positive gear counterpart
             motorTorque = -motorTorque;
