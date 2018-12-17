@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.XR;
 using UnityEngine;
 
 public class Car : MonoBehaviour
@@ -55,7 +56,7 @@ public class Car : MonoBehaviour
     public float antiRollSpring = 0;            // spring force is used to stableize the car.
     public int   gear = 0;                      // current gear.
     public float velocityZ = 0;                 // current speed in z-axis.
-    public int   velocityZInt;
+    public int   velocityZInt;                  // current speed in z-axis as int.
     public float RPM = 1000;                    // current RPM of motor.
     public float test;
 
@@ -75,6 +76,21 @@ public class Car : MonoBehaviour
 
     public void Init()
     {
+        // Sets the steeringwheel index.
+        for (int i = 0; i < Input.GetJoystickNames().Length; i++)
+            if (Input.GetJoystickNames()[i] == "G29 Driving Force Racing Wheel")
+                index = i;
+        // activates VR if VR headset is active.
+        if (XRDevice.isPresent)
+        {
+            GameObject.Find("Camera").active = false;
+        }
+        // 
+        if (!LogitechGSDK.LogiIsConnected(index))
+        {
+            GameObject.Find("FPS Cam").GetComponent<LogitechSteeringWheel>().enabled = false;
+        }
+
         // Sets inputScript. 
         inputScript = GetComponent<InputManager>();
         inputScript.enabled = true;                                 // activates the input, used to make the menu not error out.
