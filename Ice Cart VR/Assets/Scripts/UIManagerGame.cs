@@ -12,6 +12,7 @@ public class UIManagerGame : MonoBehaviour
     public GameObject pause;
     public GameObject complete;
 
+
     public GameObject panel2;
 
     public GameObject car;

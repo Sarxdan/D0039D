@@ -10,12 +10,12 @@ public class CameraBinder : MonoBehaviour {
     {
         if(XRDevice.isPresent)
         {
-            this.GetComponent<Canvas>().worldCamera = GameObject.FindGameObjectWithTag("FPS Cam").GetComponent<Camera>();
+            this.GetComponent<Canvas>().worldCamera = GameObject.Find("FPS Cam").GetComponent<Camera>();
             this.GetComponent<Canvas>().planeDistance = 0.1f;
         }
         else
         {
-            this.GetComponent<Canvas>().worldCamera = GameObject.FindGameObjectWithTag("Camera").GetComponent<Camera>();
+            this.GetComponent<Canvas>().worldCamera = GameObject.Find("Camera").GetComponent<Camera>();
             this.GetComponent<Canvas>().planeDistance = 0.1f;
         }
 
