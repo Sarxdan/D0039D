@@ -13,7 +13,7 @@ public class KeyboardInput : MonoBehaviour
     public char selectedCharacter;
     private int selectedIndex;
     public Text selected;
-    public Text name;
+    public Text playerName;
     public Text currentTime;
     private string currentTextInBox = "";
     public string verticalAxisName;
@@ -86,7 +86,7 @@ public class KeyboardInput : MonoBehaviour
             else
             {
                 currentTextInBox = currentTextInBox + characters[selectedIndex];
-                name.text = currentTextInBox;
+                playerName.text = currentTextInBox;
             }
         }
         else if (Input.GetButtonDown(backName))
@@ -95,7 +95,7 @@ public class KeyboardInput : MonoBehaviour
             if (currentTextInBox.Length != 0)
             {
                 currentTextInBox = currentTextInBox.Substring(0, currentTextInBox.Length - 1);
-                name.text = currentTextInBox;
+                playerName.text = currentTextInBox;
             }
         }
         else if (Input.GetButtonDown(pauseName))

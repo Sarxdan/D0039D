@@ -46,27 +46,27 @@ public class UIManagerGame : MonoBehaviour
 	void Update ()
     {
         isTrackComplete = car.GetComponent<CheckpointScript>().isTrackComplete;
-		if(Input.GetButton(pauseButtonName) && pause.active == false && isTrackComplete == false)
+		if(Input.GetButton(pauseButtonName) && pause.activeSelf == false && isTrackComplete == false)
         {
-            panel.active = true;
-            pause.active = true;
-            panel2.active = false;
+            panel.SetActive(true);
+            pause.SetActive(true);
+            panel2.SetActive(false);
             LogitechGSDK.LogiStopDirtRoadEffect(car.GetComponent<Car>().index);
 
             Time.timeScale = 0;
         }
         if (isTrackComplete)
         {
-            panel.active = true;
-            complete.active = true;
+            panel.SetActive(true);
+            complete.SetActive(true);
         }
 	}
 
     public void Unpause()
     {
-        pause.active = false;
-        panel.active = false;
-        panel2.active = true;
+        pause.SetActive(false);
+        panel.SetActive(false);
+        panel2.SetActive(true);
         Time.timeScale = 1;
     }
     public void Reset()
@@ -74,9 +74,9 @@ public class UIManagerGame : MonoBehaviour
         car.transform.position = car.GetComponent<CheckpointScript>().lastCheckpointPosition;
         car.transform.rotation = car.GetComponent<CheckpointScript>().lastCheckpointRotation;
         car.GetComponent<Rigidbody>().velocity = new Vector3(0f, 0f, 0f);
-        pause.active = false;
-        panel.active = false;
-        panel2.active = true;
+        pause.SetActive(false);
+        panel.SetActive(false);
+        panel2.SetActive(true);
         Time.timeScale = 1;
     }
 

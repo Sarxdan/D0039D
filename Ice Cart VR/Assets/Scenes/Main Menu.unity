@@ -815,7 +815,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1592305395324618, guid: b5f3f783de3b56e4daf1f5f01a7c39da, type: 2}
       propertyPath: m_Name
-      value: FPS Cam
+      value: FPP Cam
       objectReference: {fileID: 0}
     - target: {fileID: 4306128201701352, guid: b5f3f783de3b56e4daf1f5f01a7c39da, type: 2}
       propertyPath: m_LocalPosition.y
@@ -906,6 +906,14 @@ Prefab:
     - target: {fileID: 1701936030221756, guid: b5f3f783de3b56e4daf1f5f01a7c39da, type: 2}
       propertyPath: m_TagString
       value: TPP cam
+      objectReference: {fileID: 0}
+    - target: {fileID: 1592305395324618, guid: b5f3f783de3b56e4daf1f5f01a7c39da, type: 2}
+      propertyPath: m_TagString
+      value: FPP cam
+      objectReference: {fileID: 0}
+    - target: {fileID: 1701936030221756, guid: b5f3f783de3b56e4daf1f5f01a7c39da, type: 2}
+      propertyPath: m_Name
+      value: TPP Cam
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5f3f783de3b56e4daf1f5f01a7c39da, type: 2}
@@ -10570,7 +10578,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Steering Wheel (G29)
+  m_Text: Keyboard
 --- !u!222 &1679789010
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10692,7 +10700,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1592305395324618, guid: 1b011ebc87442764a83704615d2a287a, type: 2}
       propertyPath: m_Name
-      value: FPS Cam
+      value: FPP Cam
       objectReference: {fileID: 0}
     - target: {fileID: 1292891602364442, guid: 1b011ebc87442764a83704615d2a287a, type: 2}
       propertyPath: m_IsActive
@@ -10705,6 +10713,14 @@ Prefab:
     - target: {fileID: 1701936030221756, guid: 1b011ebc87442764a83704615d2a287a, type: 2}
       propertyPath: m_TagString
       value: TPP cam
+      objectReference: {fileID: 0}
+    - target: {fileID: 1592305395324618, guid: 1b011ebc87442764a83704615d2a287a, type: 2}
+      propertyPath: m_TagString
+      value: FPP cam
+      objectReference: {fileID: 0}
+    - target: {fileID: 1701936030221756, guid: 1b011ebc87442764a83704615d2a287a, type: 2}
+      propertyPath: m_Name
+      value: TPP Cam
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b011ebc87442764a83704615d2a287a, type: 2}
@@ -12230,7 +12246,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1592305395324618, guid: 59cdce750149304408231b759c702729, type: 2}
       propertyPath: m_Name
-      value: FPS Cam
+      value: FPP Cam
       objectReference: {fileID: 0}
     - target: {fileID: 4818237484498136, guid: 59cdce750149304408231b759c702729, type: 2}
       propertyPath: m_LocalPosition.y
@@ -12331,6 +12347,14 @@ Prefab:
     - target: {fileID: 1701936030221756, guid: 59cdce750149304408231b759c702729, type: 2}
       propertyPath: m_TagString
       value: TPP cam
+      objectReference: {fileID: 0}
+    - target: {fileID: 1592305395324618, guid: 59cdce750149304408231b759c702729, type: 2}
+      propertyPath: m_TagString
+      value: FPP cam
+      objectReference: {fileID: 0}
+    - target: {fileID: 1701936030221756, guid: 59cdce750149304408231b759c702729, type: 2}
+      propertyPath: m_Name
+      value: TPP Cam
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59cdce750149304408231b759c702729, type: 2}

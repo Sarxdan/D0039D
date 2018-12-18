@@ -30,7 +30,7 @@ public class Car : MonoBehaviour
 
     // ? 
     private new Rigidbody rigidbody;
-    private InputManager inputScript;
+    public InputManager inputScript;
    
     // used to change the steeringangle of the wheel. 
     private float steeringAngle;
@@ -80,11 +80,10 @@ public class Car : MonoBehaviour
         for (int i = 0; i < Input.GetJoystickNames().Length; i++)
             if (Input.GetJoystickNames()[i] == "G29 Driving Force Racing Wheel")
                 index = i;
-
-        // 
+        // Remove logitechsteringSDK.
         if (!LogitechGSDK.LogiIsConnected(index))
         {
-            GameObject.Find("FPS Cam").GetComponent<LogitechSteeringWheel>().enabled = false;
+            GameObject.Find("FPP Cam").GetComponent<LogitechSteeringWheel>().enabled = false;
         }
 
         // Sets inputScript. 

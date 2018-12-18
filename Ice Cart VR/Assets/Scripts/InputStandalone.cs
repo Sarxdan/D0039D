@@ -10,6 +10,9 @@ public class InputStandalone : MonoBehaviour {
     public StandaloneInputModule InputModule;
     public EventSystem EventSystem;
     public Dropdown controllerType, cameraType;
+    int index;
+
+
 
 	// Use this for initialization
 	void Start ()
@@ -35,7 +38,7 @@ public class InputStandalone : MonoBehaviour {
                 InputModule.verticalAxis = "SteeringwheelVertical";
                 InputModule.submitButton = "SteeringwheelSubmit";
                 InputModule.cancelButton = "SteeringwheelBack";
-                controllerType.value = 3;
+                index = 3;
                 break;
             }
             // Xbox Controller
@@ -46,7 +49,7 @@ public class InputStandalone : MonoBehaviour {
                 InputModule.verticalAxis = "XboxVertical";
                 InputModule.submitButton = "XboxSubmit";
                 InputModule.cancelButton = "XboxBack";
-                cameraType.value = 1;
+                index = 1;
                 break;
             }
             // Ps4 Controller
@@ -56,7 +59,7 @@ public class InputStandalone : MonoBehaviour {
                 InputModule.verticalAxis = "Ps4Vertical";
                 InputModule.submitButton = "Ps4Submit";
                 InputModule.cancelButton = "Ps4Back";
-                controllerType.value = 2;
+                index = 2;
                 break;
             }
             // Keyboard
@@ -66,13 +69,13 @@ public class InputStandalone : MonoBehaviour {
                 InputModule.verticalAxis = "KeyboardVertical";
                 InputModule.submitButton = "KeyboardSubmit";
                 InputModule.cancelButton = "KeyboardBack";
-                controllerType.value = 0;
+                index = 0;
             }
 
             
 
         }
-
+        controllerType.value = index;
         cameraType.value = 0;
         UpdateCameraType();
     }
@@ -126,7 +129,7 @@ public class InputStandalone : MonoBehaviour {
             GameObject[] cameras = GameObject.FindGameObjectsWithTag("TPP cam");
             for(int i = 0; i<cameras.Length; i++)
             {
-                cameras[i].active = false;
+                cameras[i].SetActive(false);
             }
         }
         else if(cameraType.value == 1)
@@ -134,20 +137,13 @@ public class InputStandalone : MonoBehaviour {
             GameObject[] cameras = GameObject.FindGameObjectsWithTag("TPP cam");
             for (int i = 0; i < cameras.Length; i++)
             {
-                cameras[i].active = true;
+                cameras[i].SetActive(true);
             }
         }
         else
         {
             cameraType.value = 1;
             UpdateCameraType();
-            //GameObject[] cameras = GameObject.FindGameObjectsWithTag("TPP cam");
-            //for (int i = 0; i < cameras.Length; i++)
-            //{
-            //    cameras[i].active = true;
-            //}
-
-            //+ error
         }
     }
 }
