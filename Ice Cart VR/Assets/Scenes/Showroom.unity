@@ -10248,7 +10248,7 @@ Prefab:
     - target: {fileID: 114988318622897106, guid: faf0bc2c7fce17840b026c97c066aa09,
         type: 2}
       propertyPath: isFinishLine
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114988318622897106, guid: faf0bc2c7fce17840b026c97c066aa09,
         type: 2}
@@ -23061,9 +23061,28 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1657442454611748, guid: a84b2c36ca6dae84ea2b7523135fd815, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436448086352822, guid: a84b2c36ca6dae84ea2b7523135fd815, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114285930715043734, guid: a84b2c36ca6dae84ea2b7523135fd815,
+        type: 2}
+      propertyPath: playerName
+      value: 
+      objectReference: {fileID: 1968658222}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a84b2c36ca6dae84ea2b7523135fd815, type: 2}
   m_IsPrefabAsset: 0
+--- !u!114 &1968658222 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114917963300433932, guid: a84b2c36ca6dae84ea2b7523135fd815,
+    type: 2}
+  m_PrefabInternal: {fileID: 1968658221}
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!43 &1992513727
 Mesh:
   m_ObjectHideFlags: 0

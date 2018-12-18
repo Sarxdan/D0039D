@@ -70,7 +70,7 @@ public class Car : MonoBehaviour
 
     void Start()
     {
-        //PlayerPrefs.DeleteAll();
+        PlayerPrefs.DeleteAll();
         //Init();         // Needed to run test scen.
     }
 
