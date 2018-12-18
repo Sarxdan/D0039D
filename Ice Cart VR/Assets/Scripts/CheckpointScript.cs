@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Diagnostics;
 
 
@@ -16,11 +17,14 @@ public class CheckpointScript : MonoBehaviour
     public bool isTrackComplete = false;
     public float time;
     private InputManager inputScript;
+    private Text timeOnScreen;
 
     // Use this for initialization
     void Start ()
     {
         timer = new Stopwatch();
+        //timeOnScreen = GameObject.Find("TimeOneScreen");
+
     }
     // Player collides with a trigger colliders (checkpoint)
     void OnTriggerEnter(Collider collision)
@@ -53,12 +57,15 @@ public class CheckpointScript : MonoBehaviour
                     {
                         //UnityEngine.Debug.Log("start");
                         timer.Start();
+
                     }
                     // If a player passes the right checkpoint
                     prevCheckpoint = checkpoint;
                     //UnityEngine.Debug.Log(timer.Elapsed);
                     lastCheckpointPosition = collision.GetComponent<Transform>().position;
                     lastCheckpointRotation = collision.GetComponent<Transform>().rotation;
+                    collision.gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);
+
                 }
                 
             }

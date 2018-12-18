@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HighScore : MonoBehaviour {
 
@@ -14,6 +15,7 @@ public class HighScore : MonoBehaviour {
     public Text fourth;
     public Text fifth;
     private List<Text> list = new List<Text>();
+    private string sceneName;
 
     
 
@@ -27,10 +29,13 @@ public class HighScore : MonoBehaviour {
         list.Add(fourth);
         list.Add(fifth);
 
+        // Scene specific scores
+        sceneName = SceneManager.GetActiveScene().name;
+
         for (int i = 0; i < 5; i++)
         {
-            names[i] = PlayerPrefs.GetString(i + "name", "none");
-            times[i] = PlayerPrefs.GetFloat(i + "time", 0);
+            names[i] = PlayerPrefs.GetString(i + "name" + sceneName, "none");
+            times[i] = PlayerPrefs.GetFloat(i + "time" + sceneName, 0);
         }
         updateScoreBoard();
 	}
@@ -75,8 +80,8 @@ public class HighScore : MonoBehaviour {
     {
         for (int i = 0; i < 5; i++)
         {
-            PlayerPrefs.SetFloat(i + "time", times[i]);
-            PlayerPrefs.SetString(i + "name", names[i]);
+            PlayerPrefs.SetFloat(i + "time" + sceneName, times[i]);
+            PlayerPrefs.SetString(i + "name" + sceneName, names[i]);
         }
     }
     // Add a new score the the list and place it in the right place, then update the scoreboard and save the highscores to the PlayerPrefs
