@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 public class KeyboardInput : MonoBehaviour
@@ -101,6 +102,7 @@ public class KeyboardInput : MonoBehaviour
         else if (Input.GetButtonDown(pauseName))
         {
             GetComponent<HighScore>().addScore(currentTextInBox, time);
+            GameObject.Find("EventSystem").GetComponent<UIManagerGame>().ToMainMenu();
         }
         
     }
