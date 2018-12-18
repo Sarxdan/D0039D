@@ -26,7 +26,8 @@ public class Car : MonoBehaviour
     public float clutchInput = 0.0F;
     public float backInput = 0.0F;
     public float submitInput = 0.0F;
-
+    public int controllerType = -1;
+    public int cameraType = -1;
 
     // ? 
     private new Rigidbody rigidbody;
