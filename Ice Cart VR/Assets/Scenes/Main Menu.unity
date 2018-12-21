@@ -12356,7 +12356,7 @@ Prefab:
     - target: {fileID: 114783417693158798, guid: 59cdce750149304408231b759c702729,
         type: 2}
       propertyPath: gearDistance
-      value: 2.2
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114466373017004436, guid: 59cdce750149304408231b759c702729,
         type: 2}

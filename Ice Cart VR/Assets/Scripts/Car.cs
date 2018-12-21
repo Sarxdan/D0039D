@@ -355,38 +355,10 @@ public class Car : MonoBehaviour
         string velocityAsString = velocityAsInt.ToString();
         speedomiter.GetComponentInChildren<Text>().text = velocityAsString;
 
-
-
-        test = 30 * velocityZ;
-
-        needle.transform.localRotation = Quaternion.Euler(0, 0, 205 - ((velocityZ - 1 - gear * gearDistance) + gearDistance) * 70);
-
-        //speedomiter.GetComponentsInChildren<Image>()[1].transform.rotation.SetEulerAngles(0, 0, 30*velocityZ);
-
-        if (gear < 1)
-        {
-            RPM = 1000 + (((velocityZ * gearDistance) / gear) * 1000) - ((velocityZ * gearDistance) / ((gear - 1) / gearDistance) * 1000);
-        }
-        else
-            RPM = 1000 + ((velocityZ * gearDistance) / (gear) * 1000);
-
-        // Generates a -x^2 curve where velocity is x and y is torque output. The curve is moved in the x-axis depending on the gear and gearDistance
-        float motorTorque = -((velocityZ - (Mathf.Abs(gear) - 1) * gearDistance) * (velocityZ - (Mathf.Abs(gear) - 1) * gearDistance) * (enginePower / (gearDistance * gearDistance))) + gasInput * enginePower;
-
-        if (motorTorque < 0 && gear >= 0)
-        {
-            motorTorque = 0;
-        }
-        else if (gear < 0)
-        {
-            // Makes sure reversing gets same negative torque as its positive gear counterpart
-            motorTorque = -motorTorque;
-            if (motorTorque > 0)
-            {
-                motorTorque = 0;
-            }
-        }
-        //Debug.Log("RPM: " + ((velocityZ - (gear - 1) * gearDistance)) * 1000);
+        // funkar inte! BEHÖVER HJÄLP! 
+        test = (gearDistance / ((gearDistance - velocityZ) * gear)) -1;
+        RPM = 215 - 295 * (gearDistance / ((gearDistance - velocityZ)*gear));
+        needle.transform.localRotation = Quaternion.Euler(0, 0, RPM);
 
     }
 
