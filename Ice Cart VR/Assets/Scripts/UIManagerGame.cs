@@ -46,6 +46,7 @@ public class UIManagerGame : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
+
         isTrackComplete = car.GetComponent<CheckpointScript>().isTrackComplete;
 		if(Input.GetButton(pauseButtonName) && pause.activeSelf == false && isTrackComplete == false)
         {
@@ -65,6 +66,7 @@ public class UIManagerGame : MonoBehaviour
 
     public void Unpause()
     {
+        UpdatePauseButton();
         pause.SetActive(false);
         panel.SetActive(false);
         panel2.SetActive(true);
@@ -86,5 +88,26 @@ public class UIManagerGame : MonoBehaviour
         Unpause();
         Destroy(car);
         SceneManager.LoadScene(0);
+    }
+    public void UpdatePauseButton()
+    {
+        inputType = car.GetComponent<InputManager>().inputType;
+
+        if (inputType == InputManager.ControllerType.keyboard)
+        {
+            pauseButtonName = "KeyboardPause";
+        }
+        else if (inputType == InputManager.ControllerType.ps4Controller)
+        {
+            pauseButtonName = "Ps4Pause";
+        }
+        else if (inputType == InputManager.ControllerType.steeringWheel)
+        {
+            pauseButtonName = "SteeringwheelPause";
+        }
+        else if (inputType == InputManager.ControllerType.xboxController)
+        {
+            pauseButtonName = "XboxPause";
+        }
     }
 }

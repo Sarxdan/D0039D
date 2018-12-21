@@ -15,7 +15,7 @@ public class CarCustomize : MonoBehaviour {
     public WheelCollider[] wheels;
 
     public Dropdown chassi, wheel, drive;
-    public GameObject car, wheelShape;
+    public GameObject car, wheelShape, gameState;
 
     private void Awake()
     {
@@ -28,8 +28,9 @@ public class CarCustomize : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Start () {
-
+    void Start ()
+    {
+        gameState = GameObject.Find("GameState");
     }
 	
 	// Update is called once per frame
@@ -133,6 +134,7 @@ public class CarCustomize : MonoBehaviour {
             car.transform.rotation = new Quaternion(0f, 180f, 0f, 0f);
         }
         DontDestroyOnLoad(car);
+        DontDestroyOnLoad(gameState);
         SceneManager.LoadScene(uiManager.selectedLevel);
     }
 }

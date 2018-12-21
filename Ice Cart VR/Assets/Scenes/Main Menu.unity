@@ -122,12 +122,12 @@ GameObject:
   m_Component:
   - component: {fileID: 2741726}
   m_Layer: 0
-  m_Name: Vomet Comet
+  m_Name: Gear type
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2741726
 Transform:
   m_ObjectHideFlags: 0
@@ -1259,6 +1259,7 @@ MonoBehaviour:
   drive: {fileID: 923755360}
   car: {fileID: 0}
   wheelShape: {fileID: 0}
+  gameState: {fileID: 0}
 --- !u!1 &193511818
 GameObject:
   m_ObjectHideFlags: 0
@@ -6872,13 +6873,26 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
-    - m_Text: Active
+    - m_Text: Automatic
       m_Image: {fileID: 0}
-    - m_Text: Inactive
+    - m_Text: H-Shift
+      m_Image: {fileID: 0}
+    - m_Text: Paddel-Shift
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1834760636}
+        m_MethodName: UpdateGearType
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Dropdown+DropdownEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1151568207
@@ -7818,7 +7832,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Active
+  m_Text: Automatic
 --- !u!222 &1283388819
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7987,7 +8001,7 @@ GameObject:
   - component: {fileID: 1301378397}
   - component: {fileID: 1301378396}
   m_Layer: 5
-  m_Name: Vomet comet
+  m_Name: Gear type
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8043,7 +8057,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Vomet comet
+  m_Text: Gear Type
 --- !u!222 &1301378397
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11295,6 +11309,11 @@ MonoBehaviour:
   EventSystem: {fileID: 0}
   controllerType: {fileID: 784755876}
   cameraType: {fileID: 2073796817}
+  gearType: {fileID: 1151568206}
+  gameState: {fileID: 0}
+  cameraIndex: 0
+  controllerIndex: 0
+  gearIndex: 0
 --- !u!1 &1838470676
 GameObject:
   m_ObjectHideFlags: 0
@@ -12874,3 +12893,46 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2118286684}
   m_CullTransparentMesh: 0
+--- !u!1 &2131051903
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2131051905}
+  - component: {fileID: 2131051904}
+  m_Layer: 0
+  m_Name: GameState
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2131051904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2131051903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2094b3064a5b0b940a68259bcf5eaebb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controllerType: -1
+  cameraType: -1
+  gearType: -1
+--- !u!4 &2131051905
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2131051903}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.013566353, y: -10.270757, z: -107.22809}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

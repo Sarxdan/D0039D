@@ -7,10 +7,11 @@ using UnityEngine;
 public class InputManager : MonoBehaviour {
 
     public enum ControllerType { keyboard, xboxController, ps4Controller, steeringWheel };
-    public ControllerType inputType = ControllerType.keyboard;
+    public ControllerType inputType;
     public enum gearShiftType { paddleShift, hShift, automatic };
     public gearShiftType shiftType = gearShiftType.paddleShift;
     private Car carScript;
+    private GameStateScript gameState;
 
     private int gear = 0;
     private int lastGear = 0;
@@ -18,36 +19,46 @@ public class InputManager : MonoBehaviour {
 
     void Start ()
     {
-        // Store main car script
+        // Store main car script and the gameState script.
         carScript = GetComponent<Car>();
-
-        // Get the names of all joysticks connected
-        string[] names = Input.GetJoystickNames();
-        // Set current inputType to first connected joystick depending on the joysticks name
-        for (int i = 0; i < names.Length; i++)
+        gameState = GameObject.Find("GameState").GetComponent<GameStateScript>();
+        // Bindes the correct input type dependent on the gameState.
+        if (gameState.controllerType == 0)
         {
-            if (names[i].Equals("G29 Driving Force Racing Wheel"))
-            {
-                inputType = ControllerType.steeringWheel;
-            }
-            else if (names[i].Equals("Xbox One For Windows") || names[i].Equals("Controller (XBOX 360 For Windows)"))
-            {
-                inputType = ControllerType.xboxController;
-            }
-            else if (names[i].Equals("Wireless Controller"))
-            {
-                inputType = ControllerType.ps4Controller;
-            }
-            else
-            {
-                inputType = ControllerType.keyboard;
-            }
+            inputType = ControllerType.keyboard;
         }
+        else if (gameState.controllerType == 1)
+        {
+            inputType = ControllerType.xboxController;
+        }
+        else if (gameState.controllerType == 2)
+        {
+            inputType = ControllerType.ps4Controller;
+        }
+        else if (gameState.controllerType == 3)
+        {
+            inputType = ControllerType.steeringWheel;
+        }
+        // Bindes the correct gear type dependent of the gameState.
+        if (gameState.gearType == 0)
+        {
+            shiftType = gearShiftType.automatic;
+        }
+        else if (gameState.gearType == 1)
+        {
+            shiftType = gearShiftType.hShift;
+        }
+        else if (gameState.gearType == 2)
+        {
+            shiftType = gearShiftType.paddleShift;
+        }
+
     }
 
 
     void Update()
     {
+        UpdateInputType();
         // Paddleshift (Currently only supports Xbox-controller)
         // Paddleshift means using only 2 buttons. One for shifting up, and one for shifting down
         if (shiftType == gearShiftType.paddleShift)
@@ -290,5 +301,38 @@ public class InputManager : MonoBehaviour {
     public bool getFailedGearShift()
     {
         return failedGearShift;
+    }
+
+    public void UpdateInputType()
+    {
+        if (gameState.controllerType == 0)
+        {
+            inputType = ControllerType.keyboard;
+        }
+        else if (gameState.controllerType == 1)
+        {
+            inputType = ControllerType.xboxController;
+        }
+        else if (gameState.controllerType == 2)
+        {
+            inputType = ControllerType.ps4Controller;
+        }
+        else if (gameState.controllerType == 3)
+        {
+            inputType = ControllerType.steeringWheel;
+        }
+        // Bindes the correct gear type dependent of the gameState.
+        if (gameState.gearType == 0)
+        {
+            shiftType = gearShiftType.automatic;
+        }
+        else if (gameState.gearType == 1)
+        {
+            shiftType = gearShiftType.hShift;
+        }
+        else if (gameState.gearType == 2)
+        {
+            shiftType = gearShiftType.paddleShift;
+        }
     }
 }

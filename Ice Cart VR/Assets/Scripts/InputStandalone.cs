@@ -9,9 +9,9 @@ public class InputStandalone : MonoBehaviour {
 
     public StandaloneInputModule InputModule;
     public EventSystem EventSystem;
-    public Dropdown controllerType, cameraType;
-    public GameObject car;
-    public int index, cameraIndex;
+    public Dropdown controllerType, cameraType, gearType;
+    public GameObject gameState;
+    public int cameraIndex, controllerIndex, gearIndex;
 
 
 
@@ -19,163 +19,88 @@ public class InputStandalone : MonoBehaviour {
 	void Start ()
     {
         InputModule = this.gameObject.GetComponent<StandaloneInputModule>();
-        car = GameObject.FindGameObjectWithTag("Player");
-        if (car == null)
-        {
-            // sets the input type to the first type of controller. (based on order in the machine) 
-            string[] names = Input.GetJoystickNames();
-            if (names.Length == 0)
-            {
-                InputModule.horizontalAxis = "KeyboardHorizontal";
-                InputModule.verticalAxis = "KeyboardVertical";
-                InputModule.submitButton = "KeyboardSubmit";
-                InputModule.cancelButton = "KeyboardBack";
-                controllerType.value = 4;
-            }
-            for (int i = 0; i < names.Length; i++)
-            {
-                // SteeringWheel
-                if (names[i].Equals("G29 Driving Force Racing Wheel"))
-                {
-                    InputModule.horizontalAxis = "SteeringwheelHorizontal";
-                    InputModule.verticalAxis = "SteeringwheelVertical";
-                    InputModule.submitButton = "SteeringwheelSubmit";
-                    InputModule.cancelButton = "SteeringwheelBack";
-                    index = 3;
-                    break;
-                }
-                // Xbox Controller
-                else if (names[i].Equals("Xbox One For Windows") || names[i].Equals("Controller (XBOX 360 For Windows)"))
-                {
+        gameState = GameObject.Find("GameState");
 
-                    InputModule.horizontalAxis = "XboxHorizontal";
-                    InputModule.verticalAxis = "XboxVertical";
-                    InputModule.submitButton = "XboxSubmit";
-                    InputModule.cancelButton = "XboxBack";
-                    index = 1;
-                    break;
-                }
-                // Ps4 Controller
-                else if (names[i].Equals("Wireless Controller"))
-                {
-                    InputModule.horizontalAxis = "Ps4Horizontal";
-                    InputModule.verticalAxis = "Ps4Vertical";
-                    InputModule.submitButton = "Ps4Submit";
-                    InputModule.cancelButton = "Ps4Back";
-                    index = 2;
-                    break;
-                }
-                // Keyboard
-                else
-                {
-                    InputModule.horizontalAxis = "KeyboardHorizontal";
-                    InputModule.verticalAxis = "KeyboardVertical";
-                    InputModule.submitButton = "KeyboardSubmit";
-                    InputModule.cancelButton = "KeyboardBack";
-                    index = 0;
-                }
-            }
-            controllerType.value = index;
-            cameraType.value = 0;
-            UpdateCameraType();
-        }
+        if (gameState == null)
+            Debug.Log("ERROR: No GameState Object in the scen.");
         else
         {
-            index = car.GetComponent<Car>().controllerType;
-            cameraIndex = car.GetComponent<Car>().cameraType;
-            // SteeringWheel
-            if (index == 3)
+            controllerIndex = gameState.GetComponent<GameStateScript>().controllerType;
+            cameraIndex = gameState.GetComponent<GameStateScript>().cameraType;
+            // If the GameState object was empty. (first time game is started)
+            if (controllerIndex == -1 || cameraIndex == -1)
             {
-                InputModule.horizontalAxis = "SteeringwheelHorizontal";
-                InputModule.verticalAxis = "SteeringwheelVertical";
-                InputModule.submitButton = "SteeringwheelSubmit";
-                InputModule.cancelButton = "SteeringwheelBack";
-                index = 3;
+                // Get the names of all joysticks connected
+                string[] names = Input.GetJoystickNames();
+                if (names.Length == 0)
+                { controllerIndex = 0; Debug.Log("No controllers connected."); }
+                else
+                    // Set current inputType to first connected joystick depending on the joysticks name
+                    for (int i = 0; i < names.Length; i++)
+                    {
+                        if (names[i].Equals("Controller (Xbox One For Windows)") || names[i].Equals("Controller (XBOX 360 For Windows)"))
+                        { controllerIndex = 1; break; }
+                        else if (names[i].Equals("Wireless Controller"))
+                        { controllerIndex = 2; break; }
+                        else if (names[i].Equals("G29 Driving Force Racing Wheel"))
+                        { controllerIndex = 3; break; }
+                    }
+                cameraIndex = 0;
+                gearIndex = 0;
+                UpdateCameraType();
             }
-            // Xbox Controller
-            else if (index == 1)
-            {
-
-                InputModule.horizontalAxis = "XboxHorizontal";
-                InputModule.verticalAxis = "XboxVertical";
-                InputModule.submitButton = "XboxSubmit";
-                InputModule.cancelButton = "XboxBack";
-                index = 1;
-            }
-            // Ps4 Controller
-            else if (index == 2)
-            {
-                InputModule.horizontalAxis = "Ps4Horizontal";
-                InputModule.verticalAxis = "Ps4Vertical";
-                InputModule.submitButton = "Ps4Submit";
-                InputModule.cancelButton = "Ps4Back";
-                index = 2;
-            }
-            // Keyboard
             else
             {
-                InputModule.horizontalAxis = "KeyboardHorizontal";
-                InputModule.verticalAxis = "KeyboardVertical";
-                InputModule.submitButton = "KeyboardSubmit";
-                InputModule.cancelButton = "KeyboardBack";
-                index = 0;
+                controllerIndex = gameState.GetComponent<GameStateScript>().controllerType;
+                cameraIndex = gameState.GetComponent<GameStateScript>().cameraType;
+                gearIndex = gameState.GetComponent<GameStateScript>().gearType;
             }
-            controllerType.value = index;
+            controllerType.value = controllerIndex;
             cameraType.value = cameraIndex;
-            UpdateCameraType();
+            gearType.value = gearIndex;
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        car = GameObject.FindGameObjectWithTag("Player");
-        if (car != null)
-        {
-            car.GetComponent<Car>().controllerType = index;
-            car.GetComponent<Car>().cameraType = cameraIndex;
-        }
+        gameState.GetComponent<GameStateScript>().controllerType = controllerIndex;
+        gameState.GetComponent<GameStateScript>().cameraType = cameraIndex;
+        gameState.GetComponent<GameStateScript>().gearType = gearIndex;
     }
 
     public void UpdateControllerType()
     {
-        // Keyboard
-        if (controllerType.value == 0)
+        controllerIndex = controllerType.value;
+        if (controllerIndex == 0)
         {
             InputModule.horizontalAxis = "KeyboardHorizontal";
             InputModule.verticalAxis = "KeyboardVertical";
             InputModule.submitButton = "KeyboardSubmit";
             InputModule.cancelButton = "KeyboardBack";
-            index = 0;
         }
-        // Xbox Controller
-        else if (controllerType.value == 1)
+        else if (controllerIndex == 1)
         {
-
             InputModule.horizontalAxis = "XboxHorizontal";
             InputModule.verticalAxis = "XboxVertical";
             InputModule.submitButton = "XboxSubmit";
             InputModule.cancelButton = "XboxBack";
-            index = 1;
         }
-        // Ps4 Controller
-        else if (controllerType.value == 2)
+        else if (controllerIndex == 2)
         {
             InputModule.horizontalAxis = "Ps4Horizontal";
             InputModule.verticalAxis = "Ps4Vertical";
             InputModule.submitButton = "Ps4Submit";
             InputModule.cancelButton = "Ps4Back";
-            index = 2;
         }
-        // SteeringWheel
-        else if (controllerType.value == 3)
+        else if (controllerIndex == 3)
         {
             InputModule.horizontalAxis = "SteeringwheelHorizontal";
             InputModule.verticalAxis = "SteeringwheelVertical";
             InputModule.submitButton = "SteeringwheelSubmit";
             InputModule.cancelButton = "SteeringwheelBack";
-            index = 3;
         }
+        gameState.GetComponent<GameStateScript>().controllerType = controllerIndex;
     }
 
     public void UpdateCameraType()
@@ -189,6 +114,7 @@ public class InputStandalone : MonoBehaviour {
             {
                 cameras[i].SetActive(false);
             }
+            gameState.GetComponent<GameStateScript>().cameraType = cameraIndex;
         }
         else if(cameraType.value == 1)
         {
@@ -198,11 +124,18 @@ public class InputStandalone : MonoBehaviour {
             {
                 cameras[i].SetActive(true);
             }
+            gameState.GetComponent<GameStateScript>().cameraType = cameraIndex;
         }
         else
         {
             cameraType.value = 1;
             UpdateCameraType();
         }
+    }
+
+    public void UpdateGearType()
+    {
+        gearIndex = gearType.value;
+        gameState.GetComponent<GameStateScript>().gearType = gearIndex;
     }
 }
