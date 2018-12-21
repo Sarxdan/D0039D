@@ -33,7 +33,7 @@ public class KeyboardInput : MonoBehaviour
         car = GameObject.FindGameObjectWithTag("Player");
         time = car.GetComponent<CheckpointScript>().time;
         inputType = car.GetComponent<InputManager>().inputType;
-        currentTime.text = "Your time: " + time;
+        currentTime.text = "Your time: " + car.GetComponent<CheckpointScript>().timeOnScreen.text;
 
 
         selectedIndex = 0;

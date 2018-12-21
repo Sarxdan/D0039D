@@ -17,15 +17,19 @@ public class CheckpointScript : MonoBehaviour
     public bool isTrackComplete = false;
     public float time;
     private InputManager inputScript;
-    private Text timeOnScreen;
+    public Text timeOnScreen;
+    public GameObject timeObject;
 
     // Use this for initialization
     void Start ()
     {
         timer = new Stopwatch();
-        //timeOnScreen = GameObject.Find("TimeOneScreen");
-
     }
+    //private void Update()
+    //{
+    //    timeOnScreen = GameObject.Find("TimeOnScreen").GetComponent<Text>();
+    //    timeOnScreen.text = CalulateTime();
+    //}
     // Player collides with a trigger colliders (checkpoint)
     void OnTriggerEnter(Collider collision)
     {
@@ -35,6 +39,7 @@ public class CheckpointScript : MonoBehaviour
             // Check that the colliders is actully a checkpoint
             if (collision.tag == "Checkpoint")
             {
+                timeOnScreen = GameObject.Find("TimeOnScreen").GetComponent<Text>();
                 int checkpoint = collision.gameObject.GetComponent<checkpoint>().index;
 
                 if(checkpoint > prevCheckpoint + 1)
@@ -57,10 +62,10 @@ public class CheckpointScript : MonoBehaviour
                     {
                         //UnityEngine.Debug.Log("start");
                         timer.Start();
-
                     }
                     // If a player passes the right checkpoint
                     prevCheckpoint = checkpoint;
+                    timeOnScreen.text = CalulateTime();
                     //UnityEngine.Debug.Log(timer.Elapsed);
                     lastCheckpointPosition = collision.GetComponent<Transform>().position;
                     lastCheckpointRotation = collision.GetComponent<Transform>().rotation;
@@ -73,6 +78,42 @@ public class CheckpointScript : MonoBehaviour
         }
     }
 
+    public string CalulateTime()
+    {
+        int minutes = 0, seconds = 0;
+        time = timer.ElapsedMilliseconds / 1000;
+        if (time > 60)
+        {
+            for (float i = time; i > 60; i -= 60)
+            {
+                minutes++;
+                if ((time - 60) < 60)
+                {
+                    seconds = (int)(time - 60);
+                }
+            }
+        }
+        else
+        {
+            minutes = 0;
+            seconds = (int)time;
+        }
+
+        if (minutes < 10)
+        {
+            if (seconds < 10)
+                return "0" + minutes + " : " + "0" + seconds;
+            else
+                return "0" + minutes + " : " + seconds;
+        }
+        else
+        {
+            if (seconds < 10)
+                return minutes + " : " + "0" + seconds;
+            else
+                return minutes + " : " + seconds;
+        }
+    }
 
 
 

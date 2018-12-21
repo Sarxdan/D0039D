@@ -21,7 +21,8 @@ public class HighScore : MonoBehaviour {
 
 
 	// Add all the text boxes to a list and load all the highscores from the PlayerPrefs to the local arrays
-	void Start () {
+	void Start ()
+    {
         // List is used to show all the scores on the screen
         list.Add(first);
         list.Add(second);
@@ -55,9 +56,7 @@ public class HighScore : MonoBehaviour {
                 // Show the name and highscore 
                 list[i].text = (i+1) + ": " + names[i] + " " + times[i].ToString();
             }
-
         }
-        
     }
     // Swap two ints in an array
     private void swapFloat(float[] array, int firstIndex, int secondIndex)
@@ -97,14 +96,26 @@ public class HighScore : MonoBehaviour {
                 swapString(names, i, i - 1);
             }
         }
-
-
-            
-        
         updateScoreBoard();
         saveHighscores();
     }
-	
+	public void ResetHighscore()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            if (PlayerPrefs.HasKey(i + "name" + sceneName))
+            {
+            PlayerPrefs.DeleteKey(i + "name" + sceneName);
+            PlayerPrefs.DeleteKey(i + "time" + sceneName);
+            }
+        }
+        for (int i = 0; i < 5; i++)
+        {
+            names[i] = PlayerPrefs.GetString(i + "name" + sceneName, "none");
+            times[i] = PlayerPrefs.GetFloat(i + "time" + sceneName, 0);
+        }
+        updateScoreBoard();
+    }
 
 
 }

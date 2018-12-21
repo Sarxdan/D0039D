@@ -60,6 +60,7 @@ public class UIManagerGame : MonoBehaviour
         if (isTrackComplete)
         {
             panel.SetActive(true);
+            panel2.SetActive(false);
             complete.SetActive(true);
         }
 	}
