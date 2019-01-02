@@ -53,7 +53,7 @@ public class UIManagerGame : MonoBehaviour
             panel.SetActive(true);
             pause.SetActive(true);
             panel2.SetActive(false);
-            LogitechGSDK.LogiStopDirtRoadEffect(car.GetComponent<Car>().index);
+            LogitechGSDK.LogiStopDirtRoadEffect(car.GetComponent<Car>().steeringWheelIndex);
 
             Time.timeScale = 0;
         }

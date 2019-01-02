@@ -55,7 +55,6 @@ public class InputManager : MonoBehaviour {
 
     }
 
-
     void Update()
     {
         UpdateInputType();
