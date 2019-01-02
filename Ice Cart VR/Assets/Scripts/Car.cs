@@ -45,6 +45,8 @@ public class Car : MonoBehaviour
     // Cosmetics.
     public GameObject steeringWheel, acceleratorPad, breakPad, clutchPad;
     public GameObject speedomiter;
+    public Text speedDisplay;
+    public Text gearDisplay;
     public GameObject needle;
     public Canvas ui;
 
@@ -58,11 +60,7 @@ public class Car : MonoBehaviour
     public int   gear = 0;                      // current gear.
     public float velocityZ = 0;                 // current speed in z-axis.
     public int   velocityZInt;                  // current speed in z-axis as int.
-    public float RPM = 1000;                    // current RPM of motor.
-    public float test;
-
-    // Declaring an array (ps) to store the four particle systems
-    ParticleSystem[] ps;
+    public float RPM = 0;                       // current RPM of motor. (between 0-1) (sudo 1000-3000 rpm)
 
     public bool includeChildren = true;
 
@@ -71,7 +69,6 @@ public class Car : MonoBehaviour
 
     void Start()
     {
-        //PlayerPrefs.DeleteAll();
         //Init();         // Needed to run test scen.
     }
 
@@ -180,12 +177,13 @@ public class Car : MonoBehaviour
 
     void FixedUpdate()
     {
-        GetInput();
-        LogitechGSDK.LogiUpdate();
-        RotateSteeringWheel(steeringWheel);
-        PressPedals(acceleratorPad, breakPad, clutchPad);
-        CalculateTorque();
-        LogitechGSDK.LogiPlaySpringForce(index,0,100,10*velocityZInt);
+        // Updates all the needed functions.
+        GetInput();                                                         // Takes input.
+        LogitechGSDK.LogiUpdate();                                          // Function needed for LogitechGSDK force feedback.
+        RotateSteeringWheel(steeringWheel);                                 // Cosmetic rotation of the wheel.
+        PressPedals(acceleratorPad, breakPad, clutchPad);                   // Cosmetic pushing of the pedals.
+        CalculateVisualComponents();                                                  // Cosmetic calculation of RPM and speed.
+        LogitechGSDK.LogiPlaySpringForce(index,0,100,10*velocityZInt);      // Forcefeedback to center the wheel, depending on speed.
 
         // Does something for every wheel collider in the car
         foreach (WheelCollider wheel in wheels)
@@ -264,7 +262,7 @@ public class Car : MonoBehaviour
                     wheel.forwardFriction = ff;
                     wheel.sidewaysFriction = sf;
 
-                    slowDownForce = 1000.0f     * wheelMod.resistanceMod;
+                    slowDownForce = 100.0f      * wheelMod.resistanceMod;
                 }
 
                 // Apply natural slowdown
@@ -336,30 +334,52 @@ public class Car : MonoBehaviour
         wheel.steerAngle = steeringAngle;
     }
 
-    void CalculateTorque()
+    void CalculateVisualComponents()
     {
+        // First loop.
         if (speedomiter == null)
         {
             speedomiter = GameObject.FindWithTag("Speedomiter");
+            speedDisplay = GameObject.Find("SpeedDisplay").GetComponent<Text>();
+            gearDisplay = GameObject.Find("GearDisplay").GetComponent<Text>();
             needle = GameObject.FindWithTag("SpeedNeedle");
         }
 
-        // The velocity in positive z direction of the car
+        // The velocity in positive z direction of the car.
         velocityZ = transform.InverseTransformDirection(rigidbody.velocity).z;
-        velocityZInt = (int)velocityZ;
-        if (velocityZ < 0.1)
-        {
-            velocityZ = 0;
-        }
+        // Velocity is always positive.
+        if (velocityZ < 0)
+            velocityZ = -velocityZ;
+        // Transform to int to display on speedomiter. also makes the number somewhat more realistic.
         int velocityAsInt = (int)((velocityZ * 3) * 3.6);
+        // Transform to string to be displayed.
         string velocityAsString = velocityAsInt.ToString();
-        speedomiter.GetComponentInChildren<Text>().text = velocityAsString;
+        speedDisplay.text = velocityAsString;
 
-        // funkar inte! BEHÖVER HJÄLP! 
-        test = (gearDistance / ((gearDistance - velocityZ) * gear)) -1;
-        RPM = 215 - 295 * (gearDistance / ((gearDistance - velocityZ)*gear));
-        needle.transform.localRotation = Quaternion.Euler(0, 0, RPM);
+        // GearDisplay
+        if (gear == -1)
+            gearDisplay.text = "R";
+        else if (gear == 0)
+            gearDisplay.text = "N";
+        else
+            gearDisplay.text = gear.ToString();
 
+        // RPM calculations.
+        if (gear == 1)
+            RPM = (velocityZ / (gearDistance / 2));                     // Gear 1 is half gearDistance.
+        else if (gear == 2)
+            RPM = (velocityZ - (gearDistance / 2)) / (gearDistance);    // Gear 2 have to remove first gearDistance.
+        else
+            RPM = (velocityZ - (gearDistance / 2) - (gearDistance * (gear - 2))) / gearDistance; // All other gears removes first and all gear before.
+        
+        // if the gear in wrong red shift.
+        if (RPM < 0)
+            RPM = 0;
+
+        float degree = 170 - 210 * RPM;
+        if (degree < -80)
+            degree = -80;
+        needle.transform.localEulerAngles = new Vector3(0, 0, degree);
     }
 
     //Make the car move according to the input
