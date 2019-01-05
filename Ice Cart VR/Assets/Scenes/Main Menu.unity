@@ -1094,12 +1094,20 @@ MonoBehaviour:
   - {fileID: 1598837917487794, guid: 47b5e41721eeb0246979d53940f7e2f0, type: 2}
   - {fileID: 1598752110066348, guid: ebb628346fd8e414ea5e4f8872cfc866, type: 2}
   - {fileID: 1430321568609506, guid: c0da0c81cbcc43b4fa8671255b0110ee, type: 2}
+  - {fileID: 1122300334105712, guid: d2c0d138c1d94434f8d25af49e9f2f46, type: 2}
+  - {fileID: 1768952154676808, guid: d83d00a076a95a14580290fa0d6fb88e, type: 2}
+  - {fileID: 1050320442073376, guid: f78d15dc5d04b7e44b4ca9af4b94fd74, type: 2}
+  - {fileID: 1121849147797242, guid: 02b2b47779ecc914e98f5c45368108cc, type: 2}
+  - {fileID: 1741685711598542, guid: a9ebdf07f8a7b484db32720d9222ff97, type: 2}
+  - {fileID: 1396860551956958, guid: ab3c2039d47ea2e498128f1bac37615d, type: 2}
+  - {fileID: 1878080083616118, guid: 23d0826d48fe399419909aa3530a34f8, type: 2}
   wheels: []
   chassi: {fileID: 1032269528}
   wheel: {fileID: 2006231147}
   drive: {fileID: 923755360}
   car: {fileID: 0}
-  wheelShape: {fileID: 0}
+  wheelShapeLeft: {fileID: 0}
+  wheelShapeRight: {fileID: 0}
   gameState: {fileID: 0}
 --- !u!1 &193511818
 GameObject:
@@ -11413,6 +11421,22 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1901418886}
   m_CullTransparentMesh: 0
+--- !u!1 &1901891923 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1278535654462820, guid: 59cdce750149304408231b759c702729,
+    type: 2}
+  m_PrefabInternal: {fileID: 2044500845}
+--- !u!114 &1901891925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1901891923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19227e2784bdbdf449e705c53bd72e46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1943561710
 GameObject:
   m_ObjectHideFlags: 0
@@ -11768,11 +11792,15 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
-    - m_Text: Black
+    - m_Text: Standard
       m_Image: {fileID: 0}
-    - m_Text: Orange
+    - m_Text: Low Friction
       m_Image: {fileID: 0}
-    - m_Text: Yellow
+    - m_Text: High Friction
+      m_Image: {fileID: 0}
+    - m_Text: Extra High Friction
+      m_Image: {fileID: 0}
+    - m_Text: Offroad
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
