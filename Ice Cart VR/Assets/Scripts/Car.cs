@@ -26,7 +26,8 @@ public class Car : MonoBehaviour
 
     // ? 
     private new Rigidbody rigidbody;                    // The cars rigidbody. (used to change the center of mass)
-    public InputManager inputScript;                    // Script to call all the input functions.           
+    public InputManager inputScript;                    // Script to call all the input functions.
+    public GameStateScript gameState;
 
     // Tyre shape and colliders for all the wheel.
     public GameObject wheelShape;                       // GameObject to lock in the shape of the wheel.
@@ -52,8 +53,12 @@ public class Car : MonoBehaviour
     public float velocityZ = 0;                         // current speed in z-axis.
     public int   velocityZInt;                          // current speed in z-axis as int.
     public float RPM = 0;                               // current RPM of motor. (between 0-1) (sudo 1000-3000 rpm)
+    public int groundType;
 
     public bool includeChildren = true;                 // ? /// WHAT IS THIS \\\
+
+    public GameObject tppCam;
+
 
     // The distance between gears in units per second.
     public float gearDistance = 2.2f;                   // speed needed to shift gear. (1.1 - 3.3 - 5.5 - 7.7 ...)
@@ -67,14 +72,26 @@ public class Car : MonoBehaviour
     // Init the car script, finding and making all the necessery game objects.
     public void Init()
     {
+        // sets Camera to enable toggle between TPP and FPP.
+        tppCam = GameObject.Find("TPP Cam");
+
         // Sets the steeringwheel index.
         for (int i = 0; i < Input.GetJoystickNames().Length; i++)
+        {
             if (Input.GetJoystickNames()[i] == "G29 Driving Force Racing Wheel")
                 steeringWheelIndex = i;
+        }
         // Remove logitechsteringSDK if the Logitechsteringwheel is not connected.
-        if (!LogitechGSDK.LogiIsConnected(steeringWheelIndex))
+        if (LogitechGSDK.LogiIsConnected(steeringWheelIndex))
         {
             GameObject.Find("FPP Cam").GetComponent<LogitechSteeringWheel>().enabled = false;
+        }
+
+        // Sets Gamestate.
+        gameState = GameObject.Find("GameState").GetComponent<GameStateScript>();
+        if (gameState.cameraType == 0)
+        {
+            GameObject.Find("TPP Cam").SetActive(false);
         }
 
         // Sets inputScript. 
@@ -167,16 +184,49 @@ public class Car : MonoBehaviour
             }
         }
     }
+    void UpdateLogitech()
+    {
+        Debug.Log("logi");
+        //LogitechGSDK.LogiPlaySpringForce(steeringWheelIndex, 0, 100, 10);
+        //*velocityZInt
+        if (groundType == 1)
+        {
+            Debug.Log(groundType);
+            LogitechGSDK.LogiStopDirtRoadEffect(steeringWheelIndex);
+            LogitechGSDK.LogiStopDamperForce(steeringWheelIndex);
+
+            LogitechGSDK.LogiPlaySlipperyRoadEffect(steeringWheelIndex, 50);
+        }
+        else if (groundType == 2)
+        {
+            Debug.Log(groundType);
+            LogitechGSDK.LogiStopDirtRoadEffect(steeringWheelIndex);
+            LogitechGSDK.LogiStopSlipperyRoadEffect(steeringWheelIndex);
+
+            //LogitechGSDK.LogiPlayDamperForce(steeringWheelIndex, 50);
+        }
+        else if (groundType == 3)
+        {
+            Debug.Log(groundType);
+            LogitechGSDK.LogiStopSlipperyRoadEffect(steeringWheelIndex);
+            LogitechGSDK.LogiStopDamperForce(steeringWheelIndex);
+
+            LogitechGSDK.LogiPlayDirtRoadEffect(steeringWheelIndex, 10 * velocityZInt);
+        }
+
+    }
 
     // Runs the update each frame.
     void FixedUpdate()
     {
         // Updates all the needed functions.
         GetInput();                                                         // Takes input.
+        UpdateOptions();
         LogitechGSDK.LogiUpdate();                                          // Function needed for LogitechGSDK force feedback.
         RotateSteeringWheel(steeringWheel);                                 // Cosmetic rotation of the wheel.
         PressPedals(acceleratorPad, breakPad, clutchPad);                   // Cosmetic pushing of the pedals.
         CalculateVisualComponents();                                        // Cosmetic calculation of RPM and speed.
+
 
         // Forcefeedback to center the wheel, depending on speed.
         LogitechGSDK.LogiPlaySpringForce(steeringWheelIndex,0,100,10*velocityZInt);
@@ -194,11 +244,8 @@ public class Car : MonoBehaviour
                 // Changes the effectivness of the wheel depending on the material
                 if (hit.collider.tag == "ice")
                 {
-                    LogitechGSDK.LogiStopDirtRoadEffect(steeringWheelIndex);
-                    LogitechGSDK.LogiStopDamperForce(steeringWheelIndex);
-
-                    LogitechGSDK.LogiPlaySlipperyRoadEffect(steeringWheelIndex, 50);
-
+                    groundType = 1;
+                    UpdateLogitech();
                     ff.asymptoteSlip = 0.4f     * wheelMod.forwardFrictionMod;
                     ff.asymptoteValue = 0.2f    * wheelMod.forwardFrictionMod;
                     ff.extremumSlip = 2.0f      * wheelMod.forwardFrictionMod;
@@ -216,11 +263,8 @@ public class Car : MonoBehaviour
                 }
                 else if (hit.collider.tag == "tarmac")
                 {
-                    LogitechGSDK.LogiStopDirtRoadEffect(steeringWheelIndex);
-                    LogitechGSDK.LogiStopSlipperyRoadEffect(steeringWheelIndex);
-
-                    LogitechGSDK.LogiPlayDamperForce(steeringWheelIndex, 50);
-
+                    groundType = 2;
+                    UpdateLogitech();
                     ff.asymptoteSlip = 0.7f     * wheelMod.forwardFrictionMod;
                     ff.asymptoteValue = 0.7f    * wheelMod.forwardFrictionMod;
                     ff.extremumSlip = 7.7f      * wheelMod.forwardFrictionMod;
@@ -238,13 +282,8 @@ public class Car : MonoBehaviour
                 }
                 else if (hit.collider.tag == "dirt")
                 {
-                    LogitechGSDK.LogiStopSlipperyRoadEffect(steeringWheelIndex);
-                    LogitechGSDK.LogiStopDamperForce(steeringWheelIndex);
-
-                    LogitechGSDK.LogiPlayDamperForce(steeringWheelIndex, 75);
-                    LogitechGSDK.LogiPlayDirtRoadEffect(steeringWheelIndex, 10 * velocityZInt);
-
-
+                    groundType = 3;
+                    UpdateLogitech();
                     ff.asymptoteSlip = 0.7f     * wheelMod.forwardFrictionMod;
                     ff.asymptoteValue = 0.7f    * wheelMod.forwardFrictionMod;
                     ff.extremumSlip = 7.7f      * wheelMod.forwardFrictionMod;
@@ -289,6 +328,35 @@ public class Car : MonoBehaviour
         foreach (WheelCollider wheel in wheels)
         {
             UpdateWheelPoses(wheel);
+        }
+    }
+
+    public void UpdateOptions()
+    {   
+        // Camera option.
+        if (gameState.cameraType == 0 && tppCam.activeSelf)
+        {
+            tppCam.SetActive(false);
+        }
+        else if (gameState.cameraType != 0 && !tppCam.activeSelf)
+        {
+            tppCam.SetActive(true);
+        }
+
+        // Controller Options.
+
+        // Gear Options.
+        if (gameState.gearType == 0)
+        {
+            inputScript.shiftType = InputManager.gearShiftType.automatic;
+        }
+        else if (gameState.gearType == 1)
+        {
+            inputScript.shiftType = InputManager.gearShiftType.hShift;
+        }
+        else if (gameState.gearType == 2)
+        {
+            inputScript.shiftType = InputManager.gearShiftType.paddleShift;
         }
     }
 

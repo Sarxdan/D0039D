@@ -39,14 +39,13 @@ public class InputStandalone : MonoBehaviour {
                     for (int i = 0; i < names.Length; i++)
                     {
                         if (names[i].Equals("Controller (Xbox One For Windows)") || names[i].Equals("Controller (XBOX 360 For Windows)"))
-                        { controllerIndex = 1; break; }
+                        { controllerIndex = 1; gearIndex = 0; break; }
                         else if (names[i].Equals("Wireless Controller"))
-                        { controllerIndex = 2; break; }
+                        { controllerIndex = 2; gearIndex = 0; break; }
                         else if (names[i].Equals("G29 Driving Force Racing Wheel"))
-                        { controllerIndex = 3; break; }
+                        { controllerIndex = 3; gearIndex = 1; break; }
                     }
                 cameraIndex = 0;
-                gearIndex = 0;
                 UpdateCameraType();
             }
             else

@@ -1850,6 +1850,7 @@ MonoBehaviour:
   controllerType: -1
   cameraType: -1
   inputScript: {fileID: 0}
+  gameState: {fileID: 0}
   wheelShape: {fileID: 1438684924315436, guid: 1e1b039d722ec204a83436b65b887cfd, type: 2}
   wheels: []
   frontWheels: []
@@ -1873,6 +1874,7 @@ MonoBehaviour:
   velocityZInt: 0
   RPM: 0
   includeChildren: 1
+  tppCam: {fileID: 0}
   gearDistance: 3
 --- !u!114 &114817330941427436
 MonoBehaviour:

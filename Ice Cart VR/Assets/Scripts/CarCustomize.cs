@@ -118,6 +118,7 @@ public class CarCustomize : MonoBehaviour {
 
         car.transform.GetChild(0).gameObject.SetActive(true);
         carScript.Init();
+        carScript.UpdateOptions();
         if (uiManager.selectedLevel == 1)
         {
             // Set the starting position of the car in Showroom.

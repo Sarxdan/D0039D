@@ -24,6 +24,8 @@ public class checkpoint : MonoBehaviour {
         }
         else
             this.GetComponent<SpriteRenderer>().color = new Color(1, 1, 0, 0.25f);
+
+        GameObject.FindGameObjectWithTag("Player").GetComponent<CheckpointScript>().init();
     }
 
 }

@@ -25,11 +25,17 @@ public class CheckpointScript : MonoBehaviour
     {
         timer = new Stopwatch();
     }
-    //private void Update()
-    //{
-    //    timeOnScreen = GameObject.Find("TimeOnScreen").GetComponent<Text>();
-    //    timeOnScreen.text = CalulateTime();
-    //}
+    public void init()
+    {
+        timeOnScreen = GameObject.Find("TimeOnScreen").GetComponent<Text>();
+    }
+    private void FixedUpdate()
+    {
+        if (timeOnScreen != null)
+        {
+            timeOnScreen.text = CalulateTime();
+        }
+    }
     // Player collides with a trigger colliders (checkpoint)
     void OnTriggerEnter(Collider collision)
     {
@@ -39,7 +45,6 @@ public class CheckpointScript : MonoBehaviour
             // Check that the colliders is actully a checkpoint
             if (collision.tag == "Checkpoint")
             {
-                timeOnScreen = GameObject.Find("TimeOnScreen").GetComponent<Text>();
                 int checkpoint = collision.gameObject.GetComponent<checkpoint>().index;
 
                 if(checkpoint > prevCheckpoint + 1)
@@ -53,12 +58,12 @@ public class CheckpointScript : MonoBehaviour
                 {
                     if (collision.gameObject.GetComponent<checkpoint>().isFinishLine == true)
                     {
-                        UnityEngine.Debug.Log("finish");
+                        //UnityEngine.Debug.Log("finish");
                         timer.Stop();
                         isTrackComplete = true;
                         time = timer.ElapsedMilliseconds / 1000f;
                     }
-                    else if(collision.gameObject.GetComponent<checkpoint>().isStartLine== true)
+                    else if(collision.gameObject.GetComponent<checkpoint>().isStartLine == true && timer != null)
                     {
                         //UnityEngine.Debug.Log("start");
                         timer.Start();
