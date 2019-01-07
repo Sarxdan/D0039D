@@ -276,17 +276,10 @@ GameObject:
   - component: {fileID: 4096080061555196}
   - component: {fileID: 20704238644696384}
   - component: {fileID: 81873459385829848}
-<<<<<<< HEAD
-  - component: {fileID: 114296479830837046}
-  m_Layer: 0
-  m_Name: FPS CAM
-  m_TagString: FPS Cam
-=======
-  - component: {fileID: 114491394691573890}
+  - component: {fileID: 114555835537335304}
   m_Layer: 0
   m_Name: FPP Cam
   m_TagString: FPP cam
->>>>>>> origin/bennie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1826,22 +1819,8 @@ MonoBehaviour:
   lastCheckpointRotation: {x: 0, y: 0, z: 0, w: 0}
   isTrackComplete: 0
   time: 0
-<<<<<<< HEAD
---- !u!114 &114296479830837046
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1592305395324618}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3047a8618a80261439a21993d26653a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-=======
   timeOnScreen: {fileID: 0}
   timeObject: {fileID: 0}
->>>>>>> origin/bennie
 --- !u!114 &114466373017004436
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1854,11 +1833,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputType: 0
-<<<<<<< HEAD
-  shiftType: 1
-=======
   shiftType: 2
---- !u!114 &114491394691573890
+--- !u!114 &114555835537335304
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1869,7 +1845,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3047a8618a80261439a21993d26653a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
->>>>>>> origin/bennie
 --- !u!114 &114783417693158798
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1881,13 +1856,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a9e420831fa00a499b91f14c6627ec1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
-  index: 0
-  drive: 0
-=======
   steeringWheelIndex: 0
   driveType: 0
->>>>>>> origin/bennie
   horizontalInput: 0
   verticalInput: 0
   gasInput: 0
@@ -1895,11 +1865,8 @@ MonoBehaviour:
   clutchInput: 0
   backInput: 0
   submitInput: 0
-<<<<<<< HEAD
-=======
   controllerType: -1
   cameraType: -1
->>>>>>> origin/bennie
   inputScript: {fileID: 0}
   wheelShape: {fileID: 1438684924315436, guid: 1e1b039d722ec204a83436b65b887cfd, type: 2}
   wheels: []
@@ -1909,12 +1876,8 @@ MonoBehaviour:
   acceleratorPad: {fileID: 0}
   breakPad: {fileID: 0}
   clutchPad: {fileID: 0}
-<<<<<<< HEAD
-  speedomiter: {fileID: 0}
-=======
   speedDisplay: {fileID: 0}
   gearDisplay: {fileID: 0}
->>>>>>> origin/bennie
   needle: {fileID: 0}
   ui: {fileID: 0}
   maxSteeringAngle: 10
@@ -1926,16 +1889,9 @@ MonoBehaviour:
   gear: 0
   velocityZ: 0
   velocityZInt: 0
-<<<<<<< HEAD
-  RPM: 1000
-  test: 0
-  includeChildren: 1
-  gearDistance: 2.2
-=======
   RPM: 0
   includeChildren: 1
   gearDistance: 2
->>>>>>> origin/bennie
 --- !u!136 &136199844684566682
 CapsuleCollider:
   m_ObjectHideFlags: 1

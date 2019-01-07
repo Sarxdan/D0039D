@@ -386,11 +386,6 @@ public class Car : MonoBehaviour
             motorTorque = 0;
             // Engine braking
             wheel.brakeTorque += enginePower / 4;
-<<<<<<< HEAD
-            //LogitechGSDK.LogiPlayFrontalCollisionForce(index, 50);
-=======
-            LogitechGSDK.LogiPlayFrontalCollisionForce(steeringWheelIndex, 50);
->>>>>>> origin/bennie
         }
         else if (gear == 0)
         {
