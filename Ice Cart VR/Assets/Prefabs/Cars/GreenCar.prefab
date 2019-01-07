@@ -276,9 +276,10 @@ GameObject:
   - component: {fileID: 4096080061555196}
   - component: {fileID: 20704238644696384}
   - component: {fileID: 81873459385829848}
+  - component: {fileID: 114727115697699314}
   m_Layer: 0
-  m_Name: FPS Cam
-  m_TagString: MainCamera
+  m_Name: FPP Cam
+  m_TagString: FPP cam
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -326,8 +327,8 @@ GameObject:
   - component: {fileID: 20653301579357348}
   - component: {fileID: 81715343215559668}
   m_Layer: 0
-  m_Name: Camera
-  m_TagString: Untagged
+  m_Name: TPP Cam
+  m_TagString: TPP cam
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -517,8 +518,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1292891602364442}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.7, z: 0}
+  m_LocalRotation: {x: 0, y: -0.8610972, z: 0, w: 0.5084404}
+  m_LocalPosition: {x: 0.05, y: -118.5, z: -1035}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children:
   - {fileID: 4096080061555196}
@@ -535,7 +536,7 @@ Transform:
   - {fileID: 4090478306145604}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -118.88, z: 0}
 --- !u!4 &4085399595911082
 Transform:
   m_ObjectHideFlags: 1
@@ -1818,6 +1819,8 @@ MonoBehaviour:
   lastCheckpointRotation: {x: 0, y: 0, z: 0, w: 0}
   isTrackComplete: 0
   time: 0
+  timeOnScreen: {fileID: 0}
+  timeObject: {fileID: 0}
 --- !u!114 &114314251075172666
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1831,6 +1834,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputType: 0
   shiftType: 2
+--- !u!114 &114727115697699314
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1592305395324618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3047a8618a80261439a21993d26653a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114783417693158798
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1842,10 +1856,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a9e420831fa00a499b91f14c6627ec1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ght: 0
-  velocity: 0
-  index: 0
-  drive: 0
+  steeringWheelIndex: 0
+  driveType: 0
   horizontalInput: 0
   verticalInput: 0
   gasInput: 0
@@ -1853,6 +1865,9 @@ MonoBehaviour:
   clutchInput: 0
   backInput: 0
   submitInput: 0
+  controllerType: -1
+  cameraType: -1
+  inputScript: {fileID: 0}
   wheelShape: {fileID: 1438684924315436, guid: 1e1b039d722ec204a83436b65b887cfd, type: 2}
   wheels: []
   frontWheels: []
@@ -1861,13 +1876,21 @@ MonoBehaviour:
   acceleratorPad: {fileID: 0}
   breakPad: {fileID: 0}
   clutchPad: {fileID: 0}
-  maxSteeringAngle: 20
+  speedDisplay: {fileID: 0}
+  gearDisplay: {fileID: 0}
+  needle: {fileID: 0}
+  ui: {fileID: 0}
+  maxSteeringAngle: 10
   maxSteeringWheelRot: 450
   maxPedalPress: 30
-  enginePower: 300
+  enginePower: 275
   slowDownForce: 100
   antiRollSpring: 0
   gear: 0
+  velocityZ: 0
+  velocityZInt: 0
+  RPM: 0
+  includeChildren: 1
   gearDistance: 3
 --- !u!136 &136199844684566682
 CapsuleCollider:
@@ -1902,7 +1925,7 @@ WheelCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1161404215854044}
   m_Center: {x: 0, y: 0, z: 0}
-  m_Radius: 0.51
+  m_Radius: 0.45
   m_SuspensionSpring:
     spring: 50000
     damper: 7000
@@ -1931,7 +1954,7 @@ WheelCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1407653301900986}
   m_Center: {x: 0, y: 0, z: 0}
-  m_Radius: 0.51
+  m_Radius: 0.45
   m_SuspensionSpring:
     spring: 50000
     damper: 7000
@@ -1960,7 +1983,7 @@ WheelCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1501697200600746}
   m_Center: {x: 0, y: 0, z: 0}
-  m_Radius: 0.51
+  m_Radius: 0.45
   m_SuspensionSpring:
     spring: 50000
     damper: 7000
@@ -1989,7 +2012,7 @@ WheelCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1278535654462820}
   m_Center: {x: 0, y: 0, z: 0}
-  m_Radius: 0.51
+  m_Radius: 0.45
   m_SuspensionSpring:
     spring: 50000
     damper: 7000

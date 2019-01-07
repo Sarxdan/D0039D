@@ -83,6 +83,10 @@ public class CarCustomize : MonoBehaviour {
 
             shapeTransform.position = pos;
             shapeTransform.rotation = quat;
+            if (thisWheel.transform.localPosition.x > 0)
+            {
+                shapeTransform.localEulerAngles = new Vector3(0, 90, 0);
+            }
         }
     }
     
@@ -94,12 +98,13 @@ public class CarCustomize : MonoBehaviour {
         Car carScript = car.GetComponent<Car>();
         carScript.enabled = true;
 
-        if(drive.value == 0)
-            carScript.drive = Car.wheelDrive.front;
-        else if(drive.value == 1)
-            carScript.drive = Car.wheelDrive.rear;
-        else if(drive.value == 2)
-            carScript.drive = Car.wheelDrive.four;
+        /// GAMESTATE HAVE TO SAVE WHEELDRIVE. \\\
+        //if(drive.value == 0)
+        //    carScript.drive = Car.wheelDrive.front;
+        //else if(drive.value == 1)
+        //    carScript.drive = Car.wheelDrive.rear;
+        //else if(drive.value == 2)
+        //    carScript.drive = Car.wheelDrive.four;
 
         carScript.wheelShape = wheelShape;
 

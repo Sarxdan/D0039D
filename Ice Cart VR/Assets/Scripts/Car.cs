@@ -7,82 +7,72 @@ using UnityEngine;
 
 public class Car : MonoBehaviour
 {
-
-    // Enum used to make choices easy.
-    public enum wheelDrive { four, front, rear };
-    public enum ControllerType { keyboard, xboxController, ps4Controller, steeringWheel };
-
     // WheelFrictionCurve used to set the wheelfriction on diffrent surfaces.
-    public WheelFrictionCurve ff;
-    public WheelFrictionCurve sf;
+    public WheelFrictionCurve ff;                       // ForwardFriction
+    public WheelFrictionCurve sf;                       // SidewardFriction
 
     // Input related variables.
-    public int index = 0;
-    public wheelDrive drive = wheelDrive.front;
-    public float horizontalInput;
-    public float verticalInput;
-    public float gasInput = 0.0F;
-    public float brakeInput = 0.0F;
-    public float clutchInput = 0.0F;
-    public float backInput = 0.0F;
-    public float submitInput = 0.0F;
-    public int controllerType = -1;
-    public int cameraType = -1;
+    public int steeringWheelIndex = 0;                  // Index of the SteeringWheel. (used for forcefeedback)
+    public int driveType = 0;                           // Type of Drive.
+    public float horizontalInput;                       // Input
+    public float verticalInput;                         // Input
+    public float gasInput = 0.0F;                       // Input
+    public float brakeInput = 0.0F;                     // Input
+    public float clutchInput = 0.0F;                    // Input
+    public float backInput = 0.0F;                      // Input
+    public float submitInput = 0.0F;                    // Input
+    public int controllerType = -1;                     // Controller type.
+    public int cameraType = -1;                         // Camera Type.
 
     // ? 
-    private new Rigidbody rigidbody;
-    public InputManager inputScript;
-   
-    // used to change the steeringangle of the wheel. 
-    private float steeringAngle;
+    private new Rigidbody rigidbody;                    // The cars rigidbody. (used to change the center of mass)
+    public InputManager inputScript;                    // Script to call all the input functions.           
 
     // Tyre shape and colliders for all the wheel.
-    public GameObject wheelShape;
-    public WheelCollider[] wheels;
-    public WheelCollider[] frontWheels;
-    public WheelCollider[] rearWheels;
+    public GameObject wheelShape;                       // GameObject to lock in the shape of the wheel.
+    public WheelCollider[] wheels;                      // array of all wheels.
+    public WheelCollider[] frontWheels;                 // array of the front wheels.
+    public WheelCollider[] rearWheels;                  // array of the rear wheels.
 
     // Cosmetics.
-    public GameObject steeringWheel, acceleratorPad, breakPad, clutchPad;
-    public GameObject speedomiter;
-    public GameObject needle;
-    public Canvas ui;
+    public GameObject steeringWheel, acceleratorPad, breakPad, clutchPad;       // Cosmetics
+    public Text speedDisplay;                           // Ui display of the current speed.
+    public Text gearDisplay;                            // Ui display of the current gear.
+    public GameObject needle;                           // Ui gameobject. (a needle that rotates)
+    public Canvas ui;                                   // Canvas. (to remove the ui when not in use) 
 
     // Set values for diffrent things. 
-    public float maxSteeringAngle = 10;         // max angle the wheels can turn.
-    public float maxSteeringWheelRot = 450;     // max degrees the steeringwheel can turn. (in one direction, + and - )
-    public float maxPedalPress = 30;            // max degrees the pedals can be pressed down.
-    public float enginePower = 300;             // max power the engine can put out.
-    public float slowDownForce = 100.0f;        // the force pushing the car in the opposite direction.
-    public float antiRollSpring = 0;            // spring force is used to stableize the car.
-    public int   gear = 0;                      // current gear.
-    public float velocityZ = 0;                 // current speed in z-axis.
-    public int   velocityZInt;                  // current speed in z-axis as int.
-    public float RPM = 1000;                    // current RPM of motor.
-    public float test;
+    public float maxSteeringAngle = 10;                 // max angle the wheels can turn.
+    public float maxSteeringWheelRot = 450;             // max degrees the steeringwheel can turn. (in one direction, + and - )
+    public float maxPedalPress = 30;                    // max degrees the pedals can be pressed down.
+    public float enginePower = 300;                     // max power the engine can put out.
+    public float slowDownForce = 100.0f;                // the force pushing the car in the opposite direction.
+    public float antiRollSpring = 0;                    // spring force is used to stableize the car.
+    public int   gear = 0;                              // current gear.
+    public float velocityZ = 0;                         // current speed in z-axis.
+    public int   velocityZInt;                          // current speed in z-axis as int.
+    public float RPM = 0;                               // current RPM of motor. (between 0-1) (sudo 1000-3000 rpm)
 
-    // Declaring an array (ps) to store the four particle systems
-    ParticleSystem[] ps;
+    public bool includeChildren = true;                 // ? /// WHAT IS THIS \\\
 
-    public bool includeChildren = true;
+    // The distance between gears in units per second.
+    public float gearDistance = 2.2f;                   // speed needed to shift gear. (1.1 - 3.3 - 5.5 - 7.7 ...)
 
-    // The distance between gears in units per second
-    public float gearDistance = 3.0f;
-
+    // Empty, if not in test scen then cast Init.
     void Start()
     {
-        //PlayerPrefs.DeleteAll();
-        //Init();         // Needed to run test scen.
+        //Init();                                       // Needed to run test scen.
     }
 
+    // Init the car script, finding and making all the necessery game objects.
     public void Init()
     {
         // Sets the steeringwheel index.
         for (int i = 0; i < Input.GetJoystickNames().Length; i++)
             if (Input.GetJoystickNames()[i] == "G29 Driving Force Racing Wheel")
-                index = i;
-        // Remove logitechsteringSDK.
-        if (!LogitechGSDK.LogiIsConnected(index))
+                steeringWheelIndex = i;
+        // Remove logitechsteringSDK if the Logitechsteringwheel is not connected.
+        if (!LogitechGSDK.LogiIsConnected(steeringWheelIndex))
         {
             GameObject.Find("FPP Cam").GetComponent<LogitechSteeringWheel>().enabled = false;
         }
@@ -178,16 +168,20 @@ public class Car : MonoBehaviour
         }
     }
 
+    // Runs the update each frame.
     void FixedUpdate()
     {
-        GetInput();
-        LogitechGSDK.LogiUpdate();
-        RotateSteeringWheel(steeringWheel);
-        PressPedals(acceleratorPad, breakPad, clutchPad);
-        CalculateTorque();
-        LogitechGSDK.LogiPlaySpringForce(index,0,100,10*velocityZInt);
+        // Updates all the needed functions.
+        GetInput();                                                         // Takes input.
+        LogitechGSDK.LogiUpdate();                                          // Function needed for LogitechGSDK force feedback.
+        RotateSteeringWheel(steeringWheel);                                 // Cosmetic rotation of the wheel.
+        PressPedals(acceleratorPad, breakPad, clutchPad);                   // Cosmetic pushing of the pedals.
+        CalculateVisualComponents();                                        // Cosmetic calculation of RPM and speed.
 
-        // Does something for every wheel collider in the car
+        // Forcefeedback to center the wheel, depending on speed.
+        LogitechGSDK.LogiPlaySpringForce(steeringWheelIndex,0,100,10*velocityZInt);
+
+        // Goes through all the WheelColliders.
         foreach (WheelCollider wheel in wheels)
         {
             // Checks if the wheel is on a new surface.
@@ -200,10 +194,10 @@ public class Car : MonoBehaviour
                 // Changes the effectivness of the wheel depending on the material
                 if (hit.collider.tag == "ice")
                 {
-                    LogitechGSDK.LogiStopDirtRoadEffect(index);
-                    LogitechGSDK.LogiStopDamperForce(index);
+                    LogitechGSDK.LogiStopDirtRoadEffect(steeringWheelIndex);
+                    LogitechGSDK.LogiStopDamperForce(steeringWheelIndex);
 
-                    LogitechGSDK.LogiPlaySlipperyRoadEffect(index, 50);
+                    LogitechGSDK.LogiPlaySlipperyRoadEffect(steeringWheelIndex, 50);
 
                     ff.asymptoteSlip = 0.4f     * wheelMod.forwardFrictionMod;
                     ff.asymptoteValue = 0.2f    * wheelMod.forwardFrictionMod;
@@ -222,10 +216,10 @@ public class Car : MonoBehaviour
                 }
                 else if (hit.collider.tag == "tarmac")
                 {
-                    LogitechGSDK.LogiStopDirtRoadEffect(index);
-                    LogitechGSDK.LogiStopSlipperyRoadEffect(index);
+                    LogitechGSDK.LogiStopDirtRoadEffect(steeringWheelIndex);
+                    LogitechGSDK.LogiStopSlipperyRoadEffect(steeringWheelIndex);
 
-                    LogitechGSDK.LogiPlayDamperForce(index, 50);
+                    LogitechGSDK.LogiPlayDamperForce(steeringWheelIndex, 50);
 
                     ff.asymptoteSlip = 0.7f     * wheelMod.forwardFrictionMod;
                     ff.asymptoteValue = 0.7f    * wheelMod.forwardFrictionMod;
@@ -244,11 +238,11 @@ public class Car : MonoBehaviour
                 }
                 else if (hit.collider.tag == "dirt")
                 {
-                    LogitechGSDK.LogiStopSlipperyRoadEffect(index);
-                    LogitechGSDK.LogiStopDamperForce(index);
+                    LogitechGSDK.LogiStopSlipperyRoadEffect(steeringWheelIndex);
+                    LogitechGSDK.LogiStopDamperForce(steeringWheelIndex);
 
-                    LogitechGSDK.LogiPlayDamperForce(index, 75);
-                    LogitechGSDK.LogiPlayDirtRoadEffect(index, 10 * velocityZInt);
+                    LogitechGSDK.LogiPlayDamperForce(steeringWheelIndex, 75);
+                    LogitechGSDK.LogiPlayDirtRoadEffect(steeringWheelIndex, 10 * velocityZInt);
 
 
                     ff.asymptoteSlip = 0.7f     * wheelMod.forwardFrictionMod;
@@ -264,7 +258,7 @@ public class Car : MonoBehaviour
                     wheel.forwardFriction = ff;
                     wheel.sidewaysFriction = sf;
 
-                    slowDownForce = 1000.0f     * wheelMod.resistanceMod;
+                    slowDownForce = 100.0f      * wheelMod.resistanceMod;
                 }
 
                 // Apply natural slowdown
@@ -272,27 +266,18 @@ public class Car : MonoBehaviour
             }
         }
 
-        
-
         // Call axis stabilizer function using only the first two wheels in each axis
-        
-        // Front axis
-        StabilizeAxis(frontWheels[0], frontWheels[1]);
-        // Rear axis
-        StabilizeAxis(rearWheels[0], rearWheels[1]);
+        StabilizeAxis(frontWheels[0], frontWheels[1]);                      // Front axis
+        StabilizeAxis(rearWheels[0], rearWheels[1]);                        // Rear axis
 
-
-
-
+        /// HERE THE WHEEL DRIVE HAVE TO MAKE A DIFFRENCE \\\
         // Front wheels
         foreach (var wheel in frontWheels)
         {
-            Brake(wheel);
             //Accelerate(wheel);
             Steer(wheel);
             
         }
-
         // Rear wheels
         foreach (var wheel in rearWheels)
         {
@@ -300,14 +285,14 @@ public class Car : MonoBehaviour
             Accelerate(wheel);
         }
 
-        // Update positions of wheels last
+        // Update positions of wheels cosmetic
         foreach (WheelCollider wheel in wheels)
         {
             UpdateWheelPoses(wheel);
         }
     }
 
-    // Get input from controller
+    // Get input from controller.
     void GetInput()
     {
         horizontalInput = inputScript.getHorizontal();
@@ -317,11 +302,13 @@ public class Car : MonoBehaviour
         clutchInput = inputScript.getClutch();
         gear = inputScript.getGear();
     }
+
     // Only cosmetic rotation of the steeringwheel model.
     void RotateSteeringWheel(GameObject steeringWheel)
     {
         steeringWheel.transform.localEulerAngles = new Vector3(0, -horizontalInput * maxSteeringWheelRot, 0);
     }
+
     // Only cosmetic pressing of the pedals.
     void PressPedals(GameObject accelerator, GameObject breaker, GameObject clutch)
     {
@@ -329,46 +316,66 @@ public class Car : MonoBehaviour
         breaker.transform.localEulerAngles = new Vector3(-140 + brakeInput * maxPedalPress, 0, 0);
         clutch.transform.localEulerAngles = new Vector3(-140 + clutchInput * maxPedalPress, 0, 0);
     }
-    //Rotate the wheels when steering
+
+    // Rotate the wheels when steering.
     void Steer(WheelCollider wheel)
     {
-        steeringAngle = horizontalInput * maxSteeringAngle;
-        wheel.steerAngle = steeringAngle;
+        wheel.steerAngle = horizontalInput * maxSteeringAngle;
     }
 
-    void CalculateTorque()
+    // Calculates the Rpm, SpeedDisplay, GearDisplay. (UI)
+    void CalculateVisualComponents()
     {
-        if (speedomiter == null)
+        // First loop.
+        if (speedDisplay == null)
         {
-            speedomiter = GameObject.FindWithTag("Speedomiter");
+            speedDisplay = GameObject.Find("SpeedDisplay").GetComponent<Text>();
+            gearDisplay = GameObject.Find("GearDisplay").GetComponent<Text>();
             needle = GameObject.FindWithTag("SpeedNeedle");
         }
 
-        // The velocity in positive z direction of the car
+        // The velocity in positive z direction of the car.
         velocityZ = transform.InverseTransformDirection(rigidbody.velocity).z;
-        velocityZInt = (int)velocityZ;
-        if (velocityZ < 0.1)
-        {
-            velocityZ = 0;
-        }
+        // Velocity is always positive.
+        if (velocityZ < 0)
+            velocityZ = -velocityZ;
+        // Transform to int to display on speedomiter. also makes the number somewhat more realistic.
         int velocityAsInt = (int)((velocityZ * 3) * 3.6);
+        // Transform to string to be displayed.
         string velocityAsString = velocityAsInt.ToString();
-        speedomiter.GetComponentInChildren<Text>().text = velocityAsString;
+        speedDisplay.text = velocityAsString;
 
-        // funkar inte! BEHÖVER HJÄLP! 
-        test = (gearDistance / ((gearDistance - velocityZ) * gear)) -1;
-        RPM = 215 - 295 * (gearDistance / ((gearDistance - velocityZ)*gear));
-        needle.transform.localRotation = Quaternion.Euler(0, 0, RPM);
+        // GearDisplay
+        if (gear == -1)
+            gearDisplay.text = "R";
+        else if (gear == 0)
+            gearDisplay.text = "N";
+        else
+            gearDisplay.text = gear.ToString();
 
+        // RPM calculations.
+        if (gear == 1)
+            RPM = (velocityZ / (gearDistance / 2));                     // Gear 1 is half gearDistance.
+        else if (gear == 2)
+            RPM = (velocityZ - (gearDistance / 2)) / (gearDistance);    // Gear 2 have to remove first gearDistance.
+        else
+            RPM = (velocityZ - (gearDistance / 2) - (gearDistance * (gear - 2))) / gearDistance; // All other gears removes first and all gear before.
+        
+        // if the gear in wrong red shift.
+        if (RPM < 0)
+            RPM = 0;
+
+        float degree = 170 - 210 * RPM;
+        if (degree < -80)
+            degree = -80;
+        needle.transform.localEulerAngles = new Vector3(0, 0, degree);
     }
 
     //Make the car move according to the input
     void Accelerate(WheelCollider wheel)
     {
-        // The velocity in positive z direction of the car
+        // The velocity in positive z direction of the car.
         float zVel = transform.InverseTransformDirection(rigidbody.velocity).z;
-
-        //Debug.Log("Gear: " + gear + ", Velocity (km/h):" + ((zVel * 3) * 3.6));
 
         // Generates a -x^2 curve where velocity is x and y is torque output. The curve is moved in the x-axis depending on the gear and gearDistance
         float motorTorque = -((zVel - (Mathf.Abs(gear) - 1) * gearDistance) * (zVel - (Mathf.Abs(gear) - 1) * gearDistance) * (enginePower / (gearDistance * gearDistance))) + gasInput * enginePower;
@@ -379,7 +386,11 @@ public class Car : MonoBehaviour
             motorTorque = 0;
             // Engine braking
             wheel.brakeTorque += enginePower / 4;
+<<<<<<< HEAD
             //LogitechGSDK.LogiPlayFrontalCollisionForce(index, 50);
+=======
+            LogitechGSDK.LogiPlayFrontalCollisionForce(steeringWheelIndex, 50);
+>>>>>>> origin/bennie
         }
         else if (gear == 0)
         {
@@ -397,8 +408,6 @@ public class Car : MonoBehaviour
             }
         }
 
-        //Debug.Log("RPM: " + ((zVel - gear * gearDistance) + gearDistance) * 1000);
-
         wheel.motorTorque = motorTorque;
     }
 
@@ -413,8 +422,9 @@ public class Car : MonoBehaviour
 
     void Brake(WheelCollider wheel)
     {
-        wheel.brakeTorque = brakeInput * enginePower;
+        wheel.brakeTorque = brakeInput * enginePower * 2;
     }
+
     //Updates the position of the wheel prefabs according to the wheel colliders
     void UpdateWheelPoses(WheelCollider wheel)
     {
@@ -428,7 +438,12 @@ public class Car : MonoBehaviour
 
         shapeTransform.position = pos;
         shapeTransform.rotation = quat;
+
+        // if right side wheel, flip the wheel 180.
+        if (wheel.transform.localPosition.x > 0)
+            shapeTransform.Rotate(new Vector3(0, 180, 0), Space.Self);
     }
+
     // Simulating stabilizer bars
     void StabilizeAxis(WheelCollider leftWheel, WheelCollider rightWheel)
     {
