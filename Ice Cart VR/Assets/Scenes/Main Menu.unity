@@ -1106,8 +1106,7 @@ MonoBehaviour:
   wheel: {fileID: 2006231147}
   drive: {fileID: 923755360}
   car: {fileID: 0}
-  wheelShapeLeft: {fileID: 0}
-  wheelShapeRight: {fileID: 0}
+  wheelShape: {fileID: 0}
   gameState: {fileID: 0}
 --- !u!1 &193511818
 GameObject:

@@ -434,6 +434,10 @@ public class Car : MonoBehaviour
 
         shapeTransform.position = pos;
         shapeTransform.rotation = quat;
+
+        // if right side wheel, flip the wheel 180.
+        if (wheel.transform.localPosition.x > 0)
+            shapeTransform.Rotate(new Vector3(0, 180, 0), Space.Self);
     }
 
     // Simulating stabilizer bars

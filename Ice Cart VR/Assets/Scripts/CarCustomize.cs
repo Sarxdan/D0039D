@@ -83,6 +83,10 @@ public class CarCustomize : MonoBehaviour {
 
             shapeTransform.position = pos;
             shapeTransform.rotation = quat;
+            if (thisWheel.transform.localPosition.x > 0)
+            {
+                shapeTransform.localEulerAngles = new Vector3(0, 90, 0);
+            }
         }
     }
     
