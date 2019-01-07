@@ -379,7 +379,7 @@ public class Car : MonoBehaviour
             motorTorque = 0;
             // Engine braking
             wheel.brakeTorque += enginePower / 4;
-            LogitechGSDK.LogiPlayFrontalCollisionForce(index, 50);
+            //LogitechGSDK.LogiPlayFrontalCollisionForce(index, 50);
         }
         else if (gear == 0)
         {
