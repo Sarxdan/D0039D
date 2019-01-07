@@ -1840,7 +1840,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1592305395324618}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3047a8618a80261439a21993d26653a8, type: 3}
   m_Name: 
@@ -1891,6 +1891,7 @@ MonoBehaviour:
   velocityZ: 0
   velocityZInt: 0
   RPM: 0
+  groundType: 0
   includeChildren: 1
   tppCam: {fileID: 0}
   gearDistance: 2

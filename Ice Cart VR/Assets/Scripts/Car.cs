@@ -91,7 +91,7 @@ public class Car : MonoBehaviour
         gameState = GameObject.Find("GameState").GetComponent<GameStateScript>();
         if (gameState.cameraType == 0)
         {
-            GameObject.Find("TPP Cam").SetActive(false);
+            tppCam.SetActive(false);
         }
 
         // Sets inputScript. 
@@ -337,6 +337,7 @@ public class Car : MonoBehaviour
         if (gameState.cameraType == 0 && tppCam.activeSelf)
         {
             tppCam.SetActive(false);
+            GameObject.Find("FPP Cam").GetComponent<LogitechSteeringWheel>().enabled = true;
         }
         else if (gameState.cameraType != 0 && !tppCam.activeSelf)
         {
