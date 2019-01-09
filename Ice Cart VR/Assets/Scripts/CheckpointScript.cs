@@ -87,15 +87,12 @@ public class CheckpointScript : MonoBehaviour
     {
         int minutes = 0, seconds = 0;
         time = timer.ElapsedMilliseconds / 1000;
-        if (time > 60)
+        if (time >= 60)
         {
-            for (float i = time; i > 60; i -= 60)
+            for (float i = time; i >= 60; i -= 60)
             {
                 minutes++;
-                if ((time - 60) < 60)
-                {
-                    seconds = (int)(time - 60);
-                }
+                seconds = (int)(time - (60 * minutes));
             }
         }
         else
