@@ -54,7 +54,7 @@ public class HighScore : MonoBehaviour {
             else
             {
                 // Show the name and highscore 
-                list[i].text = (i+1) + ": " + names[i] + " " + times[i].ToString();
+                list[i].text = (i+1) + ": " + names[i] + " " + CalculateTime(times[i]);
             }
         }
     }
@@ -98,6 +98,39 @@ public class HighScore : MonoBehaviour {
         }
         updateScoreBoard();
         saveHighscores();
+    }
+
+    public string CalculateTime(float time)
+    {
+        int minutes = 0, seconds = 0;
+        if (time >= 60)
+        {
+            for (float i = time; i >= 60; i -= 60)
+            {
+                minutes++;
+                seconds = (int)(time - (60 * minutes));
+            }
+        }
+        else
+        {
+            minutes = 0;
+            seconds = (int)time;
+        }
+
+        if (minutes < 10)
+        {
+            if (seconds < 10)
+                return "0" + minutes + " : " + "0" + seconds;
+            else
+                return "0" + minutes + " : " + seconds;
+        }
+        else
+        {
+            if (seconds < 10)
+                return minutes + " : " + "0" + seconds;
+            else
+                return minutes + " : " + seconds;
+        }
     }
 	public void ResetHighscore()
     {
